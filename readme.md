@@ -10,6 +10,7 @@ The reports directory contains a selection of my publicly disclosed vulnerabilit
 |----------------|---------------------------------|
 | CVE-2024-30509 | sellkit-arbitrary-file-download |
 | CVE-2024-3242  | brizy-contributor-rce-2         |
+| CVE-2024-4361  | siteorigin-panels-xxs           |
 
 
 ## Python Functions

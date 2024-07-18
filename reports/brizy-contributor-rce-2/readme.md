@@ -2,6 +2,7 @@
 
 - Link: https://www.wordfence.com/threat-intel/vulnerabilities/wordpress-plugins/brizy/brizy-page-builder-2444-authenticated-contributor-arbitrary-file-upload
 - CVE: 2024-3242
+- Bounty: $469
 
 # Brizy – Page Builder Authenticated (Contributor+) Arbitrary File Upload
 
