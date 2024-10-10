@@ -1,9 +1,9 @@
 <?php
 
-require_once 'inc/function_code.php';
 require_once 'inc/code.php';
 
-function extract_shortcode_attributes($php_code) {
+function extract_shortcode_attributes($php_code)
+{
     $matches = [];
     $used_shortcode_atts = false;
     $used_extract = false;
@@ -46,9 +46,10 @@ function extract_shortcode_attributes($php_code) {
     ];
 }
 
-function get_function_name($shortcode_name){
+function get_function_name($shortcode_name)
+{
     global $shortcode_tags;
-    if (array_key_exists($shortcode_name, $shortcode_tags)){
+    if (array_key_exists($shortcode_name, $shortcode_tags)) {
         $function = $shortcode_tags[$shortcode_name];
         if (is_object($function) && ($function instanceof Closure)) {
             return $function;
@@ -68,6 +69,10 @@ function get_function_name($shortcode_name){
     return "";
 }
 
+?>
+    <p>Show the currently registered shortcodes and the functions associated with them.</p>
+<?php
+
 global $shortcode_tags;
 
 $old_error_reporting = error_reporting();
@@ -75,19 +80,19 @@ $old_error_reporting = error_reporting();
 error_reporting(E_ALL);
 
 // API
-if (isset($_REQUEST['do_shortcode'])){
+if (isset($_REQUEST['do_shortcode'])) {
     $shortcode = wp_unslash($_REQUEST['do_shortcode']);
 //    echo $shortcode."\n\n";
     $result = do_shortcode($shortcode);
     // TODO: Fail if not shortcoded
     die($result);
 }
-if (isset($_REQUEST['list'])){
+if (isset($_REQUEST['list'])) {
     wp_send_json($shortcode_tags);
 }
-if (isset($_REQUEST['attrs'])){
+if (isset($_REQUEST['attrs'])) {
     // Step 3: Get the function code
-    if (array_key_exists($_REQUEST['attrs'], $shortcode_tags)){
+    if (array_key_exists($_REQUEST['attrs'], $shortcode_tags)) {
         $function_name = $shortcode_tags[$_REQUEST['attrs']];
         $result = get_function_code($function_name);
         $php_code = $result['code'];
@@ -101,15 +106,14 @@ echo "<h2>Registered Shortcodes:</h2>";
 echo "<ul>";
 foreach ($shortcode_tags as $shortcode => $function) {
     $url = add_query_arg('shortcode', $shortcode);
-    echo "<li><a href='$url'>{$shortcode}</a> → ";
+    echo "<li>{$shortcode} → <a href='$url'>";
     $function_name = get_function_name($shortcode);
-    if ($function_name instanceof Closure){
+    if ($function_name instanceof Closure) {
         print_r($function_name);
-    }
-    else{
+    } else {
         echo get_function_name($shortcode);
     }
-    echo "</li>";
+    echo "</a></li>";
 }
 echo "</ul>";
 
@@ -120,11 +124,10 @@ if (isset($_GET['shortcode']) && array_key_exists($_GET['shortcode'], $shortcode
 
     echo "<h2>Shortcode: [{$shortcode}]</h2>";
 
-    echo "<p>Function Name:";
-    if ($function_name instanceof Closure){
+    echo "<p>Function Name: ";
+    if ($function_name instanceof Closure) {
         print_r($function_name);
-    }
-    else{
+    } else {
         echo get_function_name($shortcode);
     }
     echo "</p>";
@@ -140,7 +143,7 @@ if (isset($_GET['shortcode']) && array_key_exists($_GET['shortcode'], $shortcode
     echo "<pre>" . print_r($result, true) . "</pre>";
 
     // Step 5: Display the function code with syntax highlighting
-    echo "<h3>Function Code:</h3>";
+    echo "<h3>Function Code</h3>";
     print_code($code_obj);
 } else {
     echo "<p>Select a shortcode from the list above to view its details.</p>";
@@ -156,3 +159,4 @@ if (isset($_GET['shortcode']) && array_key_exists($_GET['shortcode'], $shortcode
 // TODO: Check for reflection ' "
 // TODO: Check for encoding
 // TODO: Check for LFI
+// TODO: Run shortcodes on demand

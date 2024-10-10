@@ -4,8 +4,17 @@ require_once 'inc/loader.php';
 require_once 'inc/code.php';
 
 $action = '';
+$path = '/tmp/lfi.php';
 if (isset($_REQUEST['lfi_path'])) {
-    copy('./payloads/lfi.php', $_REQUEST['lfi_path']);
+    $path = $_REQUEST['lfi_path'];
+    $success = copy(__DIR__ . '/payloads/lfi.php', $path);
+    $path = esc_js($path);
+    if ($success){
+        echo "<script>showSuccess('Installed LFI Gadget to $path')</script>";
+    }
+    else{
+        echo "<script>showError('Could not install LFI Gadget to $path')</script>";
+    }
 }
 
 ?>
@@ -14,7 +23,7 @@ if (isset($_REQUEST['lfi_path'])) {
 <p>Install a LFI gadget to specific path</p>
 <form action="" method="post">
     <div class="form-group">
-        <input type="text" value="/tmp/lfi.php" name="lfi_path" placeholder="Path">
+        <input type="text" value="<?php echo esc_attr($path);?>" name="lfi_path" placeholder="Path">
         <input class="btn btn-success" type="submit" value="Install" name="submit">
     </div>
 </form>
@@ -39,12 +48,11 @@ if (class_exists('ObjInjec')) {
     // The ObjInjec class is not defined
     echo "ObjInjec class is not defined.";
 }
-print_code(file_get_contents('payloads/php_obj.php'));
+print_code(file_get_contents(__DIR__ . '/payloads/php_obj.php'));
 ?>
 
 <pre>
 <code>
-TODO
 </code>
 </pre>
 

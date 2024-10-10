@@ -38,7 +38,7 @@ $pages = [
                 <!--                    </ul>-->
                 <!--                </li>-->
             </ul>
-            <a class='btn btn-outline-success' href='https://github.com/stealthcopter/wordpress-hacking' target='_blank'>i</a>
+            <a class='btn btn-outline-success' href='https://github.com/stealthcopter/wordpress-hacking/stealth' target='_blank'>i</a>
         </div>
     </div>
 </nav>
