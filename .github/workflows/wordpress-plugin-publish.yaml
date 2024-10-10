@@ -22,7 +22,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref }}
+        tag_name: 'test-tag123'
         release_name: "Release $(date +'%Y-%m-%d %H:%M:%S')"  # Release named with current date and time
         draft: false
         prerelease: false
