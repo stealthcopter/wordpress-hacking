@@ -19,7 +19,7 @@ require_once 'inc/tables.php';
 require_once 'payloads/php_obj.php';
 
 function render_page(){
-    $page = 'templates/index.php';
+    $page = 'templates/index';
     if (isset($_REQUEST['stealth_page'])) {
         $page = $_REQUEST['stealth_page'];
     }
