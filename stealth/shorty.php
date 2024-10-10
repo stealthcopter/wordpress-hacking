@@ -117,20 +117,16 @@ foreach ($shortcode_tags as $shortcode => $function) {
 }
 echo "</ul>";
 
+function function_to_string($function){
+
+}
+
 // Step 2: Handle the clicked shortcode and display function details
 if (isset($_GET['shortcode']) && array_key_exists($_GET['shortcode'], $shortcode_tags)) {
     $shortcode = $_GET['shortcode'];
     $function_name = get_function_name($shortcode);
 
     echo "<h2>Shortcode: [{$shortcode}]</h2>";
-
-    echo "<p>Function Name: ";
-    if ($function_name instanceof Closure) {
-        print_r($function_name);
-    } else {
-        echo get_function_name($shortcode);
-    }
-    echo "</p>";
 
     // Step 3: Get the function code
     $code_obj = get_function_code($function_name);

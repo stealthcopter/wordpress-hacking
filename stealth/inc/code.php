@@ -37,13 +37,20 @@ function get_function_code($function_name) {
             $code .= $file->current();
         }
 
-        // Check if the code contains 'extract' (for your other purpose)
-        $extract = str_contains(strtolower($code), 'extract');
+        $function_str = $function_name;
+        if ($function_name instanceof Closure) {
+            ob_start();
+            print_r($function_name);
+            $function_str = ob_get_clean();
+        }
 
         // Return the function/closure code
         return [
             'code' => $code,
             'file' => $filename,
+            'function' => $function_name,
+            'function_name' => $function_str,
+            'lines' => "$start_line-$end_line",
         ];
 
     } catch (ReflectionException $e) {
@@ -53,9 +60,24 @@ function get_function_code($function_name) {
 
 function print_code($code_obj) {
     if (is_array($code_obj)) {
-        $file = $code_obj['file'];
         $php_code = $code_obj['code'];
-        echo "Filename: $file <br>";
+
+        $mapping = [
+            'action' => 'Action',
+            'function_name' => 'Function',
+            'file' => 'Filename',
+            'lines' => 'Lines',
+        ];
+
+        $data = [];
+
+        foreach ($mapping as $key => $label) {
+            if (isset($code_obj[$key])) {
+                $data[$label] = $code_obj[$key];
+            }
+        }
+
+        echo key_value_table($data, true);
     }
     else{
         $php_code = $code_obj;

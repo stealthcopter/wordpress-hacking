@@ -113,9 +113,8 @@ if (isset($_REQUEST['action'])) {
     echo "<h3 class='mt-2'>Function Code</h3>";
     $action = $_REQUEST['action'];
     $function = $actions[$_REQUEST['action']];
-    echo "Action: $action <br>";
-    echo "Function: $function <br>";
     $code_obj = get_function_code($function);
+    $code_obj['action'] = $action;
 
     if ($code_obj){
         print_code($code_obj);

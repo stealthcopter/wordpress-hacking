@@ -1,13 +1,13 @@
 <?php
 $pages = [
-    "info" => "?stealth_page=info.php",
-    "gadgets" => "?stealth_page=gadgets.php",
-    "instally" => "?stealth_page=instally.php",
-    "shorty" => "?stealth_page=shorty.php",
-    "noncy" => "?stealth_page=noncy.php",
-    "funcy" => "?stealth_page=funcy.php",
-    "upload" => "?stealth_page=upload.php",
-    "settings" => "?stealth_page=settings.php",
+    "info" => "info",
+    "gadgets" => "gadgets",
+    "instally" => "instally",
+    "shorty" => "shorty",
+    "noncy" => "noncy",
+    "funcy" => "funcy",
+    "upload" => "upload",
+    "settings" => "settings",
 ];
 ?>
 
@@ -22,7 +22,7 @@ $pages = [
                 <?php
                 foreach ($pages as $name => $file) {
                     echo "<li class='nav-item'>";
-                    echo "<a class='nav-link' href='$file' >$name</a>";
+                    echo "<a class='nav-link' href='?stealth_page=$file' >$name</a>";
                     echo "</li>";
                 }
                 ?>

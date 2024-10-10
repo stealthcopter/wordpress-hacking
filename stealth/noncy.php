@@ -1,21 +1,49 @@
 <?php
 
 $action = '';
-if (isset($_REQUEST['n'])){
-    $action = $_REQUEST['n'];
-    echo "<p>User: ".wp_get_current_user()->user_login."<br>\n";
-    echo "Action: ".htmlspecialchars($action)."<br>\n";
-    echo "Nonce: ".wp_create_nonce($action)."</p>\n";
+if (is_user_logged_in()) {
+    $current_user = wp_get_current_user()->user_login;
+} else {
+    $current_user = 'Not Logged In';
+}
+
+if (isset($_REQUEST['action_name'])) {
+    $action = $_REQUEST['action_name'];
+    $data = [
+        'User' => $current_user,
+        'Action' => $action,
+        'Nonce' => wp_create_nonce($action),
+    ];
+    show_results('Nonce Results', $data);
 }
 
 ?>
 
-<p>Generate a nonce for the current logged user</p>
-<form action="" method="post">
-    <div class="form-group">
-        <!-- Trolololol no xss for naughty bois -->
-        <input type="text" value="<?=htmlspecialchars($action);?>" name="n" placeholder="Action Name">
-        <input class="btn btn-success" type="submit" value="Create nonce" name="submit">
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Nonce Generator</h5> <!-- Not unlike the royal family... -->
+        <form action="" method="post">
+            <div class="form-group">
+
+                <p>Generate a nonce for the current logged user</p>
+
+                <div class="form-floating mb-3">
+                    <input type="text" id="current_user" class="form-control" placeholder="User"
+                           value="<?php echo $current_user; ?>" disabled>
+                    <label for="current_user">Current User</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <!-- Trolololol no xss for naughty bois -->
+                    <input type="text" id="action_name" name="action_name" class="form-control"
+                           value="<?= htmlspecialchars($action); ?>" placeholder="Action Name">
+                    <label for="action_name">Action Name</label>
+                </div>
+
+                <input class="btn btn-success" type="submit" value="Create nonce" name="submit">
+            </div>
+        </form>
     </div>
-</form>
+</div>
 

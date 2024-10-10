@@ -8,20 +8,28 @@
  * Author URI: https://sec.stealthcopter.com/
  */
 
+if (!defined('STEALTH_PLUGIN_FILE')) {
+    define('STEALTH_PLUGIN_FILE', __FILE__);
+}
+
 require_once 'inc/loader.php';
+require_once 'inc/tables.php';
 
 // Load the PHP object gadget
 require_once 'payloads/php_obj.php';
 
 function render_page(){
+    $page = 'templates/index.php';
+    if (isset($_REQUEST['stealth_page'])) {
+        $page = $_REQUEST['stealth_page'];
+    }
+
     include 'templates/header.php';
 
-    if (isset($_REQUEST['stealth_page'])) {
-        echo '<div class="content mt-4">';
-        // You can path traverse here if you like, no stress
-        include $_REQUEST['stealth_page'];
-        echo '</div>';
-    }
+    echo '<div class="content mt-4">';
+    // You can path traverse here if you like, no stress
+    include "$page.php";
+    echo '</div>';
 
     include 'templates/footer.php';
 }

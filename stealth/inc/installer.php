@@ -1,8 +1,10 @@
 <?php
-require_once(ABSPATH . 'wp-admin/includes/plugin-install.php'); // for plugins_api()
-require_once(ABSPATH . 'wp-admin/includes/class-wp-upgrader.php'); // for Plugin_Upgrader
+require_once(ABSPATH . 'wp-admin/includes/plugin-install.php');
+require_once(ABSPATH . 'wp-admin/includes/theme-install.php');
+require_once(ABSPATH . 'wp-admin/includes/class-wp-upgrader.php');
 require_once(ABSPATH . 'wp-admin/includes/file.php');
-require_once(ABSPATH . 'wp-admin/includes/plugin.php'); // for get_plugin_data()
+require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+require_once(ABSPATH . 'wp-admin/includes/theme.php');
 
 // Define a custom skin class to suppress output issues
 class Silent_Upgrader_Skin extends WP_Upgrader_Skin {
@@ -12,26 +14,36 @@ class Silent_Upgrader_Skin extends WP_Upgrader_Skin {
     }
 }
 
-function install_plugin_by_slug($slug) {
-    // Initialize the WordPress filesystem
-    if (false === function_exists('WP_Filesystem')) {
-        require_once(ABSPATH . 'wp-admin/includes/file.php');
-    }
-
-    $creds = request_filesystem_credentials('', '', false, false, array());
-
-    if (!WP_Filesystem($creds)) {
-        echo 'Could not access filesystem.<br>';
-        return false;
-    }
-
-    // Get plugin info from WordPress API
+function get_plugin_info($slug){
     $api = plugins_api('plugin_information', array(
         'slug'   => $slug,
         'fields' => array(
-            'sections' => false,
+            'sections'        => false,
+            'active_installs' => true,
+            'downloaded'      => true,
+            'last_updated'    => true,
+            'versions'         => true,
+            'icons'           => true,
         ),
     ));
+    return $api;
+}
+function get_theme_info($slug){
+    $api = themes_api('theme_information', array(
+        'slug'   => $slug,
+        'fields' => array(
+            'sections'        => false,
+            'downloaded'      => true,
+            'last_updated'    => true,
+            'versions'         => true
+        ),
+    ));
+    return $api;
+}
+
+function install_plugin_by_slug($slug) {
+    // Get plugin info from WordPress API
+    $api = get_plugin_info($slug);
 
     if (is_wp_error($api)) {
         echo 'Failed to retrieve plugin information';
@@ -78,5 +90,38 @@ function activate_plugin_by_slug($slug) {
     }
 }
 
+
+function install_theme_by_slug($slug) {
+    // Get theme info from WordPress API
+    $api = get_theme_info($slug);
+
+    if (is_wp_error($api)) {
+        echo 'Failed to retrieve theme information';
+        return false;
+    }
+
+    // Set up the theme upgrader and install the theme
+    $upgrader = new Theme_Upgrader(new Silent_Upgrader_Skin());
+    $result = $upgrader->install($api->download_link);
+
+    if ($result) {
+        echo "Theme {$slug} installed successfully!<br>";
+        return true;
+    } else {
+        echo "Theme installation failed!<br>";
+        return false;
+    }
+}
+
+function activate_theme_by_slug($slug) {
+    // Check if the theme is installed
+    if (wp_get_theme($slug)->exists()) {
+        // Activate the theme
+        switch_theme($slug);
+        echo "Theme {$slug} activated successfully!<br>";
+    } else {
+        echo "Theme {$slug} not found!<br>";
+    }
+}
 
 ?>

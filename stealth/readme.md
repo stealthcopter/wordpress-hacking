@@ -36,6 +36,6 @@ Navigate to `/stealth` and start using the tools
 If you have an idea for a new feature please create a new issue on GitHub. If you would like to contribute a bug fix, or feature please feel free to fork the repo and submit a PR against this one.
 
 # TODO:
-- Themes install
+- View user_meta and other similar key/value tables
 - Create PoC / Write up from plugin name
 - Update feature
