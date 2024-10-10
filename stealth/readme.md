@@ -24,3 +24,4 @@ If you have an idea for a new feature please create a new issue on GitHub. If yo
 - Themes install
 - Create PoC / Write up from plugin name
 - Update feature
+
