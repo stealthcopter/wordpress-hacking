@@ -20,7 +20,6 @@ unzip *.zip
 
 If you have an idea for a new feature please create a new issue on GitHub. If you would like to contribute a bug fix, or feature please feel free to fork the repo and submit a PR against this one.
 
-
 # TODO:
 - Themes install
 - Create PoC / Write up from plugin name
