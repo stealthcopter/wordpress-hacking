@@ -1,10 +1,17 @@
-# Installation
-
 This set of little helpers for WordPress hacking can either be installed as a plugin or just dumped into the webroot.
 
-## Plugin Installation Methods
+## Installation Methods
 
 If you have the WordPress cli installed you can automatically install the plugin with this command:
+
+### Manually
+
+- Download the [stealth.zip](https://github.com/stealthcopter/wordpress-hacking/releases/latest/download/stealth.zip)
+- Install the plugin from the `/wp-admin/plugin-install.php` page
+
+### WordPress CLI
+
+If you have the WordPress CLI installed you can get it running with this one-liner:
 
 ```
 wp plugin install --activate https://github.com/stealthcopter/wordpress-hacking/releases/latest/download/stealth.zip

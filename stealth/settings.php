@@ -1,14 +1,10 @@
 <?php
 
-// Now you can use WordPress functions
-// For example:
-// echo get_bloginfo('name');
-
-
 function load_table($options){
     // Print each option and its value
     echo "<br>\n";
-    echo "<table class='table'>";
+    echo '<input class="form-control mb-3" id="tableSearchInput" type="text" placeholder="Filter...">';
+    echo "<table class='table table-striped' id='optionsTable'>";
     echo "<thead><tr><th>Name</th><th>Value</th></tr></thead>";
     echo "<tbody>";
     foreach ($options as $option_name => $option_value) {
@@ -22,6 +18,31 @@ function load_table($options){
 $options = wp_load_alloptions();
 load_table($options);
 
+?>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the search input and the table
+        const searchInput = document.getElementById('tableSearchInput');
+        const table = document.getElementById('optionsTable').getElementsByTagName('tbody')[0];
 
-// update_option("admin_email","test222@test.com");
-//update_option("siteurl","http://localhost:8080");
+        // Add event listener to search input
+        searchInput.addEventListener('keyup', function() {
+            const searchValue = searchInput.value.toLowerCase();
+            const rows = table.getElementsByTagName('tr');
+
+            // Loop through all table rows and hide those that don't match the search query
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                const optionName = cells[0].innerText.toLowerCase();
+                const optionValue = cells[1].innerText.toLowerCase();
+
+                // Check if either option name or value contains the search query
+                if (optionName.includes(searchValue) || optionValue.includes(searchValue)) {
+                    rows[i].style.display = '';  // Show row
+                } else {
+                    rows[i].style.display = 'none';  // Hide row
+                }
+            }
+        });
+    });
+</script>

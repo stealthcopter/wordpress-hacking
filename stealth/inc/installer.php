@@ -52,13 +52,31 @@ function install_plugin_by_slug($slug) {
 }
 
 function activate_plugin_by_slug($slug) {
-    $plugin_file = $slug . '/' . $slug . '.php'; // Default plugin file name
-    $activate_result = activate_plugin($plugin_file);
-    if (is_wp_error($activate_result)) {
-        echo "Plugin activation failed: " . $activate_result->get_error_message()."<br>";
+    // Get all plugins
+    $all_plugins = get_plugins();
+
+    // Look for the plugin with the given slug
+    $plugin_file = '';
+    foreach ($all_plugins as $file => $plugin_data) {
+        if (strpos($file, $slug . '/') === 0) {
+            // This plugin belongs to the given slug
+            $plugin_file = $file;
+            break;
+        }
+    }
+
+    if ($plugin_file) {
+        // Try to activate the plugin
+        $activate_result = activate_plugin($plugin_file);
+        if (is_wp_error($activate_result)) {
+            echo "Plugin activation failed: " . $activate_result->get_error_message() . "<br>";
+        } else {
+            echo "Plugin {$slug} activated successfully!<br>";
+        }
     } else {
-        echo "Plugin {$slug} activated successfully!<br>";
+        echo "Plugin {$slug} not found!<br>";
     }
 }
+
 
 ?>

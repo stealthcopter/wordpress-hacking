@@ -5,13 +5,17 @@ if (defined( 'ABSPATH' ) ) {
 } else {
     // Array of directories to search for wp-load.php
     $paths = [
-        __DIR__ . '/wp-load.php',        // Current directory
-        __DIR__ . '/../wp-load.php',     // One level up
-        __DIR__ . '/../../wp-load.php',  // Two levels up
-        '/var/www/html/wp-load.php',     // Common web root
-        '/srv/www/wp-load.php',          // Another common web root
-        '/usr/share/nginx/html/wp-load.php', // Common Nginx path
-        '/var/www/wp-load.php'           // Another common web root
+        __DIR__ . '/wp-load.php',
+        __DIR__ . '/../wp-load.php',
+        __DIR__ . '/../../wp-load.php',
+        __DIR__ . '/../../../wp-load.php',
+        __DIR__ . '/../../../../wp-load.php',
+        '/var/www/html/wp-load.php',
+        '/var/www/html/wordpress/wp-load.php',
+        '/srv/www/wp-load.php',
+        '/usr/share/nginx/html/wp-load.php',
+        '/usr/share/nginx/html/wordpress/wp-load.php',
+        '/var/www/wp-load.php'
     ];
 
     // Loop through each path and check if wp-load.php exists

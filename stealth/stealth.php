@@ -33,7 +33,6 @@ if (is_installed_to_wordpress()){
         function stealth_url_handler( $query_args ) {
             if( strstr( $_SERVER["REQUEST_URI"], "/wp-content/plugins/stealth/" )){
                 // Don't intercept
-                die('hello');
             }
             else if( strstr( $_SERVER["REQUEST_URI"], "/stealth/" )){
                 // Intercept
