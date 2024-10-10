@@ -5,6 +5,9 @@ on:
     paths:
       - 'stealth/**'  # Trigger only if changes are made in the stealth folder
 
+permissions:
+  contents: write  # Ensure write permissions for GITHUB_TOKEN
+
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -12,6 +15,9 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+
+    - name: set env
+      run: echo "NOW=$(date +'%Y%m%d.%H%M%S')" >> $GITHUB_ENV
 
     - name: Zip stealth folder
       run: zip -r stealth.zip stealth
@@ -22,13 +28,15 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: 'test-tag123'
-        release_name: "Release $(date +'%Y-%m-%d %H:%M:%S')"  # Release named with current date and time
+        tag_name: "${{ env.NOW }}"
+        release_name: "Release ${{ env.NOW }}"  # Release named with current date and time
         draft: false
         prerelease: false
 
     - name: Upload Zip to Release
       uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./stealth.zip
