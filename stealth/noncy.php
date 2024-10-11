@@ -9,10 +9,11 @@ if (is_user_logged_in()) {
 
 if (isset($_REQUEST['action_name'])) {
     $action = $_REQUEST['action_name'];
+    $nonce = wp_create_nonce($action);
     $data = [
         'User' => $current_user,
         'Action' => $action,
-        'Nonce' => wp_create_nonce($action),
+        'Nonce' => copyable(wp_create_nonce($action)),
     ];
     show_results('Nonce Results', $data);
 }

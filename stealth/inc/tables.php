@@ -7,7 +7,7 @@ function key_value_table($data, $mini){
     }
     $content = "<table class='table table-striped' $style><tbody>";
     foreach ($data as $key => $value) {
-        $content .= "<tr><td><strong>" . htmlspecialchars($key) . "</strong></td><td>" . htmlspecialchars($value) . "</td></tr>";
+        $content .= "<tr><td><strong>" . htmlspecialchars($key) . "</strong></td><td>" . $value . "</td></tr>";
     }
     $content .= "</tbody></table>";
     return $content;
@@ -25,4 +25,8 @@ function show_results($title, $data)
             $content
         </div>
     </div>";
+}
+
+function copyable($text){
+    return "<span class='copy-text'>$text</span>";
 }

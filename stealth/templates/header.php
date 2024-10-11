@@ -88,6 +88,72 @@
         }
 
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Function to handle copying text
+            function copyToClipboard(text) {
+                // Use modern Clipboard API if available
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        showSuccess('Copied to clipboard');
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                    });
+                } else {
+                    // Fallback method using a hidden textarea
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    textarea.style.position = 'fixed';  // Prevent scrolling to the bottom
+                    document.body.appendChild(textarea);
+                    textarea.focus();
+                    textarea.select();
+
+                    try {
+                        document.execCommand('copy');
+                        showSuccess('Copied to clipboard');
+                    } catch (err) {
+                        console.error('Fallback: Oops, unable to copy', err);
+                    }
+
+                    document.body.removeChild(textarea);
+                }
+            }
+
+            // Find all spans with the 'copy-text' class and make them copyable
+            document.querySelectorAll('.copy-text').forEach(span => {
+                // Create the clipboard icon
+                const icon = document.createElement('button');
+                icon.innerHTML = '📋'; // Clipboard icon
+                icon.classList.add('copy-btn');
+                icon.title = 'Copy to clipboard'; // Tooltip for accessibility
+
+                // Append the clipboard icon next to the text
+                span.appendChild(icon);
+
+                // Add event listener for the icon click
+                icon.addEventListener('click', () => {
+                    const textToCopy = span.innerText.replace('📋', '').trim(); // Remove icon from the text
+                    copyToClipboard(textToCopy);
+                });
+            });
+        });
+    </script>
+
+    <style>
+        .copy-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            opacity: 0.5;
+        }
+
+        .copy-btn:hover {
+            color: green;
+        }
+    </style>
+
 </head>
 <body class="bg-dark">
 <div id="toast-container" class="toast-container"></div>

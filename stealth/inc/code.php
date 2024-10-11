@@ -73,7 +73,7 @@ function print_code($code_obj) {
 
         foreach ($mapping as $key => $label) {
             if (isset($code_obj[$key])) {
-                $data[$label] = $code_obj[$key];
+                $data[$label] = copyable($code_obj[$key]);
             }
         }
 
