@@ -77,10 +77,89 @@ function print_code($code_obj) {
             }
         }
 
+        $analysis = code_analysis($php_code);
+        print_analysis_results($analysis);
+
         echo key_value_table($data, true);
     }
     else{
         $php_code = $code_obj;
     }
     echo "<pre><code class='language-php'>" . htmlspecialchars($php_code) . "</code></pre>";
+}
+
+function code_analysis($code){
+    // Define some basic tests with regex patterns and descriptions
+    $tests = [
+        [
+            "name" => "extract",
+            "type" => "bug",
+            "pattern" => "/\bextract\s*\(/",
+            "description" => "Detects usage of the extract function, which can lead to security issues like variable injection."
+        ],
+        [
+            "name" => "shortcode_atts",
+            "type" => "info",
+            "pattern" => "/\bshortcode_atts\s*\(/",
+            "description" => "shortcode_atts is used to parse shortcode attributes."
+        ],
+        [
+            "name" => "current_user_can",
+            "type" => "protection",
+            "pattern" => "/\bcurrent_user_can\s*\(/",
+            "description" => "current_user_can is used to check user permissions."
+        ],
+        [
+            "name" => "Nonce Verification",
+            "type" => "protection",
+            "pattern" => "/\b(wp_verify_nonce|check_ajax_referer|check_admin_referer)\s*\(/",
+            "description" => "wp_verify_nonce, check_ajax_referer or check_admin_referer is used to verify a nonce."
+        ],
+    ];
+
+    // Initialize results array
+    $results = [];
+
+    // Loop through tests and perform regex matching
+    foreach ($tests as $test) {
+        // Perform regex match and store results
+        if (preg_match($test['pattern'], $code)){
+            $results[$test['name']] = [
+                "name" => $test['name'],
+                "type" => $test['type'],
+                "match" => preg_match($test['pattern'], $code),
+                "description" => $test['description']
+            ];
+        }
+    }
+
+    return $results;
+}
+
+function print_analysis_results($results) {
+    // Initialize arrays for categorizing results
+    $categories = [
+        "protection" => [],
+        "info" => [],
+        "bug" => []
+    ];
+
+    // Categorize the results based on their type
+    foreach ($results as $name => $test) {
+        if (array_key_exists($test['type'], $categories)) {
+            $categories[$test['type']][] = $test;
+        }
+    }
+
+    // Function to print buttons for each section
+    function print_buttons($tests, $color) {
+        foreach ($tests as $test) {
+            echo '<button type="button" class="btn ' . $color . ' m-2" title="' . htmlspecialchars($test['description']) . '">' . htmlspecialchars($test['name']) . '</button> ';
+        }
+    }
+
+    // Print sections
+    print_buttons($categories['protection'], 'btn-success');
+    print_buttons($categories['info'], 'btn-warning');
+    print_buttons($categories['bug'], 'btn-danger');
 }

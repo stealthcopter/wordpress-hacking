@@ -6,43 +6,32 @@ function extract_shortcode_attributes($php_code)
 {
     $matches = [];
     $used_shortcode_atts = false;
-    $used_extract = false;
 
     // Check if $atts is the first parameter
-    if (preg_match('/function\s*\w*\s*\(\s*\$atts/', $php_code)) {
+    if (preg_match('/function\s*\w*\s*\(\s*\$att/', $php_code)) {
 
         // Regex to find `$atts['something']`
-        preg_match_all("/\\\$atts\['(.*?)'\]/", $php_code, $atts_matches);
+        preg_match_all("/\\\$att\w*\s*\[\s*'(.*?)'\]/", $php_code, $atts_matches);
         if (!empty($atts_matches[1])) {
             $matches = array_unique($atts_matches[1]);  // Get unique attributes and flatten the array
         }
+    }
 
-        // Regex to find shortcode_atts array keys
-        if (preg_match_all('/shortcode_atts\s*\(\s*array\s*\((.*?)\)\s*,/s', $php_code, $shortcode_atts_matches)) {
-            $used_shortcode_atts = true;
-            foreach ($shortcode_atts_matches[1] as $shortcode_atts_block) {
-                // Extract keys from array inside shortcode_atts
-                if (preg_match_all("/'(.*?)'\s*=>/", $shortcode_atts_block, $shortcode_keys)) {
-                    $matches = array_unique(array_merge($matches, $shortcode_keys[1]));
-                }
+    // Regex to find shortcode_atts array keys
+    if (preg_match_all('/shortcode_atts[\s\n]*\([\s\n]*array([^)]*?)\)/', $php_code, $shortcode_atts_matches)) {
+        $used_shortcode_atts = true;
+        foreach ($shortcode_atts_matches[1] as $shortcode_atts_block) {
+            // Extract keys from array inside shortcode_atts
+            if (preg_match_all("/'(.*?)'\s*=>/", $shortcode_atts_block, $shortcode_keys)) {
+                $matches = array_unique(array_merge($matches, $shortcode_keys[1]));
             }
         }
-
-        // Check if extract() is used
-        if (preg_match('/\bextract\s*\(/', $php_code)) {
-            $used_extract = true;
-        }
-
-    } else {
-        // If $atts is not the first param, return an empty array
-        return [];
     }
 
     // Return results along with flags for `shortcode_atts` and `extract`
     return [
         'attributes' => array_values($matches),  // Ensure it's a proper indexed array
         'used_shortcode_atts' => $used_shortcode_atts,
-        'used_extract' => $used_extract
     ];
 }
 
@@ -117,15 +106,12 @@ foreach ($shortcode_tags as $shortcode => $function) {
 }
 echo "</ul>";
 
-function function_to_string($function){
-
-}
-
 // Step 2: Handle the clicked shortcode and display function details
 if (isset($_GET['shortcode']) && array_key_exists($_GET['shortcode'], $shortcode_tags)) {
     $shortcode = $_GET['shortcode'];
     $function_name = get_function_name($shortcode);
 
+    echo '<hr class="bg-danger border-2 border-top" />';
     echo "<h2>Shortcode: [{$shortcode}]</h2>";
 
     // Step 3: Get the function code
@@ -136,9 +122,17 @@ if (isset($_GET['shortcode']) && array_key_exists($_GET['shortcode'], $shortcode
     $result = extract_shortcode_attributes($php_code);
 
     echo "<h3>Extracted Shortcode Attributes:</h3>";
-    echo "<pre>" . print_r($result, true) . "</pre>";
+    $test = "[$shortcode ";
+    foreach ($result['attributes'] as $attribute) {
+        echo "<button class='btn btn-outline-success m-2'>$attribute</button>";
+        $test .= "$attribute='test' ";
+    }
+    $test = trim($test).']';
+
+    echo "<textarea class='form-control m-2' rows=3>$test</textarea>";
 
     // Step 5: Display the function code with syntax highlighting
+    echo '<hr class="bg-danger border-2 border-top" />';
     echo "<h3>Function Code</h3>";
     print_code($code_obj);
 } else {

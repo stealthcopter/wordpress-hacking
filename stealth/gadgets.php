@@ -39,14 +39,14 @@ if (isset($_REQUEST['lfi_path'])) {
 </p>
 
 <h1>PHP Object Injection</h1>
-<p></p>
+<p>If you have installed this plugin into WordPress the following gadget will be available to use:</p>
 <?php
 if (class_exists('ObjInjec')) {
     // The ObjInjec class is defined, you can use it
-    echo "ObjInjec class is defined.";
+    echo "✅ ObjInjec class is defined.";
 } else {
     // The ObjInjec class is not defined
-    echo "ObjInjec class is not defined.";
+    echo "❌ ObjInjec class is not defined.";
 }
 print_code(file_get_contents(__DIR__ . '/payloads/php_obj.php'));
 ?>
