@@ -161,13 +161,8 @@ if (isset($_GET['shortcode']) && array_key_exists($_GET['shortcode'], $shortcode
 </script>
 
 
-
-// Call the function
-//echo freeworld_html5map_plugin_content(['abc'=>'133'], "contnets");
-
-// TODO: Find attributes
+<?php
 // TODO: Find if accepts content
 // TODO: Check for reflection ' "
 // TODO: Check for encoding
 // TODO: Check for LFI
-// TODO: Run shortcodes on demand
