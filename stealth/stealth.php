@@ -14,7 +14,7 @@ if (!defined('STEALTH_PLUGIN_FILE')) {
 
 require_once 'inc/loader.php';
 
-if ($_REQUEST['api']){
+if (isset($_REQUEST['api'])){
     require_once 'api.php';
     die();
 }

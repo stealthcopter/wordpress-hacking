@@ -133,6 +133,7 @@ if (isset($_GET['shortcode']) && array_key_exists($_GET['shortcode'], $shortcode
     echo "<button id='btn_do_shortcode' class='btn btn-success mb-2' title='Execute the shortcode and see the output'>Do Shortcode</button><br>";
 
     echo "<iframe id='shortcode_iframe' class='w-100 d-none' class='m-2'>hello</iframe>";
+    echo "<div id='shortcode_code_output' class='m-2'></div>";
 
     // Step 5: Display the function code with syntax highlighting
     echo '<hr class="bg-danger border-2 border-top" />';
@@ -150,8 +151,19 @@ if (isset($_GET['shortcode']) && array_key_exists($_GET['shortcode'], $shortcode
         // Get the shortcode from the textarea
         var shortcode = document.getElementById('textarea_shortcode').value;
 
-        // Construct the new URL with query parameters
-        var url = window.location.href.split('?')[0] + '?api=do_shortcode&shortcode=' + encodeURIComponent(shortcode);
+        var url = window.location.href.split('?')[0] + '?api=do_shortcode&shortcode=' + btoa(shortcode);
+
+        // Use fetch to perform the request
+        fetch(url+'&code=1')
+            .then(response => response.text())  // Parse the response as text
+            .then(data => {
+                // Set the response to the innerHTML of the shortcode_code_output element
+                document.getElementById('shortcode_code_output').innerHTML = data;
+                Prism.highlightAll();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
 
         // Make the iframe visible and set its src attribute to the new URL
         var iframe = document.getElementById('shortcode_iframe');
@@ -161,8 +173,7 @@ if (isset($_GET['shortcode']) && array_key_exists($_GET['shortcode'], $shortcode
 </script>
 
 
-<?php
-// TODO: Find if accepts content
-// TODO: Check for reflection ' "
-// TODO: Check for encoding
-// TODO: Check for LFI
+<!--// TODO: Find if accepts content-->
+<!--// TODO: Check for reflection ' "-->
+<!--// TODO: Check for encoding-->
+<!--// TODO: Check for LFI-->

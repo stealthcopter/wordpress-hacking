@@ -58,7 +58,7 @@ function get_function_code($function_name) {
     }
 }
 
-function print_code($code_obj) {
+function print_code($code_obj, $language='php') {
     if (is_array($code_obj)) {
         $php_code = $code_obj['code'];
 
@@ -85,7 +85,7 @@ function print_code($code_obj) {
     else{
         $php_code = $code_obj;
     }
-    echo "<pre><code class='language-php'>" . htmlspecialchars($php_code) . "</code></pre>";
+    echo "<pre><code class='language-$language'>" . htmlspecialchars($php_code) . "</code></pre>";
 }
 
 function code_analysis($code){
