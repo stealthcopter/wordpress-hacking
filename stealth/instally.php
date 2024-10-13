@@ -1,27 +1,58 @@
 <?php
 
 require_once 'inc/installer.php';
+require_once 'inc/views.php';
 
 $theme = '';
 $plugin = '';
 
+$output = [];
+
 if (isset($_REQUEST['plugin'])) {
     $plugin = $_REQUEST['plugin'];
+    $output[] = "Installing...";
     $result = install_plugin_by_slug($plugin);
-    if ($result && isset($_REQUEST['install_and_activate'])) {
-        echo "Activating...<br>";
-        activate_plugin_by_slug($plugin);
+    $output[] = $result['output'];
+
+    if (isset($result['plugin'])) {
+        $data = [
+            "Name" => $result['plugin']->name,
+            'Slug' => $result['plugin']->slug,
+            'Version' => $result['plugin']->version,
+            'Installs' => $result['plugin']->active_installs,
+            'Updated' => $result['plugin']->last_updated,
+            'URL' => "<a href='https://wordpress.org/plugins/$plugin'>https://wordpress.org/plugins/$plugin</a>",
+            'Icon' => "<img width=32 src='" . esc_url($result['plugin']->icons['1x']) . "'/>",
+        ];
+        $info_card = show_results('Plugin Information', $data);
+    }
+
+    if ($result['success'] && isset($_REQUEST['install_and_activate'])) {
+        $output[] = "Activating...";
+        $result = activate_plugin_by_slug($plugin);
+        $output[] = $result['output'];
     }
 }
 
+if (!empty($output)) {
+    $result = show_results('Results', $output);
+    echo display_in_columns($result, $info_card ?? null);
+}
+
+
 if (isset($_REQUEST['theme'])) {
     $theme = $_REQUEST['theme'];
+    $output[] = "Installing...";
     $result = install_theme_by_slug($theme);
+    $output[] .= $result['output'];
+
     if ($result && isset($_REQUEST['install_and_activate'])) {
-        echo "Activating...<br>";
-        activate_theme_by_slug($theme);
+        $output[] = "Activating...";
+        $result = activate_theme_by_slug($theme);
+        $output[] .= $result['output'];
     }
 }
+
 
 ?>
 
@@ -58,9 +89,10 @@ if (isset($_REQUEST['theme'])) {
         <form action="" method="post">
             <div class="form-group">
                 <div class="input-group">
-                    <input class="form-control" id="plugin" type="text" value="<?php echo esc_attr($plugin); ?>" name="plugin"
+                    <input class="form-control" id="plugin" type="text" value="<?php echo esc_attr($plugin); ?>"
+                           name="plugin"
                            placeholder="Plugin Name">
-                    <input class="btn btn-success" type="submit" value="Install" name="install">
+                    <input class="btn btn-success" type="submit" value="Install" name="install" title="Install Only">
                     <input class="btn btn-success" type="submit" value="+ Activate" name="install_and_activate"
                            title="Install and Activate">
                     <button class="btn btn-primary" onclick="openPluginUrl();event.preventDefault();">
@@ -84,9 +116,10 @@ if (isset($_REQUEST['theme'])) {
         <form action="" method="post">
             <div class="form-group">
                 <div class="input-group">
-                    <input class="form-control" id="theme" type="text" value="<?php echo esc_attr($theme); ?>" name="theme"
+                    <input class="form-control" id="theme" type="text" value="<?php echo esc_attr($theme); ?>"
+                           name="theme"
                            placeholder="Theme Name">
-                    <input class="btn btn-success" type="submit" value="Install" name="install">
+                    <input class="btn btn-success" type="submit" value="Install" name="install" title="Install Only">
                     <input class="btn btn-success" type="submit" value="+ Activate" name="install_and_activate"
                            title="Install and Activate">
                     <button class="btn btn-primary" onclick="openThemeUrl();event.preventDefault();">

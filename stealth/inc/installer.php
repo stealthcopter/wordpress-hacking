@@ -42,12 +42,12 @@ function get_theme_info($slug){
 }
 
 function install_plugin_by_slug($slug) {
+    $output = '';
     // Get plugin info from WordPress API
     $api = get_plugin_info($slug);
 
     if (is_wp_error($api)) {
-        echo 'Failed to retrieve plugin information';
-        return false;
+        return ["success" => false, "output" => 'Failed to retrieve plugin information'];
     }
 
     // Set up the plugin upgrader and install the plugin
@@ -55,15 +55,14 @@ function install_plugin_by_slug($slug) {
     $result = $upgrader->install($api->download_link);
 
     if ($result) {
-        echo "Plugin {$slug} installed successfully!<br>";
-        return true;
+        return ["success" => true, "output" => "Plugin {$slug} installed successfully!", "plugin" => $api];
     } else {
-        echo "Plugin installation failed!<br>";
-        return false;
+        return ["success" => false, "output" => "Plugin installation failed!"];
     }
 }
 
 function activate_plugin_by_slug($slug) {
+    $results = '';
     // Get all plugins
     $all_plugins = get_plugins();
 
@@ -81,12 +80,12 @@ function activate_plugin_by_slug($slug) {
         // Try to activate the plugin
         $activate_result = activate_plugin($plugin_file);
         if (is_wp_error($activate_result)) {
-            echo "Plugin activation failed: " . $activate_result->get_error_message() . "<br>";
+            return ["success" => false, "output" => "Plugin activation failed: " . $activate_result->get_error_message()];
         } else {
-            echo "Plugin {$slug} activated successfully!<br>";
+            return ["success" => true, "output" => "Plugin {$slug} activated successfully!"];
         }
     } else {
-        echo "Plugin {$slug} not found!<br>";
+        return ["success" => false, "output" => "Plugin {$slug} not found!"];
     }
 }
 
@@ -96,8 +95,7 @@ function install_theme_by_slug($slug) {
     $api = get_theme_info($slug);
 
     if (is_wp_error($api)) {
-        echo 'Failed to retrieve theme information';
-        return false;
+        return ["success" => false, "output" => 'Failed to retrieve theme information'];
     }
 
     // Set up the theme upgrader and install the theme
@@ -105,11 +103,9 @@ function install_theme_by_slug($slug) {
     $result = $upgrader->install($api->download_link);
 
     if ($result) {
-        echo "Theme {$slug} installed successfully!<br>";
-        return true;
+        return ["success" => false, "output" => "Theme {$slug} installed successfully!", "theme" => $api];
     } else {
-        echo "Theme installation failed!<br>";
-        return false;
+        return ["success" => false, "output" => "Theme installation failed!"];
     }
 }
 
@@ -118,9 +114,9 @@ function activate_theme_by_slug($slug) {
     if (wp_get_theme($slug)->exists()) {
         // Activate the theme
         switch_theme($slug);
-        echo "Theme {$slug} activated successfully!<br>";
+        return ["success" => true, "output" => "Theme {$slug} activated successfully!<br>"];
     } else {
-        echo "Theme {$slug} not found!<br>";
+        return ["success" => false, "output" => "Theme {$slug} not found!"];
     }
 }
 

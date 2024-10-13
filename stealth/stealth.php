@@ -13,7 +13,13 @@ if (!defined('STEALTH_PLUGIN_FILE')) {
 }
 
 require_once 'inc/loader.php';
-require_once 'inc/tables.php';
+
+if ($_REQUEST['api']){
+    require_once 'api.php';
+    die();
+}
+
+require_once 'inc/views.php';
 
 // Load the PHP object gadget
 require_once 'payloads/php_obj.php';

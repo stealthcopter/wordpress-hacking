@@ -30,7 +30,7 @@ unzip stealth.zip
 Either:
 
 - Navigate to `/stealth` - this only works if permalink structure is set to `posts`
-- Otherwise, navigate to `/wp-content/plugins/stealth` or wherever the code is to use the tools
+- Otherwise, navigate to `/wp-content/plugins/stealth` or wherever the code is, to use the tools
 
 # Contributing
 

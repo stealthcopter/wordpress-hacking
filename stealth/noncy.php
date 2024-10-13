@@ -15,7 +15,8 @@ if (isset($_REQUEST['action_name'])) {
         'Action' => $action,
         'Nonce' => copyable(wp_create_nonce($action)),
     ];
-    show_results('Nonce Results', $data);
+    $card = show_results('Nonce Results', $data);
+    echo "<div class='w-25'>$card</div>";
 }
 
 ?>

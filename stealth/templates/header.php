@@ -54,7 +54,7 @@
 
             // Create the toast element
             const toastHTML = `
-        <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
+        <div class="toast m-2" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true">
           <div class="toast-header ${toastClass}">
             <strong class="me-auto">${title}</strong>
             <small class="text-muted">just now</small>
@@ -96,7 +96,7 @@
                 // Use modern Clipboard API if available
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(text).then(() => {
-                        showSuccess('Copied to clipboard');
+                        showSuccess(`Copied ${text} to clipboard`);
                     }).catch(err => {
                         console.error('Failed to copy: ', err);
                     });
@@ -111,7 +111,7 @@
 
                     try {
                         document.execCommand('copy');
-                        showSuccess('Copied to clipboard');
+                        showSuccess(`Copied ${text} to clipboard`);
                     } catch (err) {
                         console.error('Fallback: Oops, unable to copy', err);
                     }

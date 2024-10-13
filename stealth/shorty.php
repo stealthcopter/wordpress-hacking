@@ -129,7 +129,10 @@ if (isset($_GET['shortcode']) && array_key_exists($_GET['shortcode'], $shortcode
     }
     $test = trim($test).']';
 
-    echo "<textarea class='form-control m-2' rows=3>$test</textarea>";
+    echo "<textarea id='textarea_shortcode' class='form-control m-2' rows=3>$test</textarea>";
+    echo "<button id='btn_do_shortcode' class='btn btn-success mb-2' title='Execute the shortcode and see the output'>Do Shortcode</button><br>";
+
+    echo "<iframe id='shortcode_iframe' class='w-100 d-none' class='m-2'>hello</iframe>";
 
     // Step 5: Display the function code with syntax highlighting
     echo '<hr class="bg-danger border-2 border-top" />';
@@ -138,6 +141,24 @@ if (isset($_GET['shortcode']) && array_key_exists($_GET['shortcode'], $shortcode
 } else {
     echo "<p>Select a shortcode from the list above to view its details.</p>";
 }
+
+?>
+
+<script>
+    // Add an event listener to the button
+    document.getElementById('btn_do_shortcode').addEventListener('click', function() {
+        // Get the shortcode from the textarea
+        var shortcode = document.getElementById('textarea_shortcode').value;
+
+        // Construct the new URL with query parameters
+        var url = window.location.href.split('?')[0] + '?api=do_shortcode&shortcode=' + encodeURIComponent(shortcode);
+
+        // Make the iframe visible and set its src attribute to the new URL
+        var iframe = document.getElementById('shortcode_iframe');
+        iframe.classList.remove('d-none');  // Make iframe visible by removing the 'd-none' class
+        iframe.src = url;
+    });
+</script>
 
 
 
