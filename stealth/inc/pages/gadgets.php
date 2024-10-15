@@ -1,12 +1,14 @@
 <?php
 
-require_once 'inc/code.php';
+if ( ! defined( 'ABSPATH' ) ) {
+    die( 'not like this...' );
+}
 
 $action = '';
 $path = '/tmp/lfi.php';
 if (isset($_REQUEST['lfi_path'])) {
     $path = $_REQUEST['lfi_path'];
-    $success = copy(__DIR__ . '/payloads/lfi.php', $path);
+    $success = copy(__DIR__ . '/../../payloads/lfi.php', $path);
     $path = esc_js($path);
     if ($success){
         echo "<script>showSuccess('Installed LFI Gadget to $path')</script>";
@@ -78,7 +80,7 @@ if (class_exists('ObjInjec')) {
     // The ObjInjec class is not defined
     echo "❌ ObjInjec class is not defined.";
 }
-print_code(file_get_contents(__DIR__ . '/payloads/php_obj.php'));
+print_code(file_get_contents(__DIR__ . '/../../payloads/php_obj.php'));
 ?>
 
 <pre>

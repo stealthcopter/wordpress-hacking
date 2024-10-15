@@ -1,6 +1,9 @@
 <?php
 
-require_once 'inc/code.php';
+if ( ! defined( 'ABSPATH' ) ) {
+    die( 'not like this...' );
+}
+
 function get_all_actions()
 {
     global $wp_filter;

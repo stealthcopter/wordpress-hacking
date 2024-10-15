@@ -1,14 +1,29 @@
 <?php
 
+if (!defined('ABSPATH')) {
+    die('not like this...');
+}
+
+function color_key($key){
+    $warning = ['default_role', 'secret', 'password', 'users_can_register', 'private_key'];
+
+    // Check if any of the warning values are found within the key
+    foreach ($warning as $word) {
+        if (stripos($key, $word) !== false) {
+            return 'bg-danger'; // Return 'danger' if a match is found
+        }
+    }
+}
 function load_table($options){
     // Print each option and its value
     echo "<br>\n";
     echo '<input class="form-control mb-3" id="tableSearchInput" type="text" placeholder="Filter...">';
-    echo "<table class='table table-striped' id='optionsTable'>";
-    echo "<thead><tr><th>Name</th><th>Value</th></tr></thead>";
+    echo "<table class='table table-striped w-100' id='optionsTable' style='table-layout: fixed; width: 100%;'>";
+    echo "<thead><tr><th style='width: 30%;'>Name</th><th>Value</th></tr></thead>";
     echo "<tbody>";
     foreach ($options as $option_name => $option_value) {
-        echo "<tr><td>".$option_name . '</td><td>' . htmlentities(print_r($option_value, true)) . "</td></tr>\n";
+        $color = color_key($option_name);
+        echo "<tr><td class='$color'>".$option_name . '</td><td style="word-wrap: break-word;">' . htmlentities(print_r($option_value, true)) . "</td></tr>\n";
     }
     echo "</tbody>";
     echo "</table>";

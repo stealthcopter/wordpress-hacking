@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    die( 'not like this...' );
+}
+
 function what_functions_are_defined_here($prefix){
     // Get all defined functions
     $all_functions = get_defined_functions();

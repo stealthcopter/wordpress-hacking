@@ -1,4 +1,9 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    die( 'not like this...' );
+}
+
 require_once(ABSPATH . 'wp-admin/includes/plugin-install.php');
 require_once(ABSPATH . 'wp-admin/includes/theme-install.php');
 require_once(ABSPATH . 'wp-admin/includes/class-wp-upgrader.php');

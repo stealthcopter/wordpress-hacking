@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    die( 'not like this...' );
+}
+
 function get_function_code($function_name) {
     try {
         // Handle class methods

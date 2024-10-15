@@ -1,11 +1,15 @@
 <?php
 
-function key_value_table($data, $mini=false){
+if ( ! defined( 'ABSPATH' ) ) {
+    die( 'not like this...' );
+}
+
+function key_value_table($data, $mini=false, $align='align-middle'){
     $style = '';
     if ($mini) {
         $style = 'style="width: auto;"';
     }
-    $content = "<table class='table table-striped text-start' $style><tbody>";
+    $content = "<table class='table table-striped $align' $style><tbody>";
 
     if (is_string($data)) {
         $data = preg_split('\n', $data);
@@ -38,12 +42,9 @@ function key_value_table($data, $mini=false){
     return $content;
 }
 
-function as_markdown($data){
-
-}
 function show_results($title, $data, $mini=false)
 {
-    $content = key_value_table($data, $mini);
+    $content = key_value_table($data, $mini, 'text-start');
     $data = esc_attr(strip_tags(json_encode($data)));
 
     return "

@@ -1,7 +1,10 @@
 <?php
 
-require_once 'inc/installer.php';
-require_once 'inc/views.php';
+if (!defined('ABSPATH')) {
+    die('not like this...');
+}
+
+require_once __DIR__ . '/../installer.php';
 
 $theme = '';
 $plugin = '';

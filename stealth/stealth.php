@@ -8,33 +8,33 @@
  * Author URI: https://sec.stealthcopter.com/
  */
 
-if (!defined('STEALTH_PLUGIN_FILE')) {
-    define('STEALTH_PLUGIN_FILE', __FILE__);
-}
+const STEALTH_PLUGIN_FILE = __FILE__;
+const STEALTH_PLUGIN_PATH = __DIR__;
 
-require_once 'config.php';
 require_once 'inc/loader.php';
+require_once 'config.php';
 require_once 'api.php';
 
+require_once 'inc/code.php';
 require_once 'inc/views.php';
 
 // Load the PHP object gadget
 require_once 'payloads/php_obj.php';
 
 function render_page(){
-    $page = 'templates/index';
+    $page = 'index';
     if (isset($_REQUEST['stealth_page'])) {
-        $page = $_REQUEST['stealth_page'];
+        $page = basename($_REQUEST['stealth_page']);
     }
 
-    include 'templates/header.php';
+    include 'inc/templates/header.php';
 
     echo '<div class="content mt-4">';
     // You can path traverse here if you like, no stress
-    include "$page.php";
+    include "inc/pages/$page.php";
     echo '</div>';
 
-    include 'templates/footer.php';
+    include 'inc/templates/footer.php';
 }
 
 if (is_installed_to_wordpress()){

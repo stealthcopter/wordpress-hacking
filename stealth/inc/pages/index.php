@@ -1,3 +1,10 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    die( 'not like this...' );
+}
+
+?>
 <div class="position-relative text-center parent">
     <?php
     $image_url = plugins_url('img/logo.jpg', STEALTH_PLUGIN_FILE);

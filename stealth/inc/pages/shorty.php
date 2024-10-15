@@ -1,6 +1,8 @@
 <?php
 
-require_once 'inc/code.php';
+if (!defined('ABSPATH')) {
+    die('not like this...');
+}
 
 function extract_shortcode_attributes($php_code)
 {
@@ -124,13 +126,13 @@ if (isset($_GET['shortcode']) && array_key_exists($_GET['shortcode'], $shortcode
     echo "<h3>Extracted Shortcode Attributes:</h3>";
     $test = "[$shortcode ";
     foreach ($result['attributes'] as $attribute) {
-        echo "<button class='btn btn-outline-success m-2'>$attribute</button>";
+        echo "<button class='btn btn-outline-success mt-2 mb-2 me-2'>$attribute</button>";
         $test .= "$attribute='test' ";
     }
     $test = trim($test).']';
 
-    echo "<textarea id='textarea_shortcode' class='form-control m-2' rows=3>$test</textarea>";
-    echo "<button id='btn_do_shortcode' class='btn btn-success mb-2 mt-2' title='Execute the shortcode and see the output'>Do Shortcode</button><br>";
+    echo "<div class='form-group'><div class='input-group'><textarea id='textarea_shortcode' class='form-control' rows=3>$test</textarea>";
+    echo "<button id='btn_do_shortcode' class='btn btn-success' title='Execute the shortcode and see the output'>Do Shortcode</button><br></div></div>";
 
     $shortcode_iframe = "<div><h4>HTML Output</h4><iframe id='shortcode_iframe' class='w-100 d-none' class='m-2'>hello</iframe></div>";
     $shortcode_code = "<div><h4>Raw HTML Output</h4><div id='shortcode_code_output' class='m-2'><div class='spinner-border text-primary' role='status'></div></div></div>";

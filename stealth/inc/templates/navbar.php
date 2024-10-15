@@ -1,15 +1,8 @@
 <?php
-$pages = [
-    "info" => "info",
-    "gadgets" => "gadgets",
-    "instally" => "instally",
-    "shorty" => "shorty",
-    "noncy" => "noncy",
-    "funcy" => "funcy",
-    "upload" => "upload",
-    "login" => "login",
-    "settings" => "settings",
-];
+
+if ( ! defined( 'ABSPATH' ) ) {
+    die( 'not like this...' );
+}
 ?>
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary pb-0">
@@ -21,7 +14,7 @@ $pages = [
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-tabs" style="border-bottom: none;">
                 <?php
-                foreach ($pages as $name => $desc) {
+                foreach (PAGES as $name => $desc) {
                     $active = ($page == $name) ? "active" : "";
                     echo "<li class='nav-item'>";
                     echo "<a class='nav-link $active' href='?stealth_page=$name' title='$desc'>$name</a>";

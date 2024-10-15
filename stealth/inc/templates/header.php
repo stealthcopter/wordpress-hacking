@@ -1,3 +1,10 @@
+<?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+    die( 'not like this...' );
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
 <head>
