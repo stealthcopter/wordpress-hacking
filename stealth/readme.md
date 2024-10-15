@@ -32,6 +32,30 @@ Either:
 - Navigate to `/stealth` - this only works if permalink structure is set to `posts`
 - Otherwise, navigate to `/wp-content/plugins/stealth` or wherever the code is, to use the tools
 
+## Tools
+
+- **Shorty** - find and analyse declared shortcodes
+
+![shorty1.png](screenshots/shorty1.png)
+
+![shorty2.png](screenshots/shorty2.png)
+
+- **Funcy** - find and analyse declared actions
+
+![funcy1.png](screenshots/funcy1.png)
+
+- **Login** - automatically login as other users
+
+![login.png](screenshots/login.png)
+
+- **Gadgets** - LFI and PHPObject injection gadgets
+
+![gadgets.png](screenshots/gadgets.png)
+
+- **Noncy** - Generate nonces
+- **Settings** - List and filter all options
+- **Upload** - An upload widget to save time creating payloads
+
 # Contributing
 
 If you have an idea for a new feature please create a new issue on GitHub. If you would like to contribute a bug fix, or feature please feel free to fork the repo and submit a PR against this one.

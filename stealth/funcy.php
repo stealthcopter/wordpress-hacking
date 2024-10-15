@@ -76,14 +76,14 @@ function print_actions($i, $all_actions, $prefix)
     ?>
     <div class="accordion-item">
         <h2 class="accordion-header">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+            <button class="accordion-button collapsed bg-secondary text-white" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapse<?php echo $i; ?>" aria-expanded="true"
                     aria-controls="collapse<?php echo $i; ?>">
                 <?php echo $title; ?>
             </button>
         </h2>
         <div id="collapse<?php echo $i; ?>" class="accordion-collapse collapse <?php echo $show; ?>"
-             style="background:#424242;" data-bs-parent="#accordionExample">
+             style="background:#424242;" >
             <div class="accordion-body">
                 <?php echo $content; ?>
             </div>
@@ -96,8 +96,9 @@ $actions = get_all_actions();
 
 ?>
 
+    <h5 class="card-title">Functions</h5>
     <p>Show the currently defined functions created with `add_action`.</p>
-    <div class="accordion" id="accordionExample">
+    <div class="accordion accordion-flush" id="accordionExample">
         <?php
         print_actions(0, $actions, 'wp_ajax_nopriv_');
         print_actions(1, $actions, 'wp_ajax_');
@@ -105,7 +106,6 @@ $actions = get_all_actions();
         print_actions(3, $actions, 'admin_post');
         ?>
     </div>
-
 
 <?php
 
