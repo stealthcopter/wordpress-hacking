@@ -7,6 +7,7 @@ $pages = [
     "noncy" => "noncy",
     "funcy" => "funcy",
     "upload" => "upload",
+    "login" => "login",
     "settings" => "settings",
 ];
 ?>
@@ -39,7 +40,7 @@ $pages = [
                 <!--                    </ul>-->
                 <!--                </li>-->
             </ul>
-            <a class='btn btn-outline-success' href='https://github.com/stealthcopter/wordpress-hacking/tree/main/stealth' target='_blank'>i</a>
+            <a class='btn btn-outline-success' href='<?php echo STEALTH_URL;?>' target='_blank'>i</a>
         </div>
     </div>
 </nav>

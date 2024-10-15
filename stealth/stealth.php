@@ -12,12 +12,9 @@ if (!defined('STEALTH_PLUGIN_FILE')) {
     define('STEALTH_PLUGIN_FILE', __FILE__);
 }
 
+require_once 'config.php';
 require_once 'inc/loader.php';
-
-if (isset($_REQUEST['api'])){
-    require_once 'api.php';
-    die();
-}
+require_once 'api.php';
 
 require_once 'inc/views.php';
 
@@ -48,7 +45,7 @@ if (is_installed_to_wordpress()){
             if( strstr( $_SERVER["REQUEST_URI"], "/wp-content/plugins/stealth/" )){
                 // Don't intercept
             }
-            else if( strstr( $_SERVER["REQUEST_URI"], "/stealth/" )){
+            else if( strstr( $_SERVER["REQUEST_URI"], STEALTH_PERMALINK_PATH )){
                 // Intercept
                 render_page();
                 die();

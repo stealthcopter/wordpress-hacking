@@ -1,7 +1,3 @@
-<h2>Upload a File</h2>
-
-<p>Sometimes it's useful to have an upload form so you don't have to create a request manually like a chump.</p>
-
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $target_dir = "uploads/";
@@ -41,11 +37,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-<form action="file_upload.php" method="post" enctype="multipart/form-data">
-    <div class="form-group">
-        <label for="fileToUpload">Choose file to upload:</label>
-        <input type="file" name="fileToUpload" id="fileToUpload" required>
-        <br><br>
-        <input class="btn btn-success" type="submit" value="Upload File" name="submit">
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Upload a File</h5>
+        <p>Sometimes it's useful to have an upload form so you don't have to create a request manually like a chump.</p>
+        <form action="file_upload.php" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="fileToUpload">Choose file to upload:</label>
+                <input type="file" name="fileToUpload" id="fileToUpload" required multiple>
+                <br><br>
+                <input class="btn btn-success" type="submit" value="Upload File" name="submit">
+            </div>
+        </form>
     </div>
-</form>
+</div>

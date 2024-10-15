@@ -1,6 +1,6 @@
 <?php
 
-function key_value_table($data, $mini){
+function key_value_table($data, $mini=false){
     $style = '';
     if ($mini) {
         $style = 'style="width: auto;"';
@@ -12,11 +12,25 @@ function key_value_table($data, $mini){
     }
 
     foreach ($data as $key => $value) {
-        if (is_numeric($key)) {
-            $content .= "<tr><td>" . htmlspecialchars($value) . "</td></tr>";
+        if (is_array($value)){
+            if (is_numeric($key)) {
+                $content .= "<tr>";
+            }
+            else{
+                $content .= "<tr><td><strong>" . htmlspecialchars($key) . "</strong></td>";
+            }
+            foreach ($value as $v){
+                $content .= "<td>" . $v . "</td>";
+            }
+            $content .= "</tr>";
         }
         else{
-            $content .= "<tr><td><strong>" . htmlspecialchars($key) . "</strong></td><td>" . $value . "</td></tr>";
+            if (is_numeric($key)) {
+                $content .= "<tr><td>" . htmlspecialchars($value) . "</td></tr>";
+            }
+            else{
+                $content .= "<tr><td><strong>" . htmlspecialchars($key) . "</strong></td><td>" . $value . "</td></tr>";
+            }
         }
     }
 

@@ -33,6 +33,7 @@ if (defined( 'ABSPATH' ) ) {
     }
 }
 
-function is_installed_to_wordpress(){
+function is_installed_to_wordpress(): bool
+{
     return !defined('WP_LOADED_FROM_PATH');
 }
