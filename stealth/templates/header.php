@@ -112,36 +112,36 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            // Function to handle copying text
-            function copyToClipboard(text, textCopiedTitle) {
-                // Use modern Clipboard API if available
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(text).then(() => {
-                        showSuccess(`Copied ${textCopiedTitle} to clipboard`);
-                    }).catch(err => {
-                        console.error('Failed to copy: ', err);
-                    });
-                } else {
-                    // Fallback method using a hidden textarea
-                    const textarea = document.createElement('textarea');
-                    textarea.value = text;
-                    textarea.style.position = 'fixed';  // Prevent scrolling to the bottom
-                    document.body.appendChild(textarea);
-                    textarea.focus();
-                    textarea.select();
+        // Function to handle copying text
+        function copyToClipboard(text, textCopiedTitle) {
+            // Use modern Clipboard API if available
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showSuccess(`Copied ${textCopiedTitle} to clipboard`);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            } else {
+                // Fallback method using a hidden textarea
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';  // Prevent scrolling to the bottom
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
 
-                    try {
-                        document.execCommand('copy');
-                        showSuccess(`Copied ${textCopiedTitle} to clipboard`);
-                    } catch (err) {
-                        console.error('Fallback: Oops, unable to copy', err);
-                    }
-
-                    document.body.removeChild(textarea);
+                try {
+                    document.execCommand('copy');
+                    showSuccess(`Copied ${textCopiedTitle} to clipboard`);
+                } catch (err) {
+                    console.error('Fallback: Oops, unable to copy', err);
                 }
-            }
 
+                document.body.removeChild(textarea);
+            }
+        }
+
+        function create_copyables(){
             // Find all spans with the 'copy-text' class and make them copyable
             document.querySelectorAll('.copy-text').forEach(span => {
                 // Create the clipboard icon
@@ -166,6 +166,10 @@
                     copyToClipboard(jsonToMarkdown(button.dataset.json), 'as markdown');
                 });
             })
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            create_copyables();
         });
     </script>
 

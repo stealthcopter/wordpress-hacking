@@ -18,24 +18,53 @@ if (isset($_REQUEST['lfi_path'])) {
 
 ?>
 
-<h1>LFI</h1>
+<h1>Local File Inclusion (LFI)</h1>
 <p>Install a LFI gadget to specific path</p>
 <form action="" method="post">
     <div class="form-group">
-        <input type="text" value="<?php echo esc_attr($path);?>" name="lfi_path" placeholder="Path">
-        <input class="btn btn-success" type="submit" value="Install" name="submit">
+        <div class="input-group">
+            <input id="lfi_input" type="text" value="<?php echo $path;?>" name="lfi_path" placeholder="Path">
+            <input class="btn btn-success" type="submit" value="Install" name="submit">
+        </div>
     </div>
 </form>
 
-<p>
-<pre>
-<code>
-../../../../../../../../../../../../../../../../../../../tmp/lfi.php
-..././..././..././..././..././..././..././..././..././..././..././..././..././..././..././..././tmp/lfi.php
-..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2Ftmp%2Flfi.php
-</code>
-</pre>
-</p>
+<div class="mt-2">
+    <h3>Generated Payloads:</h3>
+    <div id="payloads" class="mt-2 mb-2 p-3" style="background:#2d2d2d">
+    </div>
+</div>
+
+<script>
+    function generatePayloads() {
+        const path = document.getElementById('lfi_input').value;
+
+        const traversalDepth = 20; // Adjust based on your use case
+
+        const traversalPath = '../'.repeat(traversalDepth) + path.replace(/^\/+/, '')
+
+        const simpleTraversal = traversalPath
+        const mixedTraversal = traversalPath.replaceAll('../','..././')
+        const encodedTraversal = encodeURIComponent(traversalPath)
+
+        let output = '';
+        output += `<span class='copy-text'>${simpleTraversal}</span><br>`
+        output += `<span class='copy-text'>${mixedTraversal}</span><br>`
+        output += `<span class='copy-text'>${encodedTraversal}</span><br>`
+
+        document.getElementById('payloads').innerHTML = output.trim();
+        create_copyables();
+    }
+
+    // Trigger payload generation on input change
+    document.getElementById('lfi_input').addEventListener('change', generatePayloads);
+
+    // Run payload generation on first page load
+    window.addEventListener('load', generatePayloads);
+</script>
+
+
+<hr class="bg-danger border-2 border-top">
 
 <h1>PHP Object Injection</h1>
 <p>If you have installed this plugin into WordPress the following gadget will be available to use:</p>

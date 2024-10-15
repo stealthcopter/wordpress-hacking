@@ -11,18 +11,19 @@ $pages = [
 ];
 ?>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary pb-0">
     <div class="container-fluid">
         <a class="navbar-brand" href="stealth.php">StealthTools</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-tabs" style="border-bottom: none;">
                 <?php
-                foreach ($pages as $name => $file) {
+                foreach ($pages as $name => $desc) {
+                    $active = ($page == $name) ? "active" : "";
                     echo "<li class='nav-item'>";
-                    echo "<a class='nav-link' href='?stealth_page=$file' >$name</a>";
+                    echo "<a class='nav-link $active' href='?stealth_page=$name' title='$desc'>$name</a>";
                     echo "</li>";
                 }
                 ?>
@@ -38,7 +39,7 @@ $pages = [
                 <!--                    </ul>-->
                 <!--                </li>-->
             </ul>
-            <a class='btn btn-outline-success' href='https://github.com/stealthcopter/wordpress-hacking/stealth' target='_blank'>i</a>
+            <a class='btn btn-outline-success' href='https://github.com/stealthcopter/wordpress-hacking/tree/main/stealth' target='_blank'>i</a>
         </div>
     </div>
 </nav>
