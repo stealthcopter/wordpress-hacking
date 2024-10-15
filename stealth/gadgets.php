@@ -1,6 +1,5 @@
 <?php
 
-require_once 'inc/loader.php';
 require_once 'inc/code.php';
 
 $action = '';
