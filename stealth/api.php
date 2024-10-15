@@ -9,7 +9,12 @@ if ($api === 'do_shortcode'){
     $output = do_shortcode(base64_decode($_REQUEST['shortcode']));
 
     if (isset($_REQUEST['code'])){
-        print_code($output, 'html');
+        if (empty($output)){
+            echo "⚠️ No output!!!";
+        }
+        else{
+            print_code($output, 'html');
+        }
     }
     else{
         echo $output;

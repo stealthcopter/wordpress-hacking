@@ -59,7 +59,7 @@ function display_in_columns(...$data)
 
     return
         "<div class='container text-center'>
-            <div class='row align-items-center'>
+            <div class='row align-items-start'>
             $content
             </div>
          </div>";
