@@ -23,14 +23,19 @@ function key_value_table($data, $mini){
     $content .= "</tbody></table>";
     return $content;
 }
+
+function as_markdown($data){
+
+}
 function show_results($title, $data, $mini=false)
 {
     $content = key_value_table($data, $mini);
+    $data = esc_attr(strip_tags(json_encode($data)));
 
     return "
     <div class='card mt-4 mb-4'>
         <div class='card-header bg-success'>
-            $title
+            $title <button class='copy-btn copy-btn-data' title='Copy to clipboard' data-json='$data'>📋</button>
         </div>
         <div class='card-body'>
             $content

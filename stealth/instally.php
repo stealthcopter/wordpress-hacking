@@ -81,7 +81,7 @@ if (isset($_REQUEST['theme'])) {
 </script>
 
 <p>Install and grab information about plugins much fastly. Note this is pretty janky atm, but is a bit faster for me
-    that jumping in CLI or </p>
+    that jumping in CLI or using the <a href="<?php echo admin_url('plugins.php'); ?>" target="_blank">web interface</a>. </p>
 
 <div class="card m-2">
     <div class="card-body">

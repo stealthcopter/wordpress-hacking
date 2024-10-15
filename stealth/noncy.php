@@ -28,7 +28,7 @@ if (isset($_REQUEST['action_name'])) {
         <form action="" method="post">
             <div class="form-group">
 
-                <p>Generate a nonce for the current logged user</p>
+                <p>For testing nonce-as-auth or for going nonce hunting. This will generate a nonce for a given action for the currently logged user, or unauthenticated if not logged in.</p>
 
                 <div class="form-floating mb-3">
                     <input type="text" id="current_user" class="form-control" placeholder="User"

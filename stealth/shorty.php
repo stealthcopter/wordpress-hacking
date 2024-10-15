@@ -59,7 +59,7 @@ function get_function_name($shortcode_name)
 }
 
 ?>
-    <p>Show the currently registered shortcodes and the functions associated with them.</p>
+    <p>Show the currently registered shortcodes and the functions associated with them. <a href="<?php echo admin_url('post-new.php'); ?>" target="_blank">Create New Post</a></p>
 <?php
 
 global $shortcode_tags;
