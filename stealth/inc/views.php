@@ -78,3 +78,22 @@ function display_in_columns(...$data)
             </div>
          </div>";
 }
+
+function get_color_for_role($role) {
+    switch ($role) {
+        case 'administrator':
+            return 'danger'; // Red
+        case 'editor':
+            return 'warning'; // Yellowish
+        case 'author':
+            return 'secondary'; // Greyish
+        case 'contributor':
+            return 'primary'; // Blue
+        case 'customer':
+            return 'info'; // Light Blue
+        case 'subscriber':
+            return 'success'; // Green
+        default:
+            return 'light'; // Default Grey
+    }
+}

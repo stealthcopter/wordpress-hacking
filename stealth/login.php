@@ -6,7 +6,6 @@ if (is_user_logged_in()) {
 } else {
     $current_user = 'Not Logged In';
 }
-
 ?>
 
 
@@ -29,7 +28,8 @@ if (is_user_logged_in()) {
 
                 foreach (get_users() as $user) {
                     $url = add_query_arg('login_as_uid', $user->ID);
-                    $data[] = [$user->ID, $user->user_login, implode(', ', $user->roles), "<a class='btn btn-primary mt-2' href='$url'>Login as $user->user_login</a>"];
+                    $color_class = 'btn-'.get_color_for_role($user->roles[0]);
+                    $data[] = [$user->ID, $user->user_login, implode(', ', $user->roles), "<a class='btn $color_class mt-2' href='$url'>Login as $user->user_login</a>"];
                 }
 
                 echo key_value_table($data);
