@@ -72,7 +72,7 @@ function print_actions($i, $all_actions, $prefix)
     }
 
     $show = '';
-    if ($i == 0 && !isset($_REQUEST['action'])) {
+    if (!isset($_REQUEST['action']) && count($actions) > 0) {
         $show = 'show';
     }
 

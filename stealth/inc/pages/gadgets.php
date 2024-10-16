@@ -21,11 +21,14 @@ if (isset($_REQUEST['lfi_path'])) {
 ?>
 
 <h1>Local File Inclusion (LFI)</h1>
-<p>Install a LFI gadget to specific path</p>
+<p>Install an LFI gadget to specific path on the server. You can then try the payloads generated below to try and execute that PHP file.</p>
 <form action="" method="post">
     <div class="form-group">
         <div class="input-group">
-            <input id="lfi_input" type="text" value="<?php echo $path;?>" name="lfi_path" placeholder="Path">
+            <span class="input-group-text">Path:</span>
+            <input id="lfi_input" type="text" value="<?php echo $path;?>" name="lfi_path" placeholder="Path" class="ps-2">
+            <span class="input-group-text">Traversals:</span>
+            <input type="number" id="lfi_traversals" value="20" class="ps-2" class="input"/>
             <input class="btn btn-success" type="submit" value="Install" name="submit">
         </div>
     </div>
@@ -40,8 +43,7 @@ if (isset($_REQUEST['lfi_path'])) {
 <script>
     function generatePayloads() {
         const path = document.getElementById('lfi_input').value;
-
-        const traversalDepth = 20; // Adjust based on your use case
+        const traversalDepth = document.getElementById('lfi_traversals').value;
 
         const traversalPath = '../'.repeat(traversalDepth) + path.replace(/^\/+/, '')
 
@@ -62,6 +64,7 @@ if (isset($_REQUEST['lfi_path'])) {
 
     // Trigger payload generation on input change
     document.getElementById('lfi_input').addEventListener('change', generatePayloads);
+    document.getElementById('lfi_traversals').addEventListener('change', generatePayloads);
 
     // Run payload generation on first page load
     window.addEventListener('load', generatePayloads);
