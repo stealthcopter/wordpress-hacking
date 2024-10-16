@@ -17,18 +17,24 @@ if (isset($_REQUEST['api'])){
 
         include "inc/code.php";
 
-        $output = do_shortcode(base64_decode($_REQUEST['shortcode']));
-
-        if (isset($_REQUEST['code'])){
-            if (empty($output)){
-                echo "⚠️ No output!!!";
+        try {
+            ob_start();
+            echo do_shortcode(base64_decode($_REQUEST['shortcode']));
+            $output = ob_get_clean();
+            if (isset($_REQUEST['code'])){
+                if (empty($output)){
+                    echo "⚠️ No output!!!";
+                }
+                else{
+                    print_code($output, 'html');
+                }
             }
             else{
-                print_code($output, 'html');
+                echo $output;
             }
         }
-        else{
-            echo $output;
+        catch (Exception $e) {
+            echo "⛔️ Exception during shortcode creation";
         }
     }
     die();
