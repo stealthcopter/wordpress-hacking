@@ -60,6 +60,14 @@ function get_function_name($shortcode_name)
     return "";
 }
 
+function count_attributes($shortcode){
+    $function_name = get_function_name($shortcode);
+    $code_obj = get_function_code($function_name);
+    $php_code = $code_obj['code'];
+    $result = extract_shortcode_attributes($php_code);
+    return count($result['attributes']);
+}
+
 ?>
     <p>Show the currently registered shortcodes and the functions associated with them. <a href="<?php echo admin_url('post-new.php'); ?>" target="_blank">Create New Post</a></p>
 <?php
@@ -112,7 +120,7 @@ foreach ($shortcode_tags as $shortcode => $function) {
     } else {
         echo get_function_name($shortcode);
     }
-    echo "</a></li>";
+    echo "</a> <small >(".count_attributes($shortcode)." attributes)</small></li>";
 }
 echo "</ul>";
 
