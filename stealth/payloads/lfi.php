@@ -1,10 +1,8 @@
 <?php
-echo "\nxxxxx_PATH_TRAVERSAL_FRIEND_xxxxx\n";
+echo "\nxxxxx_PATH_TRAVERSAL_FRIEND_xxxxx\n<br>";
+system('id');
+echo "\n<br>";
 
 /*
 * Try and find me!
-
-../../../../../../../../../../../../../../../var/www/html/stealth/lfi.php
-.././.././.././.././.././.././.././.././.././.././.././.././.././.././.././.././.././.././.././.././.././var/www/html/stealth/lfi.php
-
 */

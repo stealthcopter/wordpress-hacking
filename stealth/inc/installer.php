@@ -21,7 +21,7 @@ class Silent_Upgrader_Skin extends WP_Upgrader_Skin {
 
 function get_plugin_info($slug){
     $api = plugins_api('plugin_information', array(
-        'slug'   => $slug,
+        'slug'   => strtolower($slug),
         'fields' => array(
             'sections'        => false,
             'active_installs' => true,
@@ -35,7 +35,7 @@ function get_plugin_info($slug){
 }
 function get_theme_info($slug){
     $api = themes_api('theme_information', array(
-        'slug'   => $slug,
+        'slug'   => strtolower($slug),
         'fields' => array(
             'sections'        => false,
             'downloaded'      => true,

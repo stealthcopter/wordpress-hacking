@@ -64,6 +64,8 @@ function get_function_name($shortcode_name)
     <p>Show the currently registered shortcodes and the functions associated with them. <a href="<?php echo admin_url('post-new.php'); ?>" target="_blank">Create New Post</a></p>
 <?php
 
+$DEFAULT_SHORTCODES = ['wp_caption', 'caption', 'gallery', 'playlist', 'audio', 'video', 'embed'];
+
 global $shortcode_tags;
 
 $old_error_reporting = error_reporting();
@@ -93,11 +95,17 @@ if (isset($_REQUEST['attrs'])) {
     wp_send_json_error();
 }
 
-echo "<h2>Registered Shortcodes:</h2>";
+
+
+
+echo "<h2>Registered Shortcodes (" . count($shortcode_tags) . ")</h2>";
 echo "<ul>";
 foreach ($shortcode_tags as $shortcode => $function) {
     $url = add_query_arg('shortcode', $shortcode);
-    echo "<li>{$shortcode} → <a href='$url'>";
+    if (in_array($shortcode, $DEFAULT_SHORTCODES)){
+        $text_color = 'text-secondary';
+    }
+    echo "<li class='$text_color'>{$shortcode} → <a href='$url'>";
     $function_name = get_function_name($shortcode);
     if ($function_name instanceof Closure) {
         print_r($function_name);

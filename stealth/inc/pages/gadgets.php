@@ -28,7 +28,7 @@ if (isset($_REQUEST['lfi_path'])) {
             <span class="input-group-text">Path:</span>
             <input id="lfi_input" type="text" value="<?php echo $path;?>" name="lfi_path" placeholder="Path" class="ps-2">
             <span class="input-group-text">Traversals:</span>
-            <input type="number" id="lfi_traversals" value="20" class="ps-2" class="input"/>
+            <input type="number" id="lfi_traversals" value="20" class="ps-2" class="input" min="0"/>
             <input class="btn btn-success" type="submit" value="Install" name="submit">
         </div>
     </div>
