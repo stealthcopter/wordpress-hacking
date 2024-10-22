@@ -127,7 +127,7 @@ function show_defaults_toggle() {
     return '
     <div class="form-check form-switch mb-4">
         <input class="form-check-input" type="checkbox" id="toggleDefaults" ' . $checked . '>
-        <label class="form-check-label" for="toggleDefaults">Show Defaults</label>
+        <label class="form-check-label" for="toggleDefaults" title="Hide the defaults defined by WordPress to help reduce signal to noise.">Show Defaults</label>
     </div>
     <script>
         document.getElementById("toggleDefaults").addEventListener("change", function() {

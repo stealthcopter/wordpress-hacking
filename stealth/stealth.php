@@ -18,12 +18,14 @@ if (!defined('STEALTH_PLUGIN_PATH')) {
 
 require_once 'inc/loader.php';
 
+
 // Load the PHP object gadget
 require_once 'payloads/php_obj.php';
 
 if (!function_exists('stealth_render_page')) {
     function stealth_render_page()
     {
+        require_once 'inc/defaults.php';
         $page = 'index';
         $margin = '';
         if (isset($_REQUEST['stealth_page'])) {
