@@ -38,7 +38,7 @@ if (isset($_REQUEST['plugin'])) {
 }
 
 if (!empty($output)) {
-    $result = show_results('Results', $output);
+    $result = show_results('Results', $output, false, $result['success'] ?? '');
     echo display_in_columns($result, $info_card ?? null);
 }
 

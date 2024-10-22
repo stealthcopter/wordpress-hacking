@@ -13,6 +13,7 @@ const PAGES = [
     "shorty" => "shorty",
     "noncy" => "noncy",
     "funcy" => "funcy",
+    "resty" => "resty",
     "upload" => "upload",
     "login" => "login",
     "settings" => "settings",

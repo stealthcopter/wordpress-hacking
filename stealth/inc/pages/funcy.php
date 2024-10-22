@@ -4,20 +4,19 @@ if ( ! defined( 'ABSPATH' ) ) {
     die( 'not like this...' );
 }
 
-function get_all_actions()
+function get_all_actions($DEFAULT_ACTIONS, $show_defaults)
 {
     global $wp_filter;
 
     $ajax_actions = [];
 
-//    $default_funcs = [
-//        'wp_ajax_save', 'wp_ajax_widgets-order', 'wp_ajax_add-category', 'wp_ajax_add-post_tag',
-//        'wp_ajax_add-nav_menu', 'wp_ajax_add-link_category', 'wp_ajax_add-post_format',
-//        'wp_ajax_add-wp_theme', 'wp_ajax_add-wp_template_part_area', 'wp_ajax_add-wp_pattern_category', 'wp_ajax_save-widget'
-//    ];
-
     // Loop through the $wp_filter to find all actions
     foreach ($wp_filter as $key => $value) {
+
+        if (!$show_defaults && in_array($key, $DEFAULT_ACTIONS)) {
+            continue;
+        }
+
         foreach ($value->callbacks as $priority => $callbacks) {
             foreach ($callbacks as $action => $details) {
                 if (is_array($details['function']) && isset($details['function'][1])) {
@@ -95,12 +94,16 @@ function print_actions($i, $all_actions, $prefix)
     <?php
 }
 
-$actions = get_all_actions();
+$DEFAULT_ACTIONS = ['wp_ajax_save-widget', 'wp_ajax_widgets-order', 'wp_ajax_add-category', 'wp_ajax_add-post_tag', 'wp_ajax_add-nav_menu', 'wp_ajax_add-link_category', 'wp_ajax_add-post_format', 'wp_ajax_add-wp_theme', 'wp_ajax_add-wp_template_part_area', 'wp_ajax_add-wp_pattern_category'];
+
+$show_defaults = $_SESSION['show_defaults'];
+$actions = get_all_actions($DEFAULT_ACTIONS, $show_defaults);
 
 ?>
 
     <h5 class="card-title">Functions</h5>
     <p>Show the currently defined functions created with `add_action`.</p>
+<?php echo show_defaults_toggle(); ?>
     <div class="accordion accordion-flush" id="accordionExample">
         <?php
         print_actions(0, $actions, 'wp_ajax_nopriv_');

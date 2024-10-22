@@ -25,13 +25,15 @@ if (!function_exists('stealth_render_page')) {
     function stealth_render_page()
     {
         $page = 'index';
+        $margin = '';
         if (isset($_REQUEST['stealth_page'])) {
             $page = basename($_REQUEST['stealth_page']);
+            $margin = 'mt-4';
         }
 
         include 'inc/templates/header.php';
 
-        echo '<div class="content mt-4">';
+        echo "<div class='content $margin'>";
         // You can path traverse here if you like, no stress
         include "inc/pages/$page.php";
         echo '</div>';

@@ -72,9 +72,9 @@ function count_attributes($shortcode){
     <p>Show the currently registered shortcodes and the functions associated with them. <a href="<?php echo admin_url('post-new.php'); ?>" target="_blank">Create New Post</a></p>
 <?php
 
-$DEFAULT_SHORTCODES = ['wp_caption', 'caption', 'gallery', 'playlist', 'audio', 'video', 'embed'];
-
 global $shortcode_tags;
+$show_defaults = $_SESSION['show_defaults'];
+$DEFAULT_SHORTCODES = ['wp_caption', 'caption', 'gallery', 'playlist', 'audio', 'video', 'embed'];
 
 $old_error_reporting = error_reporting();
 // Turn on all errors, warnings, and notices
@@ -103,26 +103,45 @@ if (isset($_REQUEST['attrs'])) {
     wp_send_json_error();
 }
 
-
-
-
-echo "<h2>Registered Shortcodes (" . count($shortcode_tags) . ")</h2>";
-echo "<ul>";
-foreach ($shortcode_tags as $shortcode => $function) {
-    $url = add_query_arg('shortcode', $shortcode);
-    if (in_array($shortcode, $DEFAULT_SHORTCODES)){
-        $text_color = 'text-secondary';
+function get_shortcodes($defaults_to_ignore, $show_defaults) {
+    global $shortcode_tags;
+    if ($show_defaults){
+        return $shortcode_tags;
     }
-    echo "<li class='$text_color'>{$shortcode} → <a href='$url'>";
-    $function_name = get_function_name($shortcode);
-    if ($function_name instanceof Closure) {
-        print_r($function_name);
-    } else {
-        echo get_function_name($shortcode);
-    }
-    echo "</a> <small >(".count_attributes($shortcode)." attributes)</small></li>";
+    // Use array_diff_key to filter out keys from $shortcode_tags
+    return array_diff_key($shortcode_tags, array_flip($defaults_to_ignore));
 }
-echo "</ul>";
+
+$shortcodes = get_shortcodes($DEFAULT_SHORTCODES, $show_defaults);
+
+echo show_defaults_toggle();
+
+echo "<h2>Registered Shortcodes (" . count($shortcodes) . ")</h2>";
+if (empty($shortcodes)){
+    echo "<p>No shortcodes found...</p>";
+}
+else{
+    echo "<ul>";
+    foreach ($shortcodes as $shortcode => $function) {
+        $text_color = '';
+        $title ='';
+        if (in_array($shortcode, $DEFAULT_SHORTCODES)){
+            $text_color = 'text-secondary';
+            $title = 'Built-in WordPress Shortcode';
+        }
+        $url = add_query_arg('shortcode', $shortcode);
+        echo "<li class='$text_color' title='$title'>{$shortcode} → <a href='$url'>";
+        $function_name = get_function_name($shortcode);
+        if ($function_name instanceof Closure) {
+            print_r($function_name);
+        } else {
+            echo get_function_name($shortcode);
+        }
+        echo "</a> <small >(".count_attributes($shortcode)." attributes)</small></li>";
+    }
+    echo "</ul>";
+    echo "<p>Select a shortcode from the list above to view its details.</p>";
+}
 
 // Step 2: Handle the clicked shortcode and display function details
 if (isset($_GET['shortcode']) && array_key_exists($_GET['shortcode'], $shortcode_tags)) {
@@ -161,8 +180,6 @@ if (isset($_GET['shortcode']) && array_key_exists($_GET['shortcode'], $shortcode
     echo '<hr class="bg-danger border-2 border-top" />';
     echo "<h3>Function Code</h3>";
     print_code($code_obj);
-} else {
-    echo "<p>Select a shortcode from the list above to view its details.</p>";
 }
 
 ?>

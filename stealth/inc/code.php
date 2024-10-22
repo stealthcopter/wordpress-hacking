@@ -68,6 +68,8 @@ function print_code($code_obj, $language='php') {
 
         $mapping = [
             'action' => 'Action',
+            'route' => 'Route',
+            'methods' => 'Method(s)',
             'function_name' => 'Function',
             'file' => 'Filename',
             'lines' => 'Lines',
