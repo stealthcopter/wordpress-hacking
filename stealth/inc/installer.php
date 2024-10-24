@@ -108,7 +108,7 @@ function install_theme_by_slug($slug) {
     $result = $upgrader->install($api->download_link);
 
     if ($result) {
-        return ["success" => false, "output" => "Theme {$slug} installed successfully!", "theme" => $api];
+        return ["success" => true, "output" => "Theme {$slug} installed successfully!", "theme" => $api];
     } else {
         return ["success" => false, "output" => "Theme installation failed!"];
     }

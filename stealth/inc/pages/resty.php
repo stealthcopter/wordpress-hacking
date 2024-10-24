@@ -121,7 +121,7 @@ function print_rest_routes($i, $rest_routes, $namespace)
 {
 
     $route_count = 0;
-    $content = "";
+    $content = "<ul class='ps-0 mb-0' style='list-style-type: none;'>";
     foreach ($rest_routes as $key => $route) {
         if ($route['namespace'] != $namespace){
             continue;
@@ -132,6 +132,7 @@ function print_rest_routes($i, $rest_routes, $namespace)
         $method_badges = print_method_badges($route['method']);
         $content .= "<li>$method_badges {$route['route']} → <a href='$url'>{$route['callback']}</a></li>";
     }
+    $content .= "</ul>";
 
     $title = "$namespace (" . $route_count . ")";
 

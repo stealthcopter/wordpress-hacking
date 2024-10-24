@@ -11,6 +11,24 @@ $plugin = '';
 
 $output = [];
 
+function create_info_panel($type, $result): string
+{
+    $slug = $result->slug;
+    $data = [
+        "Name" => $result->name,
+        'Slug' => $slug,
+        'Version' => $result->version,
+        'Installs' => $result->active_installs,
+        'Updated' => $result->last_updated,
+        'URL' => "<a href='https://wordpress.org/{$type}s/$slug'>https://wordpress.org/{$type}s/$slug</a>",
+    ];
+    if (!empty($result->icons['1x'])) {
+        $data['Icon'] = "<img width=32 src='" . esc_url($result->icons['1x']) . "'/>";
+    }
+
+    return show_results("{$type} Information", $data);
+}
+
 if (isset($_REQUEST['plugin'])) {
     $plugin = $_REQUEST['plugin'];
     $output[] = "Installing...";
@@ -18,22 +36,29 @@ if (isset($_REQUEST['plugin'])) {
     $output[] = $result['output'];
 
     if (isset($result['plugin'])) {
-        $data = [
-            "Name" => $result['plugin']->name,
-            'Slug' => $result['plugin']->slug,
-            'Version' => $result['plugin']->version,
-            'Installs' => $result['plugin']->active_installs,
-            'Updated' => $result['plugin']->last_updated,
-            'URL' => "<a href='https://wordpress.org/plugins/$plugin'>https://wordpress.org/plugins/$plugin</a>",
-            'Icon' => "<img width=32 src='" . esc_url($result['plugin']->icons['1x']) . "'/>",
-        ];
-        $info_card = show_results('Plugin Information', $data);
+        $info_card = create_info_panel('plugin', $result['plugin']);
     }
 
     if ($result['success'] && isset($_REQUEST['install_and_activate'])) {
         $output[] = "Activating...";
         $result = activate_plugin_by_slug($plugin);
         $output[] = $result['output'];
+    }
+}
+elseif (isset($_REQUEST['theme'])) {
+    $theme = $_REQUEST['theme'];
+    $output[] = "Installing...";
+    $result = install_theme_by_slug($theme);
+    $output[] .= $result['output'];
+
+    if (isset($result['theme'])) {
+        $info_card = create_info_panel('theme', $result['theme']);
+    }
+
+    if ($result && isset($_REQUEST['install_and_activate'])) {
+        $output[] = "Activating...";
+        $result = activate_theme_by_slug($theme);
+        $output[] .= $result['output'];
     }
 }
 
@@ -43,18 +68,8 @@ if (!empty($output)) {
 }
 
 
-if (isset($_REQUEST['theme'])) {
-    $theme = $_REQUEST['theme'];
-    $output[] = "Installing...";
-    $result = install_theme_by_slug($theme);
-    $output[] .= $result['output'];
 
-    if ($result && isset($_REQUEST['install_and_activate'])) {
-        $output[] = "Activating...";
-        $result = activate_theme_by_slug($theme);
-        $output[] .= $result['output'];
-    }
-}
+
 
 
 ?>
