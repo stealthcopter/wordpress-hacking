@@ -142,6 +142,11 @@ function code_analysis($code){
     return $results;
 }
 
+function print_buttons($tests, $color) {
+    foreach ($tests as $test) {
+        echo '<button type="button" class="btn ' . $color . ' m-2" title="' . htmlspecialchars($test['description']) . '">' . htmlspecialchars($test['name']) . '</button> ';
+    }
+}
 function print_analysis_results($results) {
     // Initialize arrays for categorizing results
     $categories = [
@@ -154,13 +159,6 @@ function print_analysis_results($results) {
     foreach ($results as $name => $test) {
         if (array_key_exists($test['type'], $categories)) {
             $categories[$test['type']][] = $test;
-        }
-    }
-
-    // Function to print buttons for each section
-    function print_buttons($tests, $color) {
-        foreach ($tests as $test) {
-            echo '<button type="button" class="btn ' . $color . ' m-2" title="' . htmlspecialchars($test['description']) . '">' . htmlspecialchars($test['name']) . '</button> ';
         }
     }
 

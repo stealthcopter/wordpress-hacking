@@ -28,6 +28,19 @@ function get_namespaces()
     return $namespaces;
 }
 
+function get_full_callback_name($callback) {
+    if (is_array($callback) && isset($callback[1])) {
+        $class_name = is_object($callback[0]) ? get_class($callback[0]) : $callback[0];
+        $method_name = $callback[1];
+        return $class_name . '::' . $method_name;
+    } elseif (is_string($callback)) {
+        return $callback;
+    } else {
+        return 'unknown_function';
+    }
+}
+
+
 function get_rest_routes($DEFAULT_ROUTES, $show_defaults)
 {
     global $wp_rest_server;
@@ -48,40 +61,45 @@ function get_rest_routes($DEFAULT_ROUTES, $show_defaults)
 
     // Get all registered REST routes
     $routes = $wp_rest_server->get_routes();
+    $seen_routes = [];
+
     foreach ($routes as $route => $callbacks) {
 
         if (!$show_defaults && in_array($route, $DEFAULT_ROUTES)) {
             continue;
         }
 
-        foreach ($callbacks as $callback) {
-
-            // Determine which namespace the route belongs to
-            $namespace = 'none'; // Default to unknown
-            foreach ($namespaces as $ns) {
-                // Check if the route starts with the namespace (either exactly or followed by "/")
-                if (strpos($route, "/$ns") === 0) {
-                    $namespace = $ns;
-                    break;
-                }
+        // Determine which namespace the route belongs to
+        $namespace = 'none'; // Default to unknown
+        foreach ($namespaces as $ns) {
+            // Check if the route starts with the namespace (either exactly or followed by "/")
+            if (strpos($route, "/$ns") === 0) {
+                $namespace = $ns;
+                break;
             }
+        }
+
+        foreach ($callbacks as $callback) {
 
             // Check if methods are defined and retrieve them as strings
             $method_string = implode(', ', array_keys($callback['methods']));
 
-            // Check if the callback is an array (method inside a class)
-            if (is_array($callback['callback']) && isset($callback['callback'][1])) {
-                $class_name = is_object($callback['callback'][0])
-                    ? get_class($callback['callback'][0])
-                    : $callback['callback'][0];
-                $method_name = $callback['callback'][1];
-                $full_callback_name = $class_name . '::' . $method_name;
-            } else if (is_string($callback['callback'])) {
-                // It's a regular function
-                $full_callback_name = $callback['callback'];
-            } else {
-                $full_callback_name = 'unknown_function';
+            $full_callback_name = get_full_callback_name($callback['callback']);
+
+            if (isset($callback['permission_callback'])){
+                $full_permission_callback_name = get_full_callback_name($callback['permission_callback']);
             }
+            else{
+                $full_permission_callback_name = 'none';
+            }
+
+            // For de-duplication
+            $callback_id = $method_string . '_' . $full_callback_name;
+            if (in_array($callback_id, $seen_routes)) {
+                // Skip this callback if we've already processed it
+                continue;
+            }
+            $seen_routes[] = $callback_id;
 
             // Store the route with the method and callback
             $rest_routes[] = [
@@ -89,7 +107,7 @@ function get_rest_routes($DEFAULT_ROUTES, $show_defaults)
                 'route' => $route,
                 'method' => $method_string,
                 'callback' => $full_callback_name,
-                'permission_callback' => $full_callback_name,
+                'permission_callback' => $full_permission_callback_name,
             ];
         }
     }
@@ -97,6 +115,15 @@ function get_rest_routes($DEFAULT_ROUTES, $show_defaults)
     return $rest_routes;
 }
 
+function print_permissions_badges($route){
+    if ($route['permission_callback'] == 'none'){
+        return "<span class='badge bg-danger ms-2' title='Missing permissions callback!'>No Auth</span>";
+    }
+    elseif ($route['permission_callback'] == '__return_true'){
+        return "<span class='badge bg-danger ms-2' title='Missing permissions callback! (__return_true)'>No Auth</span>";
+    }
+    return '';
+}
 function print_method_badges($route)
 {
     // Define color mapping for each HTTP method
@@ -138,7 +165,8 @@ function print_rest_routes($i, $rest_routes, $namespace)
         $url = add_query_arg('action', $key);
         //  {$route['method']}
         $method_badges = print_method_badges($route);
-        $content .= "<li>$method_badges {$route['route']} → <a href='$url'>{$route['callback']}</a></li>";
+        $extra_badges = print_permissions_badges($route);
+        $content .= "<li>$method_badges {$route['route']} → <a href='$url'>{$route['callback']}</a> $extra_badges</li>";
     }
     $content .= "</ul>";
 
@@ -149,7 +177,7 @@ function print_rest_routes($i, $rest_routes, $namespace)
     }
 
     $show = '';
-    if (!isset($_REQUEST['action']) && count($rest_routes) > 0) {
+    if (!isset($_REQUEST['action']) && $route_count > 0) {
         $show = 'show';
     }
 
@@ -200,10 +228,26 @@ if (isset($_REQUEST['action'])) {
 
     $rest_route = $rest_routes[$_REQUEST['action']];
     $function = $rest_route['callback'];
+    $permission_function = $rest_route['permission_callback'];
+
+    if (!in_array($permission_function, ['unknown_function', 'none', '__return_true'])){
+        echo "<h5>Permission Callback</h5>\n";
+
+        $code_obj = get_function_code($permission_function);
+
+        if ($code_obj) {
+            print_code($code_obj);
+        }
+        else{
+            echo "???";
+        }
+    }
 
     $code_obj = get_function_code($function);
     $code_obj['route'] = $rest_route['route'];
     $code_obj['methods'] = print_method_badges($rest_route);;
+
+    echo "<h5>Callback</h5>\n";
 
     if ($code_obj) {
         print_code($code_obj);

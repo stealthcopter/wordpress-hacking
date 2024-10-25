@@ -15,7 +15,7 @@ if (isset($_REQUEST['api'])){
 
     if ($api === 'do_shortcode'){
 
-        include "inc/code.php";
+        require_once STEALTH_PLUGIN_PATH . "/inc/code.php";
 
         try {
             ob_start();

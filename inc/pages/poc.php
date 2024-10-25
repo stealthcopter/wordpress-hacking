@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
     die('not like this...');
 }
 
-require_once __DIR__ . '/../installer.php';
+require_once STEALTH_PLUGIN_PATH . '/inc/installer.php';
 
 $markdown = '';
 $python = '';

@@ -16,16 +16,16 @@ if (!defined('STEALTH_PLUGIN_PATH')) {
     define('STEALTH_PLUGIN_PATH', __DIR__);
 }
 
-require_once 'inc/loader.php';
+require_once STEALTH_PLUGIN_PATH . '/inc/loader.php';
 
 
 // Load the PHP object gadget
-require_once 'payloads/php_obj.php';
+require_once STEALTH_PLUGIN_PATH . '/payloads/php_obj.php';
 
 if (!function_exists('stealth_render_page')) {
     function stealth_render_page()
     {
-        require_once 'inc/defaults.php';
+        require_once STEALTH_PLUGIN_PATH . '/inc/defaults.php';
         $page = 'index';
         $margin = '';
         if (isset($_REQUEST['stealth_page'])) {
@@ -33,24 +33,24 @@ if (!function_exists('stealth_render_page')) {
             $margin = 'mt-4';
         }
 
-        include 'inc/templates/header.php';
+        include STEALTH_PLUGIN_PATH . '/inc/templates/header.php';
 
         echo "<div class='content $margin'>";
         // You can path traverse here if you like, no stress
-        include "inc/pages/$page.php";
+        include STEALTH_PLUGIN_PATH . "/inc/pages/$page.php";
         echo '</div>';
 
-        include 'inc/templates/footer.php';
+        include STEALTH_PLUGIN_PATH . '/inc/templates/footer.php';
     }
 }
 
 function init_stealth()
 {
-    require_once 'config.php';
-    require_once 'api.php';
+    require_once STEALTH_PLUGIN_PATH . '/config.php';
+    require_once STEALTH_PLUGIN_PATH . '/api.php';
 
-    require_once 'inc/code.php';
-    require_once 'inc/views.php';
+    require_once STEALTH_PLUGIN_PATH . '/inc/code.php';
+    require_once STEALTH_PLUGIN_PATH . '/inc/views.php';
 }
 
 if (is_installed_to_wordpress()) {
