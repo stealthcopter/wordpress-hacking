@@ -16,6 +16,7 @@ const PAGES = [
     "resty" => "resty",
     "upload" => "upload",
     "login" => "login",
+//     "poc" => "poc",
     "options" => "options",
 ];
 ?>
