@@ -2,6 +2,10 @@
 
 Some useful resources for hacking WordPress and it's plugins and themes.
 
+## Plugin
+
+I have written a plugin designed to help dyanamic analysis and hacking of WordPress plugins and themes, this can be found in the [plugin](https://github.com/stealthcopter/wordpress-hacking/tree/plugin) branch in this repo.
+
 ## Reports
 
 The reports directory contains a selection of my publicly disclosed vulnerability reports that were disclosed to bug bounty programs. I've tried to get a good cross-section of different vulnerability types. 
