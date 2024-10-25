@@ -285,6 +285,8 @@ Accept: application/json
         codeElement.textContent = output
         // var myModal = document.getElementById('requestModal')
 
+        Prism.highlightElement(codeElement);
+
         const requestModal = new bootstrap.Modal(document.getElementById('requestModal'));
         requestModal.show();
 
