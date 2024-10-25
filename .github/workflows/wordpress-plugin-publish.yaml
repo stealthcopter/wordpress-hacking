@@ -20,7 +20,7 @@ jobs:
       run: echo "NOW=$(date +'%Y%m%d.%H%M%S')" >> $GITHUB_ENV
 
     - name: Zip stealth folder
-      run: zip -r stealth.zip ./ -x screenshots -x .git -x .github
+      run: zip -r stealth.zip ./ -x "screenshots/*" -x ".git/*" -x ".github/*"
 
     - name: Create GitHub Release
       id: create_release
