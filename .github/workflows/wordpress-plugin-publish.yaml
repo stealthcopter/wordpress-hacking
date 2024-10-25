@@ -2,6 +2,8 @@ name: Release Stealth
 
 on:
   push:
+    branches:
+      - plugin
 
 permissions:
   contents: write  # Ensure write permissions for GITHUB_TOKEN
