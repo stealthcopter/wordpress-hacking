@@ -1,21 +1,71 @@
-# WordPress Hacking
+This set of little helpers for WordPress hacking can either be installed as a plugin or just dumped into the webroot.
 
-Some useful resources for hacking WordPress and it's plugins and themes.
+## Installation Methods
 
-## Reports
+### Manually
 
-The reports directory contains a selection of my publicly disclosed vulnerability reports that were disclosed to bug bounty programs. I've tried to get a good cross-section of different vulnerability types. 
+- Download the [stealth.zip](https://github.com/stealthcopter/wordpress-hacking/releases/latest/download/stealth.zip)
+- Install the plugin from the `/wp-admin/plugin-install.php` page
 
-| CVE            | Vulnerability                               | 📄 Report 🐍 Python PoC 🔗 Blog                                                                                           |
-|----------------|---------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|
-| CVE-2024-30509 | SellKit Subscriber+ Arbitrary File Download | [📄](reports/sellkit-arbitrary-file-download) [🐍](reports/sellkit-arbitrary-file-download/sellkit.py)                    |        
-| CVE-2024-3242  | Brizy Contributor+ Arbitrary File Upload    | [📄](reports/brizy-contributor-rce-2) [🐍](reports/brizy-contributor-rce-2/brizy-rce2.py)                                 |        
-| CVE-2024-4361  | SiteOrigin Contributor+ XSS                 | [📄](reports/siteorigin-panels-xxs)                                                                                       |        
-| CVE-2024-22144 | GoTMLS Unauthenticated RCE                  | [📄](reports/gotmls-rce) [🐍](reports/gotmls-rce/gotmls.py) [🔗](https://sec.stealthcopter.com/cve-2024-22144/)           |        
-| CVE-2024-6386  | Contributor+ SSTI to RCE                    | [📄](reports/sitepress-multilingual-cms-rce/wpml-ssti-rce.md) [🔗](https://sec.stealthcopter.com/wpml-rce-via-twig-ssti/) |
+### WordPress CLI
 
-These 📄 reports are in their original formats when originally submitted. Any mistakes are mine, for prettier versions please see the ones that have linked blog posts 🔗. Where I created a Python proof-of-concept script you will find it in the folder or directly by clicking on 🐍.
+If you have the WordPress CLI installed you can get it running with this one-liner:
 
-## Python Functions
+```
+wp plugin install --activate https://github.com/stealthcopter/wordpress-hacking/releases/latest/download/stealth.zip
+```
 
-Feel free to reuse my Python code to help write you own PoCs, in future I may turn some of the functions into an easy-to-use library.
+### Web Installation Methods
+
+If you don't want to install it as a plugin you can just dump this zip into the webroot and it will try and find `wp-load.php` automatically so it can hook in.
+
+```
+cd /var/www/html
+wget https://github.com/stealthcopter/wordpress-hacking/releases/latest/download/stealth.zip
+unzip stealth.zip
+```
+
+# Usage
+
+Either:
+
+- Navigate to `/stealth` - this only works if permalink structure is set to `posts`
+- Otherwise, navigate to `/wp-content/plugins/stealth` or wherever the code is, to use the tools
+
+## Tools
+
+- **Resty** - find all registered REST routes and display their functions and information.
+
+![resty.png](screenshots/resty.png)
+
+- **Shorty** - find and analyse declared shortcodes
+
+![shorty1.png](screenshots/shorty1.png)
+
+![shorty2.png](screenshots/shorty2.png)
+
+- **Funcy** - find and analyse declared actions
+
+![funcy1.png](screenshots/funcy1.png)
+
+- **Login** - automatically login as other users
+
+![login.png](screenshots/login.png)
+
+- **Gadgets** - LFI and PHPObject injection gadgets
+
+![gadgets.png](screenshots/gadgets.png)
+
+- **Noncy** - Generate nonces
+
+- **Options** - List and filter all options
+- **Upload** - An upload widget to save time creating payloads
+
+# Contributing
+
+If you have an idea for a new feature please create a new issue on GitHub. If you would like to contribute a bug fix, or feature please feel free to fork the repo and submit a PR against this one.
+
+# TODO:
+- View user_meta and other similar key/value tables
+- Create PoC / Write up from plugin name
+- Update feature

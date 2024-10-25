@@ -2,8 +2,6 @@ name: Release Stealth
 
 on:
   push:
-    paths:
-      - 'stealth/**'  # Trigger only if changes are made in the stealth folder
 
 permissions:
   contents: write  # Ensure write permissions for GITHUB_TOKEN
@@ -20,7 +18,7 @@ jobs:
       run: echo "NOW=$(date +'%Y%m%d.%H%M%S')" >> $GITHUB_ENV
 
     - name: Zip stealth folder
-      run: zip -r stealth.zip stealth -x stealth/screenshots
+      run: zip -r stealth.zip ./ -x screenshots
 
     - name: Create GitHub Release
       id: create_release
