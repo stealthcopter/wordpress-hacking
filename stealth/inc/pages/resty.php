@@ -203,7 +203,7 @@ if (isset($_REQUEST['action'])) {
 
     $code_obj = get_function_code($function);
     $code_obj['route'] = $rest_route['route'];
-    $code_obj['methods'] = print_method_badges($rest_route['method']);;
+    $code_obj['methods'] = print_method_badges($rest_route);;
 
     if ($code_obj) {
         print_code($code_obj);
