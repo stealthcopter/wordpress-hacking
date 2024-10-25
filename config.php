@@ -3,7 +3,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
     die( 'not like this...' );
 }
-const STEALTH_URL = 'https://github.com/stealthcopter/wordpress-hacking/tree/main/stealth';
+const STEALTH_URL = 'https://github.com/stealthcopter/wordpress-hacking/tree/plugin';
 const STEALTH_PERMALINK_PATH = '/stealth/';
 
 const PAGES = [
