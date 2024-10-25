@@ -34,6 +34,10 @@ Either:
 
 ## Tools
 
+- **Resty** - find all registered REST routes and display their functions and information.
+
+![resty.png](screenshots/resty.png)
+
 - **Shorty** - find and analyse declared shortcodes
 
 ![shorty1.png](screenshots/shorty1.png)
@@ -53,7 +57,8 @@ Either:
 ![gadgets.png](screenshots/gadgets.png)
 
 - **Noncy** - Generate nonces
-- **Settings** - List and filter all options
+
+- **Options** - List and filter all options
 - **Upload** - An upload widget to save time creating payloads
 
 # Contributing
