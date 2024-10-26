@@ -8,6 +8,9 @@
  * Author URI: https://sec.stealthcopter.com/
  */
 
+// This seems to be needed when using symlinks to host the folder. Stupid PHP.
+opcache_reset();
+
 if (!defined('STEALTH_PLUGIN_FILE')) {
     // We do this nasty shit so we can support loading via symlinked directories without explosions.
     define('STEALTH_PLUGIN_FILE', WP_PLUGIN_DIR . '/' . basename(dirname(__FILE__)) . '/' . basename(__FILE__));

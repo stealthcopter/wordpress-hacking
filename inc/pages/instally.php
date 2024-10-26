@@ -109,7 +109,7 @@ if (!empty($output)) {
                 <div class="input-group">
                     <input class="form-control" id="plugin" type="text" value="<?php echo esc_attr($plugin); ?>"
                            name="plugin"
-                           placeholder="Plugin Name">
+                           placeholder="Plugin Slug or Zip File URL">
                     <input class="btn btn-success" type="submit" value="Install" name="install" title="Install Only">
                     <input class="btn btn-success" type="submit" value="+ Activate" name="install_and_activate"
                            title="Install and Activate">
@@ -136,7 +136,7 @@ if (!empty($output)) {
                 <div class="input-group">
                     <input class="form-control" id="theme" type="text" value="<?php echo esc_attr($theme); ?>"
                            name="theme"
-                           placeholder="Theme Name">
+                           placeholder="Theme Slug or Zip File URL">
                     <input class="btn btn-success" type="submit" value="Install" name="install" title="Install Only">
                     <input class="btn btn-success" type="submit" value="+ Activate" name="install_and_activate"
                            title="Install and Activate">

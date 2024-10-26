@@ -206,7 +206,7 @@ $namespaces = get_namespaces();
 
 ?>
 
-<h5 class="card-title">Functions</h5>
+<h5 class="card-title">REST API Functions</h5>
 <p>Show the currently defined registered REST API routes created with `register_rest_route`. It's a bit barebones atm,
     but aiming to make this a bit more useful that browsing <a href="../wp-json/">/wp-json</a> or <a
             href="../?rest_route=/">/?rest_route=/</a></p><p>Click on the <span class='badge bg-success' style='cursor: pointer;' onclick="alert('yes, just like that. well done.')">badges</span> to get a RAW HTTP request for that endpoint.</p>
@@ -291,9 +291,8 @@ function get_current_auth_cookies(){
 
 
 <script>
-    const url = '<?php echo esc_js(get_site_url()); ?>';
-    const host = `${url.protocol}//${url.host}`;
-    const base_path = url.pathname || '';
+    const url = new URL('<?php echo esc_js(get_site_url()); ?>');
+    const base_path = url.pathname === '/' ? '' : url.pathname;
     const cookies = '<?php echo esc_js(get_current_auth_cookies());?>';
 
     document.querySelectorAll('.method_badge').forEach(badge => {
@@ -312,10 +311,9 @@ function get_current_auth_cookies(){
         let method = data['method'];
 
         var path = base_path + data['route'];
-        let host = data['host'];
         let output =
             `${method} ${path} HTTP/1.1
-Host: ${host}
+Host: ${url.host}
 Cookie: ${cookies}
 Accept: application/json
         `;
