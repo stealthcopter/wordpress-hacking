@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Stealth
- * Plugin URI: https://github.com/stealthcopter/wordpress-hacking/tree/main/stealth
+ * Plugin URI: https://github.com/stealthcopter/wordpress-hacking/tree/plugin
  * Description: Some hacking tools for stuff and things.
  * Version: 0.0.1
  * Author: stealthcopter
