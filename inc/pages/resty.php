@@ -35,6 +35,9 @@ function get_full_callback_name($callback) {
         return $class_name . '::' . $method_name;
     } elseif (is_string($callback)) {
         return $callback;
+    }
+    elseif ($callback instanceof Closure) {
+        return $callback;
     } else {
         return 'unknown_function';
     }
@@ -94,12 +97,14 @@ function get_rest_routes($DEFAULT_ROUTES, $show_defaults)
             }
 
             // For de-duplication
-            $callback_id = $method_string . '_' . $full_callback_name;
-            if (in_array($callback_id, $seen_routes)) {
-                // Skip this callback if we've already processed it
-                continue;
+            if (!$full_callback_name instanceof Closure){
+                $callback_id = $method_string . '_' . $full_callback_name;
+                if (in_array($callback_id, $seen_routes)) {
+                    // Skip this callback if we've already processed it
+                    continue;
+                }
+                $seen_routes[] = $callback_id;
             }
-            $seen_routes[] = $callback_id;
 
             // Store the route with the method and callback
             $rest_routes[] = [
@@ -166,7 +171,9 @@ function print_rest_routes($i, $rest_routes, $namespace)
         //  {$route['method']}
         $method_badges = print_method_badges($route);
         $extra_badges = print_permissions_badges($route);
-        $content .= "<li>$method_badges {$route['route']} → <a href='$url'>{$route['callback']}</a> $extra_badges</li>";
+
+        $function_str = get_printable_function_name($route['callback']);
+        $content .= "<li>$method_badges {$route['route']} → <a href='$url'>{$function_str}</a> $extra_badges</li>";
     }
     $content .= "</ul>";
 

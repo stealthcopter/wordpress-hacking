@@ -41,12 +41,7 @@ function get_function_code($function_name) {
             $code .= $file->current();
         }
 
-        $function_str = $function_name;
-        if ($function_name instanceof Closure) {
-            ob_start();
-            print_r($function_name);
-            $function_str = ob_get_clean();
-        }
+        $function_str = get_printable_function_name($function_name);
 
         // Return the function/closure code
         return [
@@ -91,6 +86,23 @@ function print_code($code_obj, $language='php') {
     else{
         $php_code = $code_obj;
     }
+
+    $php_code = trim($php_code); // Trim empty lines from start/end
+
+
+    // Match the minimum number of leading tabs or spaces across all lines
+    preg_match_all('/^[ \t]*/m', $php_code, $matches);
+    $indentation_levels = array_filter($matches[0], fn($line) => $line !== '');
+
+    // Find the smallest indentation level (minimum number of tabs or spaces)
+    $min_indentation = strlen($indentation_levels ? min($indentation_levels) : '');
+
+    // Remove the smallest indentation level from all lines
+    if ($min_indentation > 0) {
+        $php_code = preg_replace('/^[ \t]{' . $min_indentation . '}/m', '', $php_code);
+    }
+
+
     echo "<pre><code class='language-$language'>" . htmlspecialchars($php_code) . "</code></pre>";
 }
 
@@ -166,4 +178,13 @@ function print_analysis_results($results) {
     print_buttons($categories['protection'], 'btn-success');
     print_buttons($categories['info'], 'btn-warning');
     print_buttons($categories['bug'], 'btn-danger');
+}
+
+
+function get_printable_function_name($function){
+    $function_str = $function;
+    if ($function instanceof Closure) {
+        return "Closure";
+    }
+    return $function_str;
 }

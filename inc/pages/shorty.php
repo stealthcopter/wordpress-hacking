@@ -133,7 +133,7 @@ else{
         echo "<li class='$text_color' title='$title'>{$shortcode} → <a href='$url'>";
         $function_name = get_function_name($shortcode);
         if ($function_name instanceof Closure) {
-            print_r($function_name);
+            echo get_printable_function_name($function_name);
         } else {
             echo get_function_name($shortcode);
         }
