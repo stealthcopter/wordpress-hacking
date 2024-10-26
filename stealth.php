@@ -9,11 +9,12 @@
  */
 
 if (!defined('STEALTH_PLUGIN_FILE')) {
-    define('STEALTH_PLUGIN_FILE', __FILE__);
+    // We do this nasty shit so we can support loading via symlinked directories without explosions.
+    define('STEALTH_PLUGIN_FILE', WP_PLUGIN_DIR . '/' . basename(dirname(__FILE__)) . '/' . basename(__FILE__));
 }
 
 if (!defined('STEALTH_PLUGIN_PATH')) {
-    define('STEALTH_PLUGIN_PATH', __DIR__);
+    define('STEALTH_PLUGIN_PATH', WP_PLUGIN_DIR . '/' . basename(dirname(__FILE__)));
 }
 
 require_once STEALTH_PLUGIN_PATH . '/inc/loader.php';
@@ -25,6 +26,7 @@ require_once STEALTH_PLUGIN_PATH . '/payloads/php_obj.php';
 if (!function_exists('stealth_render_page')) {
     function stealth_render_page()
     {
+
         require_once STEALTH_PLUGIN_PATH . '/inc/defaults.php';
         $page = 'index';
         $margin = '';

@@ -46,18 +46,46 @@ function get_theme_info($slug){
     return $api;
 }
 
+function slug_from_url($url){
+    if (preg_match('/\/([^\/]+?)(-\d+(\.\d+)*|)\.zip$/', $url, $matches)) {
+        $name = $matches[1];
+        return $name; // Outputs: stealth
+    }
+    return null;
+}
+
+function is_remote_file($slug){
+    return (strpos($slug, 'http://') === 0 || strpos($slug, 'https://') === 0);
+}
+
 function install_plugin_by_slug($slug) {
     $output = '';
-    // Get plugin info from WordPress API
-    $api = get_plugin_info($slug);
 
-    if (is_wp_error($api)) {
-        return ["success" => false, "output" => 'Failed to retrieve plugin information'];
+    if (is_remote_file($slug)) {
+        // Installing from URL
+        $download_link = $slug;
+        $slug = slug_from_url($download_link);
+        $api = null;
     }
+    else{
+        // Get plugin info from WordPress API
+        $api = get_plugin_info($slug);
+
+        if (is_wp_error($api)) {
+            return ["success" => false, "output" => 'Failed to retrieve plugin information'];
+        }
+
+        $download_link = $api->download_link;
+    }
+
+    $args = array(
+        'clear_destination' => true, // This will delete the existing plugin folder
+        'overwrite_package' => true, // Optional: this flag ensures overwriting if necessary
+    );
 
     // Set up the plugin upgrader and install the plugin
     $upgrader = new Plugin_Upgrader(new Silent_Upgrader_Skin());
-    $result = $upgrader->install($api->download_link);
+    $result = $upgrader->install($download_link, $args);
 
     if ($result) {
         return ["success" => true, "output" => "Plugin {$slug} installed successfully!", "plugin" => $api];
@@ -67,6 +95,12 @@ function install_plugin_by_slug($slug) {
 }
 
 function activate_plugin_by_slug($slug) {
+    if (is_remote_file($slug)) {
+        // Installing from URL
+        $download_link = $slug;
+        $slug = slug_from_url($download_link);
+    }
+
     $results = '';
     // Get all plugins
     $all_plugins = get_plugins();

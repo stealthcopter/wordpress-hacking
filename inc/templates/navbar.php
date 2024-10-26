@@ -21,19 +21,48 @@ if ( ! defined( 'ABSPATH' ) ) {
                     echo "</li>";
                 }
                 ?>
-                <!--                <li class="nav-item dropdown">-->
-                <!--                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
-                <!--                        Dropdown-->
-                <!--                    </a>-->
-                <!--                    <ul class="dropdown-menu">-->
-                <!--                        <li><a class="dropdown-item" href="#">Action</a></li>-->
-                <!--                        <li><a class="dropdown-item" href="#">Another action</a></li>-->
-                <!--                        <li><hr class="dropdown-divider"></li>-->
-                <!--                        <li><a class="dropdown-item" href="#">Something else here</a></li>-->
-                <!--                    </ul>-->
-                <!--                </li>-->
             </ul>
-            <a class='btn btn-outline-success' href='<?php echo STEALTH_URL;?>' target='_blank'>i</a>
+
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    &#8942;
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="?stealth_page=instally&install_and_activate=1&plugin=<?php echo esc_url(STEALTH_PLUGIN_ZIP_URL);?>">Update</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#" onclick="show_info()">About</a></li>
+                </ul>
+            </div>
+
         </div>
     </div>
 </nav>
+
+
+<div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="infoModalLabel">Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Hello 🥳 this is a collection of WordPress hacking tools that I have found useful for performing dynamic analysis and to help during exploit creation for the purposes of bug bounty. For instructions and more information please refer to <a class='' href='<?php echo STEALTH_URL;?>' target='_blank'>GitHub</a></p>
+
+                <p>If you have a bug to report or an idea for a new feature please create an issue in GitHub <a href="https://github.com/stealthcopter/wordpress-hacking/issues">here</a>.</p>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function show_info(){
+        const requestModal = new bootstrap.Modal(document.getElementById('infoModal'));
+        requestModal.show();
+    }
+</script>
