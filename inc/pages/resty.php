@@ -172,7 +172,7 @@ function print_rest_routes($i, $rest_routes, $namespace)
 
     $title = "Namespace: $namespace (" . $route_count . ")";
 
-    if (empty($content)) {
+    if ($route_count == 0) {
         $content = "No REST API routes defined";
     }
 
