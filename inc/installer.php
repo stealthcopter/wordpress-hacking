@@ -130,16 +130,27 @@ function activate_plugin_by_slug($slug) {
 
 
 function install_theme_by_slug($slug) {
-    // Get theme info from WordPress API
-    $api = get_theme_info($slug);
 
-    if (is_wp_error($api)) {
-        return ["success" => false, "output" => 'Failed to retrieve theme information'];
+    if (is_remote_file($slug)) {
+        // Installing from URL
+        $download_link = $slug;
+        $slug = slug_from_url($download_link);
+        $api = null;
+    }
+    else{
+        // Get theme info from WordPress API
+        $api = get_theme_info($slug);
+
+        if (is_wp_error($api)) {
+            return ["success" => false, "output" => 'Failed to retrieve theme information'];
+        }
+
+        $download_link = $api->download_link;
     }
 
     // Set up the theme upgrader and install the theme
     $upgrader = new Theme_Upgrader(new Silent_Upgrader_Skin());
-    $result = $upgrader->install($api->download_link);
+    $result = $upgrader->install($download_link);
 
     if ($result) {
         return ["success" => true, "output" => "Theme {$slug} installed successfully!", "theme" => $api];
@@ -149,6 +160,12 @@ function install_theme_by_slug($slug) {
 }
 
 function activate_theme_by_slug($slug) {
+    if (is_remote_file($slug)) {
+        // Installing from URL
+        $download_link = $slug;
+        $slug = slug_from_url($download_link);
+    }
+
     // Check if the theme is installed
     if (wp_get_theme($slug)->exists()) {
         // Activate the theme
