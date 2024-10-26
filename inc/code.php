@@ -65,6 +65,7 @@ function print_code($code_obj, $language='php') {
             'action' => 'Action',
             'route' => 'Route',
             'methods' => 'Method(s)',
+            'parameters' => 'Parameter(s)',
             'function_name' => 'Function',
             'file' => 'Filename',
             'lines' => 'Lines',
@@ -73,7 +74,7 @@ function print_code($code_obj, $language='php') {
         $data = [];
 
         foreach ($mapping as $key => $label) {
-            if (isset($code_obj[$key])) {
+            if (!empty($code_obj[$key])) {
                 $data[$label] = copyable($code_obj[$key]);
             }
         }

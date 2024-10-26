@@ -61,6 +61,9 @@ function show_results($title, $data, $mini=false, $type='success')
 }
 
 function copyable($text){
+    if (is_array($text)){
+        $text = implode(', ', $text);
+    }
     return "<span class='copy-text'>$text</span>";
 }
 

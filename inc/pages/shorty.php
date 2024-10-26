@@ -137,7 +137,7 @@ else{
         } else {
             echo get_function_name($shortcode);
         }
-        echo "</a> <small >(".count_attributes($shortcode)." attributes)</small></li>";
+        echo "</a> <small>(".count_attributes($shortcode)." attributes)</small></li>";
     }
     echo "</ul>";
     echo "<p>Select a shortcode from the list above to view its details.</p>";

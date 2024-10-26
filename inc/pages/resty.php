@@ -43,6 +43,29 @@ function get_full_callback_name($callback) {
     }
 }
 
+function extract_parameters($php_code)
+{
+    $matches = [];
+
+    if (empty($php_code)) {
+        return $matches;
+    }
+
+    if (!is_string($php_code)) {
+        return $matches;
+    }
+
+    $used_shortcode_atts = false;
+
+    // Regex to find `$atts['something']`
+    preg_match_all('/(\$request\s*\[|->get_param\()\s*["\']([\w-]+)["\']/', $php_code, $parameter_matches);
+    if (!empty($parameter_matches[2])) {
+        $matches = array_unique($parameter_matches[2]);  // Get unique attributes and flatten the array
+    }
+
+    return $matches;
+}
+
 
 function get_rest_routes($DEFAULT_ROUTES, $show_defaults)
 {
@@ -106,13 +129,20 @@ function get_rest_routes($DEFAULT_ROUTES, $show_defaults)
                 $seen_routes[] = $callback_id;
             }
 
+            $code = get_function_code($full_callback_name);
+            $permission_code = get_function_code($full_permission_callback_name);
+
+            $code['parameters'] = extract_parameters($code['code']);
+
             // Store the route with the method and callback
             $rest_routes[] = [
                 'namespace' => $namespace,
                 'route' => $route,
                 'method' => $method_string,
                 'callback' => $full_callback_name,
+                'callback_code' =>$code,
                 'permission_callback' => $full_permission_callback_name,
+                'permission_callback_code' => $permission_code
             ];
         }
     }
@@ -149,6 +179,7 @@ function print_method_badges($route)
         $data = [
             'method' => $method,
             'route' => $route['route'],
+            'parameters' => $route['callback_code']['parameters'] ?? [],
         ];
         $data_json = esc_attr(json_encode($data));
         $color = isset($method_colors[$method]) ? $method_colors[$method] : 'secondary'; // Default to 'secondary' if method isn't mapped
@@ -160,11 +191,15 @@ function print_method_badges($route)
 function print_rest_routes($i, $rest_routes, $namespace)
 {
 
+    $is_requested_action = false;
     $route_count = 0;
     $content = "<ul class='ps-0 mb-0' style='list-style-type: none;'>";
     foreach ($rest_routes as $key => $route) {
         if ($route['namespace'] != $namespace) {
             continue;
+        }
+        if (isset($_REQUEST['action']) && $key == $_REQUEST['action']){
+            $is_requested_action = true;
         }
         $route_count++;
         $url = add_query_arg('action', $key);
@@ -172,8 +207,13 @@ function print_rest_routes($i, $rest_routes, $namespace)
         $method_badges = print_method_badges($route);
         $extra_badges = print_permissions_badges($route);
 
+        $parameters = '';
+        if (isset($route['callback_code']) && !empty($route['callback_code']['parameters'])){
+            $parameters = '- <small>' . count($route['callback_code']['parameters']) . ' parameters</small>';
+        }
+
         $function_str = get_printable_function_name($route['callback']);
-        $content .= "<li>$method_badges {$route['route']} → <a href='$url'>{$function_str}</a> $extra_badges</li>";
+        $content .= "<li>$method_badges {$route['route']} → <a href='$url'>{$function_str}</a> $extra_badges $parameters</li>";
     }
     $content .= "</ul>";
 
@@ -184,7 +224,7 @@ function print_rest_routes($i, $rest_routes, $namespace)
     }
 
     $show = '';
-    if (!isset($_REQUEST['action']) && $route_count > 0) {
+    if ($is_requested_action || (!isset($_REQUEST['action']) && $route_count > 0)) {
         $show = 'show';
     }
 
@@ -240,24 +280,21 @@ if (isset($_REQUEST['action'])) {
     if (!in_array($permission_function, ['unknown_function', 'none', '__return_true'])){
         echo "<h5>Permission Callback</h5>\n";
 
-        $code_obj = get_function_code($permission_function);
-
-        if ($code_obj) {
-            print_code($code_obj);
+        if ($rest_route['permission_callback_code']) {
+            print_code($rest_route['permission_callback_code']);
         }
         else{
             echo "???";
         }
     }
 
-    $code_obj = get_function_code($function);
     $code_obj['route'] = $rest_route['route'];
     $code_obj['methods'] = print_method_badges($rest_route);;
 
     echo "<h5>Callback</h5>\n";
 
-    if ($code_obj) {
-        print_code($code_obj);
+    if ($rest_route['callback_code']) {
+        print_code($rest_route['callback_code']);
     } else {
         $msg = 'Could not find function through Reflection 🥲';
         echo $msg;
@@ -316,19 +353,32 @@ function get_current_auth_cookies(){
     function show_raw_http_request(data) {
         console.log(data)
         let method = data['method'];
+        let parameters = data['parameters'];
 
-        var path = base_path + data['route'];
+        let body = ''
+
+        let queryString = Object.values(parameters).map(key => `${key}=1`).join('&');
+
+        let path = base_path + data['route'];
+        let contentType = '';
+
+        if (method === 'GET'){
+            path = base_path + data['route'] + '?' + queryString;
+        }
+        else{
+            contentType = 'Content-Type: application/x-www-form-urlencoded\n'
+            body = `
+${queryString}`
+        }
+
+        console.log(parameters)
+
         let output =
             `${method} ${path} HTTP/1.1
 Host: ${url.host}
 Cookie: ${cookies}
 Accept: application/json
-        `;
-
-        if (method != 'GET'){
-            output += `
-<BODY GOES HERE>`
-        }
+${contentType}${body}`;
 
         const codeElement = document.getElementById('raw_request_code')
         codeElement.textContent = output
@@ -338,8 +388,6 @@ Accept: application/json
 
         const requestModal = new bootstrap.Modal(document.getElementById('requestModal'));
         requestModal.show();
-
-
     }
 
 </script>
