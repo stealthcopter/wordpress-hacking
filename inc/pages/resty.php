@@ -4,12 +4,6 @@ if (!defined('ABSPATH')) {
     die('not like this...');
 }
 
-// TODO: Show permissions callback
-// TODO: Highlight permissions __return_true
-// TODO: Annotate for nonce check, current_user_can
-// TODO: C&P http request
-// TODO: Toggle cookie for http request
-// TODO: Show link for get requests
 function get_namespaces()
 {
     global $wp_rest_server;

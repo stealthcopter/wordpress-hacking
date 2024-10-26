@@ -23,6 +23,8 @@ $show_defaults = get_show_defaults();
 
     <!-- Prism.js CSS for code highlighting -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet"/>
+
 
     <style>
         /* Toast container in bottom-right corner */
