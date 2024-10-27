@@ -74,7 +74,6 @@ function count_attributes($shortcode){
 
 global $shortcode_tags;
 $show_defaults = $_SESSION['show_defaults'];
-$DEFAULT_SHORTCODES = ['wp_caption', 'caption', 'gallery', 'playlist', 'audio', 'video', 'embed'];
 
 $old_error_reporting = error_reporting();
 // Turn on all errors, warnings, and notices

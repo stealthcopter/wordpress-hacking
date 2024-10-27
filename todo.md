@@ -1,8 +1,10 @@
 
 # General
 - Code highlight
-  - Sources (user input)
-  - Sinks (dangerous functions)
+  - Complete Sources (user input)
+  - Complete Sinks (dangerous functions)
+  - Reference wpctf.org
+  - Hover text to explain more info
 
 # Info
 - Add WP info

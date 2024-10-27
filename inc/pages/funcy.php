@@ -94,8 +94,6 @@ function print_actions($i, $all_actions, $prefix)
     <?php
 }
 
-$DEFAULT_ACTIONS = ['wp_ajax_save-widget', 'wp_ajax_widgets-order', 'wp_ajax_add-category', 'wp_ajax_add-post_tag', 'wp_ajax_add-nav_menu', 'wp_ajax_add-link_category', 'wp_ajax_add-post_format', 'wp_ajax_add-wp_theme', 'wp_ajax_add-wp_template_part_area', 'wp_ajax_add-wp_pattern_category'];
-
 $show_defaults = $_SESSION['show_defaults'];
 $actions = get_all_actions($DEFAULT_ACTIONS, $show_defaults);
 

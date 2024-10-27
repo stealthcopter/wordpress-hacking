@@ -1,5 +1,7 @@
 <?php
 
+// Where are you WordPress??? imma find ya!
+
 if (defined( 'ABSPATH' ) ) {
     // We are probably loaded from WordPress
 } else {

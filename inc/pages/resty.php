@@ -299,10 +299,10 @@ if (isset($_REQUEST['action'])) {
 function get_current_auth_cookies(){
     $auth_cookies = '';
     if ( isset( $_COOKIE[LOGGED_IN_COOKIE] ) ) {
-        $auth_cookies .= $_COOKIE[LOGGED_IN_COOKIE];
+        $auth_cookies .= LOGGED_IN_COOKIE . '='.$_COOKIE[LOGGED_IN_COOKIE];
     }
     if ( isset( $_COOKIE[AUTH_COOKIE] ) ) {
-        $auth_cookies .= ( $auth_cookies ? '; ' : '' ) . $_COOKIE[AUTH_COOKIE];
+        $auth_cookies .= ( $auth_cookies ? '; ' : '' ) . AUTH_COOKIE . '='. $_COOKIE[AUTH_COOKIE];
     }
     return $auth_cookies;
 }

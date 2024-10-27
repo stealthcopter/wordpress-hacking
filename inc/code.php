@@ -90,19 +90,7 @@ function print_code($code_obj, $language='php') {
 
     $php_code = trim($php_code); // Trim empty lines from start/end
 
-
-    // Match the minimum number of leading tabs or spaces across all lines
-    preg_match_all('/^[ \t]*/m', $php_code, $matches);
-    $indentation_levels = array_filter($matches[0], fn($line) => $line !== '');
-
-    // Find the smallest indentation level (minimum number of tabs or spaces)
-    $min_indentation = strlen($indentation_levels ? min($indentation_levels) : '');
-
-    // Remove the smallest indentation level from all lines
-    if ($min_indentation > 0) {
-        $php_code = preg_replace('/^[ \t]{' . $min_indentation . '}/m', '', $php_code);
-    }
-
+    // TODO: Deindent code if it's all indented by a uniform amount
 
     echo "<pre><code class='language-$language'>" . htmlspecialchars($php_code) . "</code></pre>";
 }

@@ -1,5 +1,34 @@
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) {
+    die( 'not like this...' );
+}
+
+// Define sets of default WordPress things that we may want to ignore so we can focus on the non-built-in functionality.
+
+$DEFAULT_SHORTCODES = [
+    'audio',
+    'caption',
+    'embed',
+    'gallery',
+    'playlist',
+    'video',
+    'wp_caption',
+];
+
+$DEFAULT_ACTIONS = [
+    'wp_ajax_add-category',
+    'wp_ajax_add-link_category',
+    'wp_ajax_add-nav_menu',
+    'wp_ajax_add-post_tag',
+    'wp_ajax_add-post_format',
+    'wp_ajax_add-wp_template_part_area',
+    'wp_ajax_add-wp_theme',
+    'wp_ajax_add-wp_pattern_category',
+    'wp_ajax_save-widget',
+    'wp_ajax_widgets-order',
+];
+
 $DEFAULT_ROUTES = [
     '/',
     '/batch/v1',
