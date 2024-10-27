@@ -1,4 +1,5 @@
 ->get_param
 \bfilter_input\b
 (add|remove|get)_query_arg
-\$_(GET|POST|REQUEST|FILES|COOKIE|SERVER)
+\$_(GET|POST|REQUEST|FILES|COOKIE|SERVER)\s*\[
+\$request\s*\[

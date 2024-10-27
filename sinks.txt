@@ -28,4 +28,3 @@
 \bload_template\b
 \bwp_set_current_user\b
 \bwp_set_auth_cookie\b
-\brest_ensure_response\b
