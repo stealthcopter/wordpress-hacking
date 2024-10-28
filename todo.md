@@ -9,6 +9,10 @@
 # Info
 - Add WP info
 
+# Instally
+- Make AJAX via API
+- Allow comma seperated lists for speedy++
+
 # Gadgets
 - Auto generate serialized php obj
 - Allow updating?

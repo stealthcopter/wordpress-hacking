@@ -1,5 +1,7 @@
 This set of little helpers for WordPress hacking can either be installed as a plugin or just dumped into the webroot.
 
+⚠️ Warning: You probably shouldn't install this on a production environment as it could easily be abused by an attacker.
+
 ## Installation Methods
 
 ### Manually
