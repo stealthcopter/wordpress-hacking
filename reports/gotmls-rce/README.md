@@ -1,3 +1,10 @@
+# Post Report Info
+
+- Link: https://patchstack.com/database/vulnerability/gotmls/wordpress-anti-malware-security-and-brute-force-firewall-plugin-4-21-96-unauthenticated-predictable-nonce-brute-force-leading-to-rce-vulnerability
+- CVE: 2024-22144
+- Bounty: 270 AXP
+
+
 # gotmls-rce
 
 Unauthenticated Remote Code Execution (RCE) in the [Anti-Malware Security and Brute-Force Firewall](https://en-gb.wordpress.org/plugins/gotmls/) (GOTMLS) WordPress Plugin by chaining multiple vulnerabilities including unprotected API access, insufficient randomness, insecure design and improper sanitization of data.

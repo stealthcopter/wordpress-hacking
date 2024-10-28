@@ -2,6 +2,7 @@
 
 - Link: https://patchstack.com/database/vulnerability/sellkit/wordpress-sellkit-plugin-1-8-1-arbitrary-file-download-vulnerability
 - CVE: 2024-30509
+- Bounty: 11.25 AXP
 
 # SellKit Arbitrary File Download
 
