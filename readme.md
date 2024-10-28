@@ -67,7 +67,5 @@ Either:
 
 If you have an idea for a new feature please create a new issue on GitHub. If you would like to contribute a bug fix, or feature please feel free to fork the repo and submit a PR against this one.
 
-# TODO:
-- View user_meta and other similar key/value tables
-- Create PoC / Write up from plugin name
-- Update feature
+# TODO
+See the [todo.md](todo.md) file for a brain dump of things that are planned.
