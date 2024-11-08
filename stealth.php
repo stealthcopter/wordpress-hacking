@@ -64,7 +64,9 @@ if (is_installed_to_wordpress()) {
     add_action('parse_request', 'stealth_url_handler');
     function stealth_url_handler($query_args)
     {
-        if (strstr($_SERVER["REQUEST_URI"], STEALTH_PERMALINK_PATH)) {
+        $requestPath = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+        $url = trailingslashit($requestPath);
+        if (strstr($url, STEALTH_PERMALINK_PATH)) {
             // Intercept
             stealth_render_page();
             die();
