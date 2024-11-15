@@ -11,6 +11,8 @@
 // This seems to be needed when using symlinks to host the folder. Stupid PHP.
 opcache_reset();
 
+require_once 'inc/loader.php';
+
 if (!defined('STEALTH_PLUGIN_FILE')) {
     // We do this nasty shit so we can support loading via symlinked directories without explosions.
     define('STEALTH_PLUGIN_FILE', WP_PLUGIN_DIR . '/' . basename(dirname(__FILE__)) . '/' . basename(__FILE__));
@@ -19,9 +21,6 @@ if (!defined('STEALTH_PLUGIN_FILE')) {
 if (!defined('STEALTH_PLUGIN_PATH')) {
     define('STEALTH_PLUGIN_PATH', WP_PLUGIN_DIR . '/' . basename(dirname(__FILE__)));
 }
-
-require_once STEALTH_PLUGIN_PATH . '/inc/loader.php';
-
 
 // Load the PHP object gadget
 require_once STEALTH_PLUGIN_PATH . '/payloads/php_obj.php';
