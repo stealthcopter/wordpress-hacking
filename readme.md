@@ -2,9 +2,13 @@
 
 Some useful resources for hacking WordPress and it's plugins and themes.
 
+## Bug Bounty
+
+If you're passionate about finding and reporting WordPress vulnerabilities, consider joining these bug bounty programs: [Wordfence](https://www.wordfence.com/res/BTMF4ED7ERDM) and [Patchstack](https://patchstack.com/bug-bounty/). Signing up through my Wordfence link gives me a small bonus when you report 5 vulns, helping support my work on tools and resources for the community. Thank you!
+
 ## Plugin
 
-I have written a plugin designed to help dyanamic analysis and hacking of WordPress plugins and themes, this can be found in the [plugin](https://github.com/stealthcopter/wordpress-hacking/tree/plugin) branch in this repo.
+I have written a plugin designed to help dynamic analysis and hacking of WordPress plugins and themes, this can be found in the [plugin](https://github.com/stealthcopter/wordpress-hacking/tree/plugin) branch in this repo.
 
 ## Reports
 
