@@ -25,6 +25,7 @@ The reports directory contains a selection of my publicly disclosed vulnerabilit
 | CVE-2024-5153  | $361      | Starlar Elementor Addons Arbitrary Folder Deletion       | [📄](reports/startklar-elmentor-forms-extwidgets-arbitrary-folder-deletion) [🐍](reports/startklar-elmentor-forms-extwidgets-arbitrary-folder-deletion/exploit.py) |
 | CVE-2024-52376 | 60 AXP    | Boat Rental System Unauthenticated Arbitrary File Upload | [📄](reports/boat-rental-system-arb-file-upload) [🐍](reports/boat-rental-system-arb-file-upload/exploit.py)                                                       |
 | CVE-2024-50477 | 58.8 AXP  | Stacks Mobile App Unauthenticated Privileged Escalation  | [📄](reports/stacks-mobile-app-builder-priv-esc/stacks-mobile-app-builder-priv-esc.md)                                                                             |
+| CVE-2025-0366  | $782  | Jupiterx Core Contributor+ SVG to RCE                    | [📄](reports/jupiterx-rce/jupiterx-core-remote-code-execution.md) [🐍](reports/jupiterx-rce/jupiterx-core-rce.py) [🔗](https://sec.stealthcopter.com/jupiterx-chaining-svg-to-rce/)                                                                            |
 
 These 📄 reports are in their original formats when originally submitted. Any mistakes are mine, for prettier versions please see the ones that have linked blog posts 🔗. Where I created a Python proof-of-concept script you will find it in the folder or directly by clicking on 🐍.
 
