@@ -111,7 +111,7 @@ function get_shortcodes($defaults_to_ignore, $show_defaults) {
     return array_diff_key($shortcode_tags, array_flip($defaults_to_ignore));
 }
 
-$shortcodes = get_shortcodes($DEFAULT_SHORTCODES, $show_defaults);
+$shortcodes = get_shortcodes($DEFAULT_SHORTCODES['default'], $show_defaults);
 
 echo show_defaults_toggle();
 
@@ -124,10 +124,15 @@ else{
     foreach ($shortcodes as $shortcode => $function) {
         $text_color = '';
         $title ='';
-        if (in_array($shortcode, $DEFAULT_SHORTCODES)){
-            $text_color = 'text-secondary';
-            $title = 'Built-in WordPress Shortcode';
+
+        foreach ($DEFAULT_SHORTCODES as $name => $shortcodes) {
+            if (in_array($shortcode, $shortcodes)) {
+                $text_color = $PLUGIN_COLOR_MAP[$name] ?? 'text-default';
+                $title = ucfirst($name) . ' Shortcode';
+                break;
+            }
         }
+
         $url = add_query_arg('shortcode', $shortcode);
         echo "<li class='$text_color' title='$title'>{$shortcode} → <a href='$url'>";
         $function_name = get_function_name($shortcode);

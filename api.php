@@ -1,4 +1,4 @@
-<?php
+        <?php
 
 if ( ! defined( 'ABSPATH' ) ) {
     die( 'not like this...' );

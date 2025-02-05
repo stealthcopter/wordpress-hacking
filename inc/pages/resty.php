@@ -207,7 +207,7 @@ function print_rest_routes($i, $rest_routes, $namespace)
         }
 
         $function_str = get_printable_function_name($route['callback']);
-        $content .= "<li>$method_badges {$route['route']} → <a href='$url'>{$function_str}</a> $extra_badges $parameters</li>";
+        $content .= "<li>$method_badges ".htmlentities($route['route'])." → <a href='$url'>{$function_str}</a> $extra_badges $parameters</li>";
     }
     $content .= "</ul>";
 

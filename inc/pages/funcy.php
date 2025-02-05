@@ -4,7 +4,14 @@ if ( ! defined( 'ABSPATH' ) ) {
     die( 'not like this...' );
 }
 
-function get_all_actions($DEFAULT_ACTIONS, $show_defaults)
+function load_admin(){
+    include ABSPATH . '/wp-admin/includes/admin.php';
+    define('WP_ADMIN', true);
+}
+
+load_admin();
+
+function get_all_actions($defaults, $show_defaults)
 {
     global $wp_filter;
 
@@ -13,7 +20,7 @@ function get_all_actions($DEFAULT_ACTIONS, $show_defaults)
     // Loop through the $wp_filter to find all actions
     foreach ($wp_filter as $key => $value) {
 
-        if (!$show_defaults && in_array($key, $DEFAULT_ACTIONS)) {
+        if (!$show_defaults && in_array($key, $defaults)) {
             continue;
         }
 
@@ -43,6 +50,7 @@ function get_all_actions($DEFAULT_ACTIONS, $show_defaults)
 
 function print_actions($i, $all_actions, $prefix)
 {
+    global $DEFAULT_ACTIONS, $PLUGIN_COLOR_MAP;
     $actions = [];
 
     // Filter only specific actions matching the prefix given
@@ -62,8 +70,20 @@ function print_actions($i, $all_actions, $prefix)
 
     $content = "";
     foreach ($actions as $action => $function) {
+
+        $text_color = '';
+        $li_title ='';
+
+        foreach ($DEFAULT_ACTIONS as $name => $def_actions) {
+            if (in_array($action, $def_actions)) {
+                $text_color = $PLUGIN_COLOR_MAP[$name] ?? 'text-default';
+                $li_title = ucfirst($name) . ' Action';
+                break;
+            }
+        }
+
         $url = add_query_arg('action', $action);
-        $content .= "<li>{$action} → <a href='$url'>$function</a></li>";
+        $content .= "<li class='${text_color}' title='${li_title}'>{$action} → <a href='$url'>$function</a></li>";
     }
 
     if (empty($content)) {
@@ -95,8 +115,7 @@ function print_actions($i, $all_actions, $prefix)
 }
 
 $show_defaults = $_SESSION['show_defaults'];
-$actions = get_all_actions($DEFAULT_ACTIONS, $show_defaults);
-
+$actions = get_all_actions($DEFAULT_ACTIONS['default'], $show_defaults);
 ?>
 
     <h5 class="card-title">Functions</h5>
@@ -104,10 +123,12 @@ $actions = get_all_actions($DEFAULT_ACTIONS, $show_defaults);
 <?php echo show_defaults_toggle(); ?>
     <div class="accordion accordion-flush" id="accordionExample">
         <?php
+
         print_actions(0, $actions, 'wp_ajax_nopriv_');
         print_actions(1, $actions, 'wp_ajax_');
         print_actions(2, $actions, 'admin_post_nopriv_');
         print_actions(3, $actions, 'admin_post');
+
         ?>
     </div>
 

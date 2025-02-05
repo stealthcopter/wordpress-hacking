@@ -11,7 +11,7 @@ function what_functions_are_defined_here($prefix){
     // Filter user-defined functions by the prefix
     if (isset($prefix)){
         $matching_functions = array_filter($all_functions['user'], function($function) use ($prefix) {
-            return strpos($function, $prefix) === 0;
+            return strpos($function, $prefix) !== false;
         });
     }
     else{

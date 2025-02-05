@@ -36,18 +36,34 @@ $show_defaults = get_show_defaults();
         }
 
         .toast-header-success {
-            background-color: #28a745; /* Bootstrap success color */
+            background-color: #28a745;
             color: white;
         }
 
         .toast-header-error {
-            background-color: #dc3545; /* Bootstrap danger color */
+            background-color: #dc3545;
             color: white;
         }
 
         .toast-header-info {
-            background-color: #17a2b8; /* Bootstrap info color */
+            background-color: #17a2b8;
             color: white;
+        }
+
+        .text-purple {
+            color: #9B5DE5;
+        }
+        .text-yellow {
+            color: #FACC15;
+        }
+        .text-blue {
+            color: #3B82F6;
+        }
+        .text-red {
+            color: #F43F5E;
+        }
+        .text-teal {
+            color: #14B8A6;
         }
     </style>
 
