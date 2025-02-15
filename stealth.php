@@ -30,6 +30,8 @@ if (!function_exists('stealth_render_page')) {
     {
 
         require_once STEALTH_PLUGIN_PATH . '/inc/defaults.php';
+        require_once STEALTH_PLUGIN_PATH . '/inc/init.php';
+
         $page = 'index';
         $margin = '';
         if (isset($_REQUEST['stealth_page'])) {
@@ -54,6 +56,9 @@ function init_stealth()
     require_once STEALTH_PLUGIN_PATH . '/api.php';
 
     require_once STEALTH_PLUGIN_PATH . '/inc/code.php';
+    require_once STEALTH_PLUGIN_PATH . '/inc/shortcodes.php';
+    require_once STEALTH_PLUGIN_PATH . '/inc/rest.php';
+
     require_once STEALTH_PLUGIN_PATH . '/inc/views.php';
 }
 

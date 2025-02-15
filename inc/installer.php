@@ -59,6 +59,7 @@ function is_remote_file($slug){
 }
 
 function install_plugin_by_slug($slug) {
+    $slug = trim($slug);
     $output = '';
 
     if (is_remote_file($slug)) {
@@ -95,6 +96,7 @@ function install_plugin_by_slug($slug) {
 }
 
 function activate_plugin_by_slug($slug) {
+    $slug = trim($slug);
     if (is_remote_file($slug)) {
         // Installing from URL
         $download_link = $slug;
@@ -130,6 +132,7 @@ function activate_plugin_by_slug($slug) {
 
 
 function install_theme_by_slug($slug) {
+    $slug = trim($slug);
 
     if (is_remote_file($slug)) {
         // Installing from URL
@@ -160,6 +163,8 @@ function install_theme_by_slug($slug) {
 }
 
 function activate_theme_by_slug($slug) {
+    $slug = trim($slug);
+
     if (is_remote_file($slug)) {
         // Installing from URL
         $download_link = $slug;

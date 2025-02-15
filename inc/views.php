@@ -105,8 +105,6 @@ function get_color_for_role($role) {
 }
 
 function get_show_defaults() {
-    session_start(); // Start the session
-
     // Check if the GET param is set, else use the session value
     if (isset($_GET['show_defaults'])) {
         // Set the session based on GET param

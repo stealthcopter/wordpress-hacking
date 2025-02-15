@@ -3,6 +3,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
     die( 'not like this...' );
 }
+
 ?>
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary pb-0">
@@ -16,8 +17,18 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <?php
                 foreach (PAGES as $name => $desc) {
                     $active = ($page == $name) ? "active" : "";
+                    $badge = '';
+                    if ($name == 'funcy') {
+                        $badge = ($ACTION_COUNT > 0) ? "<span class='badge rounded-pill bg-primary ms-1'>$ACTION_COUNT</span>" : "";
+                    }
+                    else if ($name == 'shorty') {
+                        $badge = ($SHORTCODE_COUNT > 0) ? "<span class='badge rounded-pill bg-primary ms-1'>$SHORTCODE_COUNT</span>" : "";
+                    }
+                    else if ($name == 'resty') {
+                        $badge = ($ROUTE_COUNT > 0) ? "<span class='badge rounded-pill bg-primary ms-1'>$ROUTE_COUNT</span>" : "";
+                    }
                     echo "<li class='nav-item'>";
-                    echo "<a class='nav-link $active' href='?stealth_page=$name' title='$desc'>$name</a>";
+                    echo "<a class='nav-link $active' href='?stealth_page=$name' title='$desc'>$name$badge</a>";
                     echo "</li>";
                 }
                 ?>

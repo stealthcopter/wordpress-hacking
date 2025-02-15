@@ -4,8 +4,6 @@ if ( ! defined( 'ABSPATH' ) ) {
     die( 'not like this...' );
 }
 
-$show_defaults = get_show_defaults();
-
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">

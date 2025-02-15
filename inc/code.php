@@ -4,6 +4,61 @@ if ( ! defined( 'ABSPATH' ) ) {
     die( 'not like this...' );
 }
 
+function get_all_actions($show_defaults)
+{
+    global $wp_filter;
+    global $DEFAULT_ACTIONS;
+    global $DEFAULT_FUNCTIONS;
+
+    $defaults = $DEFAULT_ACTIONS['default'];
+
+    $ajax_actions = [];
+
+    // Loop through the $wp_filter to find all actions
+    foreach ($wp_filter as $key => $value) {
+
+        if (
+            strpos($key, 'wp_ajax_') !== 0 &&
+            strpos($key, 'admin_post') !== 0 &&
+            $key != 'admin_init' &&
+            $key != 'init'
+        )
+        {
+            continue;
+        }
+
+        if (!$show_defaults && in_array($key, $defaults)) {
+            continue;
+        }
+
+        foreach ($value->callbacks as $priority => $callbacks) {
+            foreach ($callbacks as $action => $details) {
+                if (is_array($details['function']) && isset($details['function'][1])) {
+                    // It's a method inside a class
+                    $class_name = is_object($details['function'][0])
+                        ? get_class($details['function'][0])
+                        : $details['function'][0];
+                    $method_name = $details['function'][1];
+                    $full_action_name = $class_name . '::' . $method_name;
+                } else if (is_string($details['function'])) {
+                    // It's a regular function
+                    $full_action_name = $details['function'];
+                } else {
+                    $full_action_name = 'unknown_function';
+                }
+
+                if (!$show_defaults && in_array($full_action_name, $DEFAULT_FUNCTIONS['default'])) {
+                    continue;
+                }
+
+                $ajax_actions[md5($key.$full_action_name)] = ["hook"=>$key, "action"=>$full_action_name];
+            }
+        }
+    }
+
+    return $ajax_actions;
+}
+
 function get_function_code($function_name) {
     try {
         // Handle class methods
@@ -63,6 +118,7 @@ function print_code($code_obj, $language='php') {
 
         $mapping = [
             'action' => 'Action',
+            'link' => 'Link',
             'route' => 'Route',
             'methods' => 'Method(s)',
             'parameters' => 'Parameter(s)',
