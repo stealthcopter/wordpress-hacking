@@ -296,8 +296,27 @@ $DEFAULT_FUNCTIONS = [
             "send_frame_options_header",
             "default_password_nag_handler",
             "handle_legacy_widget_preview_iframe",
-            "WP_Privacy_Policy_Content::text_change_check"
-        ]
+            "WP_Privacy_Policy_Content::text_change_check",
+            "wp_register_core_block_metadata_collection",
+            "_wp_register_default_font_collections",
+            "_register_block_bindings_pattern_overrides_source",
+            "_register_block_bindings_post_meta_source",
+            "register_block_core_button",
+            "register_block_core_list",
+            "register_block_core_media_text",
+            "register_block_core_footnotes_post_meta"
+        ],
+    "elementor" => [
+        "Elementor\Plugin::init",
+        "Elementor\Compatibility::init",
+        "Elementor\Modules\PageTemplates\Module::add_wp_templates_support",
+        "Elementor\Modules\LazyLoad\Module::init",
+        "Elementor\Modules\ImageLoadingOptimization\Module::stop_core_fetchpriority_high_logic",
+        "Elementor\Modules\History\Revisions_Manager::add_revision_support_for_all_post_types",
+        "Elementor\Settings::on_admin_init",
+        "Elementor\Tracker::handle_tracker_actions",
+        "Elementor\Core\Logger\Manager::add_system_info_report"
+    ]
 ];
 
 global $DEFAULT_ROUTES;

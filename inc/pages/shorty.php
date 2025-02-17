@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 global $DEFINED_SHORTCODES;
 
 ?>
-    <p>Show the currently registered shortcodes and the functions associated with them. <a href="<?php echo admin_url('post-new.php'); ?>" target="_blank">Create New Post</a></p>
+<p>Displays the currently registered shortcodes defined with <a href="https://developer.wordpress.org/reference/functions/add_shortcode/" class="inline-code">add_shortcode</a> and the functions associated with them.</p>
 <?php
 
 global $shortcode_tags;

@@ -63,6 +63,17 @@ if ( ! defined( 'ABSPATH' ) ) {
         .text-teal {
             color: #14B8A6;
         }
+
+        .inline-code {
+            background-color: rgba(245, 245, 245, 0.76);
+            color: #d63384;
+            font-family:    'Courier New', Courier, monospace;
+            padding: 0.2em 0.2em;
+            border-radius: 4px;
+            font-size: 0.95em;
+            border: 1px solid #e1e1e1;
+            text-decoration: none;
+        }
     </style>
 
     <script>

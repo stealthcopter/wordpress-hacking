@@ -7,7 +7,7 @@ if (!defined('ABSPATH')) {
 ?>
 
 <h5 class="card-title">REST API Functions</h5>
-<p>Show the currently defined registered REST API routes created with `register_rest_route`. It's a bit barebones atm,
+<p>Show the currently defined registered REST API routes created with <a href="https://developer.wordpress.org/reference/functions/register_rest_route/" class="inline-code">register_rest_route</a>. It's a bit barebones atm,
     but aiming to make this a bit more useful that browsing <a href="../wp-json/">/wp-json</a> or <a
             href="../?rest_route=/">/?rest_route=/</a></p><p>Click on the <span class='badge bg-success' style='cursor: pointer;' onclick="alert('yes, just like that. well done.')">badges</span> to get a RAW HTTP request for that endpoint.</p>
 <?php echo show_defaults_toggle(); ?>

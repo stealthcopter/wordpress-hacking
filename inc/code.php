@@ -31,27 +31,40 @@ function get_all_actions($show_defaults)
             continue;
         }
 
-        foreach ($value->callbacks as $priority => $callbacks) {
-            foreach ($callbacks as $action => $details) {
+        foreach ($value->callbacks as $_priority => $callbacks) {
+            $i = 0;
+            foreach ($callbacks as $_action => $details) {
                 if (is_array($details['function']) && isset($details['function'][1])) {
                     // It's a method inside a class
                     $class_name = is_object($details['function'][0])
                         ? get_class($details['function'][0])
                         : $details['function'][0];
                     $method_name = $details['function'][1];
-                    $full_action_name = $class_name . '::' . $method_name;
+                    $full_action = $class_name . '::' . $method_name;
                 } else if (is_string($details['function'])) {
                     // It's a regular function
-                    $full_action_name = $details['function'];
+                    $full_action = $details['function'];
+                }
+                else if (is_object($details['function']) && ($details['function'] instanceof Closure)){
+                    $full_action = $details['function'];
                 } else {
-                    $full_action_name = 'unknown_function';
+                    $full_action = 'unknown_function';
                 }
 
-                if (!$show_defaults && in_array($full_action_name, $DEFAULT_FUNCTIONS['default'])) {
+                if (!$show_defaults && in_array($full_action, $DEFAULT_FUNCTIONS['default'])) {
                     continue;
                 }
 
-                $ajax_actions[md5($key.$full_action_name)] = ["hook"=>$key, "action"=>$full_action_name];
+                if ($full_action instanceof Closure){
+                    $key_name = $key.$i;
+                }
+                else{
+                    $key_name = $key.$full_action;
+                }
+
+                $ajax_actions[md5($key_name)] = ["hook"=>$key, "action"=>$full_action];
+
+                $i++;
             }
         }
     }
