@@ -27,6 +27,11 @@ wget https://github.com/stealthcopter/wordpress-hacking/releases/latest/download
 unzip stealth.zip
 ```
 
+# Support
+If you love what I'm doing with wordpress-hacking or my other projects, please feel free to contribute without spending money by creating issues, PRs, or just messaging me to let you know you use it. And of course, you can directly sponsor this project on GitHub or buy me a coffee ☕! Thank you for your support – it means the world to me and the open source community!
+
+<a href="https://www.buymeacoffee.com/stealthcopter"><img src="https://cdn.buymeacoffee.com/buttons/v2/arial-yellow.png" height="50px"></a>
+
 # Usage
 
 Either:
