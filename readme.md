@@ -32,3 +32,8 @@ These 📄 reports are in their original formats when originally submitted. Any 
 ## Python Functions
 
 Feel free to reuse my Python code to help write you own PoCs, in future I may turn some of the functions into an easy-to-use library.
+
+# Support
+If you love what I'm doing with wordpress-hacking or my other projects, please feel free to contribute without spending money by creating issues, PRs, or just messaging me to let you know you use it. And of course, you can directly sponsor this project on GitHub or buy me a coffee ☕! Thank you for your support – it means the world to me and the open source community!
+
+<a href="https://www.buymeacoffee.com/stealthcopter"><img src="https://cdn.buymeacoffee.com/buttons/v2/arial-yellow.png" height="50px"></a>
