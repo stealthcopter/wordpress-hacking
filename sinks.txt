@@ -28,3 +28,6 @@
 \bload_template\b
 \bwp_set_current_user\b
 \bwp_set_auth_cookie\b
+\bupdate_option\b
+\badd_option\b
+\bdownload_url\b

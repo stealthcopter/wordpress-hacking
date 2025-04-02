@@ -10,7 +10,7 @@ if (!defined('ABSPATH')) {
 <p>Show the currently defined registered REST API routes created with <a href="https://developer.wordpress.org/reference/functions/register_rest_route/" class="inline-code">register_rest_route</a>. It's a bit barebones atm,
     but aiming to make this a bit more useful that browsing <a href="../wp-json/">/wp-json</a> or <a
             href="../?rest_route=/">/?rest_route=/</a></p><p>Click on the <span class='badge bg-success' style='cursor: pointer;' onclick="alert('yes, just like that. well done.')">badges</span> to get a RAW HTTP request for that endpoint.</p>
-<?php echo show_defaults_toggle(); ?>
+<?php draw_filters(); ?>
 <div class="accordion accordion-flush mb-4" id="accordionExample">
     <?php
     $i = 0;
@@ -127,7 +127,7 @@ ${queryString}`
         console.log(parameters)
 
         let output =
-            `${method} ${path} HTTP/1.1
+            `${method} /wp-json${path} HTTP/1.1
 Host: ${url.host}
 Cookie: ${cookies}
 Accept: application/json

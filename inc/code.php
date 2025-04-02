@@ -4,17 +4,17 @@ if ( ! defined( 'ABSPATH' ) ) {
     die( 'not like this...' );
 }
 
-function get_all_actions($show_defaults)
+function get_all_actions()
 {
     global $wp_filter;
-    global $DEFAULT_ACTIONS;
-    global $DEFAULT_FUNCTIONS;
 
-    $defaults = $DEFAULT_ACTIONS['default'];
+    $user_filters = get_user_filters();
 
     $ajax_actions = [];
 
     // Loop through the $wp_filter to find all actions
+    ksort($wp_filter);
+
     foreach ($wp_filter as $key => $value) {
 
         if (
@@ -27,13 +27,13 @@ function get_all_actions($show_defaults)
             continue;
         }
 
-        if (!$show_defaults && in_array($key, $defaults)) {
-            continue;
-        }
-
         foreach ($value->callbacks as $_priority => $callbacks) {
             $i = 0;
             foreach ($callbacks as $_action => $details) {
+
+                $slug = 'unknown';
+                $item_type = 'unknown';
+
                 if (is_array($details['function']) && isset($details['function'][1])) {
                     // It's a method inside a class
                     $class_name = is_object($details['function'][0])
@@ -51,10 +51,6 @@ function get_all_actions($show_defaults)
                     $full_action = 'unknown_function';
                 }
 
-                if (!$show_defaults && in_array($full_action, $DEFAULT_FUNCTIONS['default'])) {
-                    continue;
-                }
-
                 if ($full_action instanceof Closure){
                     $key_name = $key.$i;
                 }
@@ -62,18 +58,35 @@ function get_all_actions($show_defaults)
                     $key_name = $key.$full_action;
                 }
 
-                $ajax_actions[md5($key_name)] = ["hook"=>$key, "action"=>$full_action];
+                $code = get_function_code($full_action);
+
+                if (!in_array($code['slug'], $user_filters) || ($code['type'] == 'theme' and in_array('theme', $user_filters))){
+                    continue;
+                }
+
+                $ajax_actions[md5($key_name)] = [
+                    "hook"=>$key,
+                    "action"=>$full_action,
+                    "code" => $code,
+                    "slug" => $code['slug'],
+                    "item_type" => $code['item_type']
+                ];
 
                 $i++;
             }
         }
     }
 
+    uasort($ajax_actions, function ($a, $b) {
+        return strcmp((string)$a['slug'], (string)$b['slug']);
+    });
     return $ajax_actions;
 }
 
 function get_function_code($function_name) {
     try {
+        $slug = 'unknown';
+        $item_type = 'unknown';
         // Handle class methods
         if (is_object($function_name) && ($function_name instanceof Closure)) {
             // Handle closures using ReflectionFunction
@@ -111,8 +124,28 @@ function get_function_code($function_name) {
 
         $function_str = get_printable_function_name($function_name);
 
+        if (strlen($code) > 0) {
+            $relative_path = str_replace(ABSPATH . 'wp-content/', '', $filename);
+
+            if (strlen($filename) === strlen($relative_path) || $function_name === '_wp_ajax_add_hierarchical_term'){
+                $slug = 'default';
+                $item_type = 'default';
+            }
+            else{
+                $path_parts = explode('/', $relative_path);
+                $item_type = isset($path_parts[0]) ? rtrim($path_parts[0], 's') : null;
+                $slug = isset($path_parts[1]) ? $path_parts[1] : null;
+            }
+        }
+        else{
+            $slug = 'default';
+            $item_type = 'default';
+        }
+
         // Return the function/closure code
         return [
+            'slug' => $slug,
+            'item_type' => $item_type,
             'code' => $code,
             'file' => $filename,
             'function' => $function_name,
@@ -121,7 +154,11 @@ function get_function_code($function_name) {
         ];
 
     } catch (ReflectionException $e) {
-        return false;
+        return [
+            'slug' => 'default',
+            'item_type' => 'default',
+            'code' => ''
+        ];
     }
 }
 
@@ -161,7 +198,7 @@ function print_code($code_obj, $language='php') {
 
     // TODO: Deindent code if it's all indented by a uniform amount
 
-    echo "<pre><code class='language-$language'>" . htmlspecialchars($php_code) . "</code></pre>";
+    echo "<pre class='pt-0'><code class='language-$language'>" . htmlspecialchars($php_code) . "</code></pre>";
 }
 
 function code_analysis($code){

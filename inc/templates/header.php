@@ -23,58 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.css" rel="stylesheet"/>
 
-
-    <style>
-        /* Toast container in bottom-right corner */
-        .toast-container {
-            position: fixed;
-            bottom: 1rem;
-            right: 1rem;
-            z-index: 1055; /* Above other content */
-        }
-
-        .toast-header-success {
-            background-color: #28a745;
-            color: white;
-        }
-
-        .toast-header-error {
-            background-color: #dc3545;
-            color: white;
-        }
-
-        .toast-header-info {
-            background-color: #17a2b8;
-            color: white;
-        }
-
-        .text-purple {
-            color: #9B5DE5;
-        }
-        .text-yellow {
-            color: #FACC15;
-        }
-        .text-blue {
-            color: #3B82F6;
-        }
-        .text-red {
-            color: #F43F5E;
-        }
-        .text-teal {
-            color: #14B8A6;
-        }
-
-        .inline-code {
-            background-color: rgba(245, 245, 245, 0.76);
-            color: #d63384;
-            font-family:    'Courier New', Courier, monospace;
-            padding: 0.2em 0.2em;
-            border-radius: 4px;
-            font-size: 0.95em;
-            border: 1px solid #e1e1e1;
-            text-decoration: none;
-        }
-    </style>
+    <style><?php include 'style.css';?></style>
 
     <script>
         // Function to create and show a toast

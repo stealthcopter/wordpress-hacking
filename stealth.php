@@ -57,6 +57,7 @@ function init_stealth()
 
     require_once STEALTH_PLUGIN_PATH . '/inc/code.php';
     require_once STEALTH_PLUGIN_PATH . '/inc/shortcodes.php';
+    require_once STEALTH_PLUGIN_PATH . '/inc/filters.php';
     require_once STEALTH_PLUGIN_PATH . '/inc/rest.php';
 
     require_once STEALTH_PLUGIN_PATH . '/inc/views.php';

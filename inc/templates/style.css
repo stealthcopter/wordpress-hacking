@@ -1,0 +1,205 @@
+/* Toast container in bottom-right corner */
+.toast-container {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 1055; /* Above other content */
+}
+
+.toast-header-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.toast-header-error {
+    background-color: #dc3545;
+    color: white;
+}
+
+.toast-header-info {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.text-purple {
+    color: #9B5DE5;
+}
+.text-yellow {
+    color: #FACC15;
+}
+.text-blue {
+    color: #3B82F6;
+}
+.text-red {
+    color: #F43F5E;
+}
+.text-teal {
+    color: #14B8A6;
+}
+
+.inline-code {
+    background-color: rgba(245, 245, 245, 0.76);
+    color: #d63384;
+    font-family:    'Courier New', Courier, monospace;
+    padding: 0.2em 0.2em;
+    border-radius: 4px;
+    font-size: 0.95em;
+    border: 1px solid #e1e1e1;
+    text-decoration: none;
+}
+
+.method_badge {
+    min-width: 5em;
+}
+.badge-item {
+    width: 10em;
+    overflow: clip;
+}
+
+.bg-purple {
+    background: #9B5DE5;
+}
+
+.bg-yellow {
+    background: #FACC15;
+}
+
+.bg-blue {
+    background: #3B82F6;
+}
+
+.bg-red {
+    background: #F43F5E;
+}
+
+.bg-teal {
+    background: #14B8A6;
+}
+
+.bg-orange {
+    background: #F97316;
+}
+
+.bg-green {
+    background: #22C55E;
+}
+
+.bg-cyan {
+    background: #06B6D4;
+}
+
+.bg-pink {
+    background: #EC4899;
+}
+
+.bg-lime {
+    background: #84CC16;
+}
+
+.bg-indigo {
+    background: #6366F1;
+}
+
+.bg-rose {
+    background: #F43F5E;
+}
+
+.bg-amber {
+    background: #F59E0B;
+}
+
+.bg-emerald {
+    background: #10B981;
+}
+
+.bg-sky {
+    background: #0EA5E9;
+}
+
+
+.form-check-input-secondary:checked {
+    background-color: #6C747D;
+    border-color: #6C747D;
+}
+
+.form-check-input-info:checked {
+    background-color: #0DC9F0;
+    border-color: #0DC9F0;
+}
+
+.form-check-input-purple:checked {
+    background-color: #9B5DE5;
+    border-color: #9B5DE5;
+}
+
+.form-check-input-yellow:checked {
+    background-color: #FACC15;
+    border-color: #FACC15;
+}
+
+.form-check-input-blue:checked {
+    background-color: #3B82F6;
+    border-color: #3B82F6;
+}
+
+.form-check-input-red:checked {
+    background-color: #F43F5E;
+    border-color: #F43F5E;
+}
+
+.form-check-input-teal:checked {
+    background-color: #14B8A6;
+    border-color: #14B8A6;
+}
+
+.form-check-input-orange:checked {
+    background-color: #F97316;
+    border-color: #F97316;
+}
+
+.form-check-input-green:checked {
+    background-color: #22C55E;
+    border-color: #22C55E;
+}
+
+.form-check-input-cyan:checked {
+    background-color: #06B6D4;
+    border-color: #06B6D4;
+}
+
+.form-check-input-pink:checked {
+    background-color: #EC4899;
+    border-color: #EC4899;
+}
+
+.form-check-input-lime:checked {
+    background-color: #84CC16;
+    border-color: #84CC16;
+}
+
+.form-check-input-indigo:checked {
+    background-color: #6366F1;
+    border-color: #6366F1;
+}
+
+.form-check-input-rose:checked {
+    background-color: #F43F5E;
+    border-color: #F43F5E;
+}
+
+.form-check-input-amber:checked {
+    background-color: #F59E0B;
+    border-color: #F59E0B;
+}
+
+.form-check-input-emerald:checked {
+    background-color: #10B981;
+    border-color: #10B981;
+}
+
+.form-check-input-sky:checked {
+    background-color: #0EA5E9;
+    border-color: #0EA5E9;
+}
+
+

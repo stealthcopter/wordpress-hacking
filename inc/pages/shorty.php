@@ -11,7 +11,6 @@ global $DEFINED_SHORTCODES;
 <?php
 
 global $shortcode_tags;
-$show_defaults = $_SESSION['show_defaults'];
 
 $old_error_reporting = error_reporting();
 // Turn on all errors, warnings, and notices
@@ -40,28 +39,24 @@ if (isset($_REQUEST['attrs'])) {
     wp_send_json_error();
 }
 
-echo show_defaults_toggle();
+draw_filters();
 
 echo "<h2>Registered Shortcodes (" . count($DEFINED_SHORTCODES) . ")</h2>";
 if (empty($DEFINED_SHORTCODES)){
     echo "<p>No shortcodes found...</p>";
 }
 else{
-    echo "<ul>";
-    foreach ($DEFINED_SHORTCODES as $shortcode => $function) {
+    echo "<ul class='ps-0 mb-3' style='list-style-type: none;'>";
+    foreach ($DEFINED_SHORTCODES as $shortcode => $entry) {
         $text_color = '';
         $title ='';
 
-        foreach ($DEFAULT_SHORTCODES as $name => $shortcodes) {
-            if (in_array($shortcode, $shortcodes)) {
-                $text_color = $PLUGIN_COLOR_MAP[$name] ?? 'text-default';
-                $title = ucfirst($name) . ' Shortcode';
-                break;
-            }
-        }
+        $item_type = $entry['item_type'];
+        $slug = $entry['slug'];
+        $badge = get_item_badge($item_type, $slug, '');
 
         $url = add_query_arg('shortcode', $shortcode);
-        echo "<li class='$text_color' title='$title'>{$shortcode} → <a href='$url'>";
+        echo "<li class='$text_color' title='$title'>{$badge}{$shortcode} → <a href='$url'>";
         $function_name = get_function_name($shortcode);
         if ($function_name instanceof Closure) {
             echo get_printable_function_name($function_name);

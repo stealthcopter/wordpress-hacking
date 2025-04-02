@@ -57,10 +57,12 @@ function extract_parameters($php_code)
 }
 
 
-function get_rest_routes($DEFAULT_ROUTES, $show_defaults)
+function get_rest_routes()
 {
     global $wp_rest_server;
     $rest_routes = [];
+
+    $user_filters = get_user_filters();
 
     // If the REST server is not initialized, initialize it
     if (!isset($wp_rest_server)) {
@@ -80,11 +82,6 @@ function get_rest_routes($DEFAULT_ROUTES, $show_defaults)
     $seen_routes = [];
 
     foreach ($routes as $route => $callbacks) {
-
-        if (!$show_defaults && in_array($route, $DEFAULT_ROUTES)) {
-            continue;
-        }
-
         // Determine which namespace the route belongs to
         $namespace = 'none'; // Default to unknown
         foreach ($namespaces as $ns) {
@@ -121,6 +118,10 @@ function get_rest_routes($DEFAULT_ROUTES, $show_defaults)
 
             $code = get_function_code($full_callback_name);
             $permission_code = get_function_code($full_permission_callback_name);
+
+            if (!in_array($code['slug'], $user_filters) || ($code['type'] == 'theme' and in_array('theme', $user_filters))){
+                continue;
+            }
 
             $code['parameters'] = extract_parameters($code['code']);
 
@@ -209,8 +210,10 @@ function print_rest_routes($i, $rest_routes, $namespace)
 
     $title = "Namespace: $namespace (" . $route_count . ")";
 
+    $extra_class = '';
     if ($route_count == 0) {
         $content = "No REST API routes defined";
+        $extra_class = ' opacity-75';
     }
 
     $show = '';
@@ -221,7 +224,7 @@ function print_rest_routes($i, $rest_routes, $namespace)
     ?>
     <div class="accordion-item">
         <h2 class="accordion-header">
-            <button class="accordion-button collapsed bg-secondary text-white" type="button" data-bs-toggle="collapse"
+            <button class="accordion-button collapsed bg-secondary text-white <?php echo $extra_class?>" type="button" data-bs-toggle="collapse"
                     data-bs-target="#collapse<?php echo $i; ?>" aria-expanded="true"
                     aria-controls="collapse<?php echo $i; ?>">
                 <?php echo $title; ?>

@@ -39,6 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li><a class="dropdown-item" href="<?php echo admin_url('post-new.php'); ?>" target="_blank">Create New Post</a></li>
+                        <li><a class="dropdown-item" href="<?php echo admin_url('users.php'); ?>" target="_blank">Users</a></li>
                         <li><a class="dropdown-item" href="<?php echo admin_url('plugins.php'); ?>" target="_blank">Plugins</a></li>
                         <li><a class="dropdown-item" href="<?php echo admin_url('themes.php'); ?>" target="_blank">Themes</a></li>
                         <li><a class="dropdown-item" href="/stealth/stealth.php?stealth_page=login&login_as_uid=1&redirect=1" target="_blank">Login as Admin</a></li>
@@ -77,10 +78,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
                 <p>If you have a bug to report or an idea for a new feature please create an issue in GitHub <a href="https://github.com/stealthcopter/wordpress-hacking/issues">here</a>.</p>
 
+                <hr>
+                <p>If you like this project you can directly sponsor it on <a href="https://github.com/stealthcopter/wordpress-hacking">GitHub</a> or by buying me a coffee ☕! Thanks!</p>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="https://www.buymeacoffee.com/stealthcopter"><img src="https://cdn.buymeacoffee.com/buttons/v2/arial-yellow.png" height="50px"></a>
             </div>
         </div>
     </div>

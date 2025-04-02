@@ -13,7 +13,6 @@ load_admin();
 
 function print_actions($i, $all_actions, $prefix)
 {
-    global $DEFAULT_ACTIONS, $DEFAULT_FUNCTIONS, $PLUGIN_COLOR_MAP;
     $actions = [];
 
     $contains_selected = false;
@@ -43,25 +42,13 @@ function print_actions($i, $all_actions, $prefix)
     foreach ($actions as $hash => $entry) {
         $hook = $entry['hook'];
         $action = $entry['action'];
+        $code = $entry['code'];
+        $item_type = $entry['item_type'];
+        $slug = $entry['slug'];
+
+        $badge = get_item_badge($item_type, $slug, $code['file']);
 
         $text_color = '';
-        $li_title = '';
-
-        foreach ($DEFAULT_ACTIONS as $name => $def_actions) {
-            if (in_array($hook, $def_actions)) {
-                $text_color = $PLUGIN_COLOR_MAP[$name] ?? 'text-default';
-                $li_title = ucfirst($name) . ' Action';
-                break;
-            }
-        }
-
-        foreach ($DEFAULT_FUNCTIONS as $name => $def_function) {
-            if (in_array($action, $def_function)) {
-                $text_color = $PLUGIN_COLOR_MAP[$name] ?? 'text-default';
-                $li_title = ucfirst($name) . ' Action';
-                break;
-            }
-        }
 
         $url = add_query_arg('action', $hash);
 
@@ -75,14 +62,20 @@ function print_actions($i, $all_actions, $prefix)
             $link = "<a href='$url'>$action</a>";
         }
 
-        $content .= "<li class='${text_color}' title='${li_title}'>{$hook} → $link</li>";
+        if ($hook === $prefix){
+            $text = "$link";
+        }
+        else{
+            $text = substr($hook, strlen($prefix)) . " → $link";
+        }
 
+        $content .= "<li class='${text_color}'>$badge $text</li>";
     }
 
     $extra_class = '';
     if (empty($content)) {
         $content = "No functions defined";
-        $extra_class = ' opacity-50';
+        $extra_class = ' opacity-75';
     }
 
     $show = '';
@@ -112,7 +105,7 @@ function print_actions($i, $all_actions, $prefix)
         <div id="collapse<?php echo $i; ?>" class="accordion-collapse collapse <?php echo $show; ?>"
              style="background:#424242;" >
             <div class="accordion-body">
-                <?php echo $content; ?>
+                <ul class='ps-0 mb-0' style='list-style-type: none;'><?php echo $content; ?></ul>
             </div>
         </div>
     </div>
@@ -122,7 +115,7 @@ function print_actions($i, $all_actions, $prefix)
 ?>
     <p>Displays a list of functions that have been registered using <a href="https://developer.wordpress.org/reference/functions/add_action/" class="inline-code">add_action</a>. These actions are either automatically triggered during the WordPress lifecycle or directly callable by hitting an endpoint.
     </p>
-<?php echo show_defaults_toggle(); ?>
+<?php draw_filters(); ?>
     <div class="accordion accordion-flush" id="accordionExample">
         <?php
 

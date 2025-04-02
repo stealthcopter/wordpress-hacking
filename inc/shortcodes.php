@@ -1,12 +1,26 @@
 <?php
 
-function get_shortcodes($defaults_to_ignore, $show_defaults) {
+function get_shortcodes() {
     global $shortcode_tags;
-    if ($show_defaults){
-        return $shortcode_tags;
+    $results = [];
+
+    $user_filters = get_user_filters();
+
+    foreach ($shortcode_tags as $key => $function) {
+        $function_name = get_function_name($key);
+        $code = get_function_code($function_name);
+
+        if (!in_array($code['slug'], $user_filters) || ($code['type'] == 'theme' and in_array('theme', $user_filters))){
+            continue;
+        }
+
+        $results[$key] = [
+            'code' => $function,
+            'slug' => $code['slug'],
+            'item_type' => $code['item_type'],
+        ];
     }
-    // Use array_diff_key to filter out keys from $shortcode_tags
-    return array_diff_key($shortcode_tags, array_flip($defaults_to_ignore));
+    return $results;
 }
 function extract_shortcode_attributes($php_code)
 {
