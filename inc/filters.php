@@ -50,22 +50,25 @@ function draw_filters()
         echo '</div>';
     }
     echo '</div></form>';
+
+    ?>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const checkboxes = document.querySelectorAll(".filter_checkbox");
+            checkboxes.forEach((checkbox) => {
+                checkbox.addEventListener("change", function () {
+                    const checkedFilters = Array.from(checkboxes)
+                        .filter((cb) => cb.checked)
+                        .map((cb) => cb.value);
+                    console.log('Saving filters: ' + checkedFilters.join(','));
+                    // Save checked filters to a cookie
+                    document.cookie = `stealth_filters=${checkedFilters.join(',')}; path=/;`;
+                });
+            });
+        });
+    </script>
+    <?php
 }
 
 ?>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const checkboxes = document.querySelectorAll(".filter_checkbox");
-        checkboxes.forEach((checkbox) => {
-            checkbox.addEventListener("change", function () {
-                const checkedFilters = Array.from(checkboxes)
-                    .filter((cb) => cb.checked)
-                    .map((cb) => cb.value);
-                console.log('Saving filters: ' + checkedFilters.join(','));
-                // Save checked filters to a cookie
-                document.cookie = `stealth_filters=${checkedFilters.join(',')}; path=/;`;
-            });
-        });
-    });
-</script>
