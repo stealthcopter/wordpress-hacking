@@ -60,7 +60,7 @@ function get_all_actions()
 
                 $code = get_function_code($full_action);
 
-                if (!in_array($code['slug'], $user_filters) || ($code['type'] == 'theme' and in_array('theme', $user_filters))){
+                if (!is_filter_selected($user_filters, $code['slug'], $code['item_type'])){
                     continue;
                 }
 

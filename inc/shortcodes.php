@@ -10,7 +10,7 @@ function get_shortcodes() {
         $function_name = get_function_name($key);
         $code = get_function_code($function_name);
 
-        if (!in_array($code['slug'], $user_filters) || ($code['type'] == 'theme' and in_array('theme', $user_filters))){
+        if (!is_filter_selected($user_filters, $code['slug'], $code['item_type'])){
             continue;
         }
 
