@@ -22,9 +22,9 @@ wp plugin install --activate https://github.com/stealthcopter/wordpress-hacking/
 If you don't want to install it as a plugin you can just dump this zip into the webroot and it will try and find `wp-load.php` automatically so it can hook in.
 
 ```
-cd /var/www/html
-wget https://github.com/stealthcopter/wordpress-hacking/releases/latest/download/stealth.zip
-unzip stealth.zip
+cd /var/www/html/wp-content/plugins
+wget https://github.com/stealthcopter/wordpress-hacking/releases/latest/download/stealth.zip 
+unzip -q stealth.zip -d stealth
 ```
 
 # Support
