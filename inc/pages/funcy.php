@@ -56,10 +56,10 @@ function print_actions($i, $all_actions, $prefix)
             $link = "<span class='text-danger bg-dark'>$action</span>";
         }
         else if ($action instanceof Closure){
-            $link = "<a href='$url' title='An inline function'>Closure</a>";
+            $link = "<a href='$url#function_code' title='An inline function'>Closure</a>";
         }
         else{
-            $link = "<a href='$url'>$action</a>";
+            $link = "<a href='$url#function_code'>$action</a>";
         }
 
         if ($hook === $prefix){
@@ -132,7 +132,7 @@ function print_actions($i, $all_actions, $prefix)
 <?php
 
 if (isset($_REQUEST['action'])) {
-    echo "<h3 class='mt-2'>Function Code</h3>";
+    echo "<h3 id='function_code' class='mt-2'>Function Code</h3>";
     $entry = $DEFINED_ACTIONS[$_REQUEST['action']];
 
     $action = $entry['action'];

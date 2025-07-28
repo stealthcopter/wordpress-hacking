@@ -23,7 +23,7 @@ if (!defined('ABSPATH')) {
 <?php
 
 if (isset($_REQUEST['action'])) {
-    echo "<h3 class='mt-2'>Function Code</h3>";
+    echo "<h3 id='function_code' class='mt-2'>Function Code</h3>";
     $action = $_REQUEST['action'];
 
     $rest_route = $DEFINED_ROUTES[$_REQUEST['action']];

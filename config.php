@@ -20,6 +20,3 @@ const PAGES = [
 //     "poc" => "poc",
     "options" => "Filterable options table list",
 ];
-?>
-
-

@@ -153,7 +153,7 @@ function get_function_code($function_name) {
             'lines' => "$start_line-$end_line",
         ];
 
-    } catch (ReflectionException $e) {
+    } catch (Throwable $e) {
         return [
             'slug' => 'default',
             'item_type' => 'default',

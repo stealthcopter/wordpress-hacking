@@ -2,21 +2,21 @@
 
 class ObjInjec
 {
-    public $command="hellO";
+    public $command="id";
 
     function __wakeup()
     {
-        system($command);
+        system($this->command);
         die("done...");
     }
     
     function __destruct()
     {
-        die("PHP Object Injection: " . $this->c . (178*691));
+        die("PHP Object Injection: " . $this->command . (178*691));
     }
 }
 
-// O:8:"ObjInjec":1:{s:1:"c";s:5:"hellO";}
+// O:8:"ObjInjec":1:{s:2:"id";}
 
 //$x = new ObjInjec();
 //echo serialize($x)."\n";
