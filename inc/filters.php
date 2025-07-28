@@ -98,6 +98,3 @@ function draw_filters()
     </script>
     <?php
 }
-
-?>
-

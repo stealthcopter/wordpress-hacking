@@ -180,5 +180,3 @@ function activate_theme_by_slug($slug) {
         return ["success" => false, "output" => "Theme {$slug} not found!"];
     }
 }
-
-?>
