@@ -9,7 +9,10 @@
  */
 
 // This seems to be needed when using symlinks to host the folder. Stupid PHP.
-opcache_reset();
+if (function_exists('opcache_reset')) {
+    // Fix crash on Windows (thanks to xnl-h4ck3r)
+    opcache_reset();
+}
 
 require_once 'inc/loader.php';
 
