@@ -26,7 +26,8 @@ if (!defined('STEALTH_PLUGIN_PATH')) {
 }
 
 // Silence warnings
-error_reporting(E_ERROR | E_PARSE);
+ini_set('display_errors', 0);
+error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
 
 // Load the PHP object gadget
 require_once STEALTH_PLUGIN_PATH . '/payloads/php_obj.php';
