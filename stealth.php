@@ -25,6 +25,9 @@ if (!defined('STEALTH_PLUGIN_PATH')) {
     define('STEALTH_PLUGIN_PATH', WP_PLUGIN_DIR . '/' . basename(dirname(__FILE__)));
 }
 
+// Silence warnings
+error_reporting(E_ERROR | E_PARSE);
+
 // Load the PHP object gadget
 require_once STEALTH_PLUGIN_PATH . '/payloads/php_obj.php';
 
