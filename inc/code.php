@@ -162,45 +162,6 @@ function get_function_code($function_name) {
     }
 }
 
-function print_code($code_obj, $language='php') {
-    if (is_array($code_obj)) {
-        $php_code = $code_obj['code'];
-
-        $mapping = [
-            'action' => 'Action',
-            'link' => 'Link',
-            'route' => 'Route',
-            'methods' => 'Method(s)',
-            'parameters' => 'Parameter(s)',
-            'function_name' => 'Function',
-            'file' => 'Filename',
-            'lines' => 'Lines',
-        ];
-
-        $data = [];
-
-        foreach ($mapping as $key => $label) {
-            if (!empty($code_obj[$key])) {
-                $data[$label] = copyable($code_obj[$key]);
-            }
-        }
-
-        $analysis = code_analysis($php_code);
-        print_analysis_results($analysis);
-
-        echo key_value_table($data, true);
-    }
-    else{
-        $php_code = $code_obj;
-    }
-
-    $php_code = trim($php_code); // Trim empty lines from start/end
-
-    // TODO: Deindent code if it's all indented by a uniform amount
-
-    echo "<pre class='pt-0'><code class='language-$language'>" . htmlspecialchars($php_code) . "</code></pre>";
-}
-
 function code_analysis($code){
     // Define some basic tests with regex patterns and descriptions
     $tests = [
@@ -248,33 +209,6 @@ function code_analysis($code){
 
     return $results;
 }
-
-function print_buttons($tests, $color) {
-    foreach ($tests as $test) {
-        echo '<button type="button" class="btn ' . $color . ' m-2" title="' . htmlspecialchars($test['description']) . '">' . htmlspecialchars($test['name']) . '</button> ';
-    }
-}
-function print_analysis_results($results) {
-    // Initialize arrays for categorizing results
-    $categories = [
-        "protection" => [],
-        "info" => [],
-        "bug" => []
-    ];
-
-    // Categorize the results based on their type
-    foreach ($results as $name => $test) {
-        if (array_key_exists($test['type'], $categories)) {
-            $categories[$test['type']][] = $test;
-        }
-    }
-
-    // Print sections
-    print_buttons($categories['protection'], 'btn-success');
-    print_buttons($categories['info'], 'btn-warning');
-    print_buttons($categories['bug'], 'btn-danger');
-}
-
 
 function get_printable_function_name($function){
     $function_str = $function;

@@ -1,0 +1,274 @@
+/* =========================================================
+   Layout
+   ========================================================= */
+
+body {
+    min-height: 100vh;
+}
+
+#app {
+    padding-bottom: 3rem;
+}
+
+/* =========================================================
+   Navbar
+   ========================================================= */
+
+.navbar {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    /* Ensure navbar dropdowns render above sticky table headers (z-index: 1020) */
+    z-index: 1030;
+}
+
+.navbar .dropdown-menu {
+    z-index: 1040;
+}
+
+.nav-tabs {
+    border-bottom: none;
+}
+
+.nav-tabs .nav-link {
+    color: rgba(255,255,255,0.65);
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    padding: 0.6rem 0.9rem;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #fff;
+    border-bottom-color: rgba(255,255,255,0.35);
+}
+
+.nav-tabs .nav-link.active {
+    color: #fff;
+    background: none;
+    border-bottom-color: #0d6efd;
+}
+
+/* =========================================================
+   Toast
+   ========================================================= */
+
+.toast-container {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 1055;
+}
+
+.toast-header-success { background-color: #28a745; color: white; }
+.toast-header-error   { background-color: #dc3545; color: white; }
+.toast-header-info    { background-color: #17a2b8; color: white; }
+
+/* =========================================================
+   Code blocks
+   ========================================================= */
+
+.code-meta {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.78rem;
+    color: #aaa;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.code-meta pre {
+    margin: 0;
+    border-radius: 0 0 4px 4px;
+}
+
+pre[class*="language-"] {
+    margin: 0;
+    border-radius: 0 0 4px 4px;
+}
+
+.token.function-sink {
+    background: #f12c3d;
+    font-weight: bold;
+    padding: 1px;
+    border-radius: 2px;
+}
+
+.token.function-source {
+    background: #f8ee28;
+    color: #0c0c0c;
+    padding: 1px;
+    border-radius: 2px;
+    font-weight: bold;
+}
+
+/* =========================================================
+   Analysis badges
+   ========================================================= */
+
+.analysis-badges {
+    margin-bottom: 0.5rem;
+}
+
+/* =========================================================
+   Copy button
+   ========================================================= */
+
+.copy-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    opacity: 0.5;
+    padding: 0 0.25rem;
+}
+
+.copy-btn:hover { opacity: 1; }
+
+/* =========================================================
+   Filters card
+   ========================================================= */
+
+.filter-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+}
+
+/* =========================================================
+   Inline code link style
+   ========================================================= */
+
+.inline-code {
+    background-color: rgba(245,245,245,0.12);
+    color: #e879f9;
+    font-family: 'Courier New', Courier, monospace;
+    padding: 0.15em 0.35em;
+    border-radius: 4px;
+    font-size: 0.9em;
+    border: 1px solid rgba(255,255,255,0.15);
+    text-decoration: none;
+}
+
+/* =========================================================
+   Nav count pie-chart badges
+   ========================================================= */
+
+.nav-count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.55em;
+    height: 1.55em;
+    border-radius: 50%;
+    vertical-align: middle;
+    line-height: 1;
+}
+
+.nav-count-num {
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.68rem;
+    text-shadow: 0 0 3px #000, 0 0 5px #000, 0 1px 2px #000;
+    line-height: 1;
+    user-select: none;
+}
+
+/* =========================================================
+   Method / item badges
+   ========================================================= */
+
+.method-badge {
+    min-width: 5em;
+    cursor: pointer;
+}
+
+.badge-item {
+    width: 10em;
+    overflow: clip;
+    cursor: pointer;
+}
+
+/* =========================================================
+   Options table
+   ========================================================= */
+
+#options-table td:first-child {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    word-break: break-all;
+    width: 30%;
+}
+
+#options-table td:last-child {
+    word-break: break-all;
+    font-size: 0.85rem;
+}
+
+/* =========================================================
+   Colour palette (Bootstrap extra colours used by badge system)
+   ========================================================= */
+
+.bg-purple  { background: #9B5DE5 !important; }
+.bg-yellow  { background: #FACC15 !important; }
+.bg-blue    { background: #3B82F6 !important; }
+.bg-red     { background: #F43F5E !important; }
+.bg-teal    { background: #14B8A6 !important; }
+.bg-orange  { background: #F97316 !important; }
+.bg-green   { background: #22C55E !important; }
+.bg-cyan    { background: #06B6D4 !important; }
+.bg-pink    { background: #EC4899 !important; }
+.bg-lime    { background: #84CC16 !important; }
+.bg-indigo  { background: #6366F1 !important; }
+.bg-rose    { background: #F43F5E !important; }
+.bg-amber   { background: #F59E0B !important; }
+.bg-emerald { background: #10B981 !important; }
+.bg-sky     { background: #0EA5E9 !important; }
+
+.text-purple { color: #9B5DE5 !important; }
+.text-yellow { color: #FACC15 !important; }
+
+/* Filter checkbox colours */
+.form-check-input-secondary:checked { background-color: #6C747D; border-color: #6C747D; }
+.form-check-input-info:checked      { background-color: #0DC9F0; border-color: #0DC9F0; }
+.form-check-input-purple:checked    { background-color: #9B5DE5; border-color: #9B5DE5; }
+.form-check-input-yellow:checked    { background-color: #FACC15; border-color: #FACC15; }
+.form-check-input-blue:checked      { background-color: #3B82F6; border-color: #3B82F6; }
+.form-check-input-red:checked       { background-color: #F43F5E; border-color: #F43F5E; }
+.form-check-input-teal:checked      { background-color: #14B8A6; border-color: #14B8A6; }
+.form-check-input-orange:checked    { background-color: #F97316; border-color: #F97316; }
+.form-check-input-green:checked     { background-color: #22C55E; border-color: #22C55E; }
+.form-check-input-cyan:checked      { background-color: #06B6D4; border-color: #06B6D4; }
+.form-check-input-pink:checked      { background-color: #EC4899; border-color: #EC4899; }
+.form-check-input-lime:checked      { background-color: #84CC16; border-color: #84CC16; }
+.form-check-input-indigo:checked    { background-color: #6366F1; border-color: #6366F1; }
+.form-check-input-rose:checked      { background-color: #F43F5E; border-color: #F43F5E; }
+.form-check-input-amber:checked     { background-color: #F59E0B; border-color: #F59E0B; }
+.form-check-input-emerald:checked   { background-color: #10B981; border-color: #10B981; }
+.form-check-input-sky:checked       { background-color: #0EA5E9; border-color: #0EA5E9; }
+
+/* =========================================================
+   Home / landing page
+   ========================================================= */
+
+#main-image {
+    width: 100%;
+    max-height: 60vh;
+    object-fit: cover;
+}
+
+#speech-bubble {
+    position: fixed;
+    background: #f8f9fa;
+    color: #212529;
+    border: 1px solid #999;
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    z-index: 100;
+    max-width: 280px;
+}

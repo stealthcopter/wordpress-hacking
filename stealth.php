@@ -15,6 +15,8 @@ if (function_exists('opcache_reset')) {
 }
 
 require_once 'inc/loader.php';
+// FIXME
+require_once 'canary.php';
 
 if (!defined('STEALTH_PLUGIN_FILE')) {
     // We do this nasty shit so we can support loading via symlinked directories without explosions.
@@ -32,42 +34,24 @@ error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED);
 // Load the PHP object gadget
 require_once STEALTH_PLUGIN_PATH . '/payloads/php_obj.php';
 
-if (!function_exists('stealth_render_page')) {
-    function stealth_render_page()
-    {
-
-        require_once STEALTH_PLUGIN_PATH . '/inc/defaults.php';
-        require_once STEALTH_PLUGIN_PATH . '/inc/init.php';
-
-        $page = 'index';
-        $margin = '';
-        if (isset($_REQUEST['stealth_page'])) {
-            $page = basename($_REQUEST['stealth_page']);
-            $margin = 'mt-4';
-        }
-
-        include STEALTH_PLUGIN_PATH . '/inc/templates/header.php';
-
-        echo "<div class='content $margin'>";
-        // You can path traverse here if you like, no stress
-        include STEALTH_PLUGIN_PATH . "/inc/pages/$page.php";
-        echo '</div>';
-
-        include STEALTH_PLUGIN_PATH . '/inc/templates/footer.php';
-    }
-}
-
 function init_stealth()
 {
     require_once STEALTH_PLUGIN_PATH . '/config.php';
-    require_once STEALTH_PLUGIN_PATH . '/api.php';
-
     require_once STEALTH_PLUGIN_PATH . '/inc/code.php';
     require_once STEALTH_PLUGIN_PATH . '/inc/shortcodes.php';
     require_once STEALTH_PLUGIN_PATH . '/inc/filters.php';
     require_once STEALTH_PLUGIN_PATH . '/inc/rest.php';
+    require_once STEALTH_PLUGIN_PATH . '/inc/api/router.php';
+}
 
-    require_once STEALTH_PLUGIN_PATH . '/inc/views.php';
+function stealth_handle_request()
+{
+    if (isset($_REQUEST['stealth_api'])) {
+        stealth_api_dispatch();
+        die();
+    }
+    require_once STEALTH_PLUGIN_PATH . '/frontend/shell.php';
+    die();
 }
 
 if (is_installed_to_wordpress()) {
@@ -79,13 +63,11 @@ if (is_installed_to_wordpress()) {
         $requestPath = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
         $url = trailingslashit($requestPath);
         if (strstr($url, STEALTH_PERMALINK_PATH)) {
-            // Intercept
-            stealth_render_page();
-            die();
+            stealth_handle_request();
         }
     }
 
 } else {
     init_stealth();
-    stealth_render_page();
+    stealth_handle_request();
 }
