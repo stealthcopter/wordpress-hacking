@@ -15,8 +15,6 @@ if (function_exists('opcache_reset')) {
 }
 
 require_once 'inc/loader.php';
-// FIXME
-require_once 'canary.php';
 
 if (!defined('STEALTH_PLUGIN_FILE')) {
     // We do this nasty shit so we can support loading via symlinked directories without explosions.
